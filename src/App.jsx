@@ -1,122 +1,54 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import Welcome from './components/Welcome'
+import InstrumentMenu, { INSTRUMENTS } from './components/InstrumentMenu'
 
-function App() {
-  const [count, setCount] = useState(0)
+const STORAGE_KEY = 'musagete:instrument'
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+function loadInstrument() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (INSTRUMENTS.some((i) => i.id === saved)) return saved
+  } catch {
+    // storage non disponibile: si usa il valore di default
+  }
+  return 'keyboard'
 }
 
-export default App
+export default function App() {
+  const [screen, setScreen] = useState('welcome')
+  const [instrument, setInstrument] = useState(loadInstrument)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, instrument)
+    } catch {
+      // ignorato: la scelta vale solo per questa sessione
+    }
+  }, [instrument])
+
+  if (screen === 'welcome') {
+    return (
+      <div className="app">
+        <Welcome onStart={() => setScreen('home')} />
+      </div>
+    )
+  }
+
+  const current = INSTRUMENTS.find((i) => i.id === instrument)
+
+  return (
+    <div className="app">
+      <header className="topbar">
+        <span className="brand">Musagete</span>
+        <InstrumentMenu value={instrument} onChange={setInstrument} />
+      </header>
+      <main className="home">
+        <section className="card">
+          <h2>Capitolo 1: Fondamenti</h2>
+          <p>In costruzione. Qui comparirà il percorso a capitoli.</p>
+          <p className="muted">Strumento scelto: {current.label}</p>
+        </section>
+      </main>
+    </div>
+  )
+}
