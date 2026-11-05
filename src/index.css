@@ -201,14 +201,14 @@ select {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  padding: calc(8px + env(safe-area-inset-top)) 16px 8px;
   background: var(--bg);
   border-bottom: 2px solid var(--surface);
 }
-.brand {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
+.logo-top {
+  height: 48px;
+  max-width: none;
+  flex-shrink: 0;
 }
 .instrument select {
   height: 44px;

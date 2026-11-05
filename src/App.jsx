@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Welcome from './components/Welcome'
+import Logo from './components/Logo'
 import InstrumentMenu, { INSTRUMENTS } from './components/InstrumentMenu'
 
 const STORAGE_KEY = 'musagete:instrument'
@@ -39,7 +40,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <span className="brand">Musagete</span>
+        <Logo className="logo-top" />
         <InstrumentMenu value={instrument} onChange={setInstrument} />
       </header>
       <main className="home">
