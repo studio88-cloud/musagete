@@ -41,6 +41,7 @@ body {
   margin: 0;
   background: var(--bg-outer);
   color: var(--text);
+  overscroll-behavior-y: none;
 }
 
 .app {
@@ -72,18 +73,21 @@ select {
 /* Logo */
 .logo-img {
   display: block;
-  width: 100%;
-  max-width: 230px;
-  height: auto;
+  width: auto;
+  max-width: 100%;
+  height: clamp(72px, 14dvh, 119px);
+  object-fit: contain;
 }
 
-/* Schermata di benvenuto */
+/* Schermata di benvenuto: fissa, si adatta all'altezza dello schermo */
 .welcome {
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: calc(24px + env(safe-area-inset-top)) 24px calc(28px + env(safe-area-inset-bottom));
+  padding: calc(clamp(12px, 2.6dvh, 24px) + env(safe-area-inset-top)) 24px
+    calc(clamp(16px, 3dvh, 28px) + env(safe-area-inset-bottom));
 }
 .intro {
   margin: 8px 0 0;
@@ -94,44 +98,46 @@ select {
   display: block;
 }
 .intro-q {
-  font-size: 20px;
+  font-size: clamp(15px, 2.4dvh, 20px);
   font-weight: 800;
   line-height: 1.35;
   color: var(--lavender);
 }
 .intro-no {
   margin: 2px 0;
-  font-size: 45px;
+  font-size: clamp(34px, 5.4dvh, 45px);
   font-weight: 800;
   line-height: 1.35;
   color: var(--gold);
 }
 .intro-a {
-  font-size: 20px;
+  font-size: clamp(15px, 2.4dvh, 20px);
   font-weight: 800;
   line-height: 1.35;
   color: var(--text);
 }
 .intro-sig {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: clamp(15px, 2.4dvh, 20px);
   font-weight: 800;
   line-height: 1.35;
   color: var(--lavender);
-    }
+}
 .intro-sig2 {
-  margin-top: 0px;
-  font-size: 20px;
+  margin-top: 0;
+  font-size: clamp(15px, 2.4dvh, 20px);
   font-weight: 800;
   line-height: 1.35;
   color: var(--lavender);
 }
 .polly-hero {
   display: block;
+  flex: 1 1 0;
+  min-height: 0;
   width: 100%;
   max-width: 340px;
-  height: auto;
   margin-top: 4px;
+  object-fit: contain;
 }
 .actions {
   margin-top: auto;
@@ -142,10 +148,23 @@ select {
   gap: 12px;
 }
 
+/* Rete di sicurezza: schermi molto bassi o testo ingrandito */
+@media (max-height: 560px) {
+  .welcome {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+  .polly-hero {
+    flex: none;
+    height: 220px;
+  }
+}
+
 /* Pulsanti */
 .btn {
   width: 100%;
-  height: 56px;
+  height: clamp(46px, 6.7dvh, 56px);
   border-radius: 16px;
   font-size: 17px;
   font-weight: 800;
