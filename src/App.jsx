@@ -5,6 +5,7 @@ import TabBar from './components/TabBar'
 import { INSTRUMENTS } from './components/InstrumentMenu'
 import Path from './screens/Path'
 import Profile from './screens/Profile'
+import Handbook from './screens/Handbook'
 import Stub from './screens/Stub'
 import { useProgress } from './lib/progress'
 import './screens.css'
@@ -51,17 +52,22 @@ export default function App() {
 
   let content
   if (openItem) {
+    const isChapter = openItem.kind === 'intro' || openItem.kind === 'chapter'
     content = (
       <Stub
         title={openItem.number ? `${openItem.number} ${openItem.title}` : openItem.title}
-        text="In costruzione. Qui comparirà la lista dei passi del capitolo."
+        text={
+          isChapter
+            ? 'In costruzione. Qui comparirà la lista dei passi del capitolo.'
+            : 'In costruzione. Qui comparirà la scheda del prontuario.'
+        }
         onBack={() => setOpenItem(null)}
       />
     )
   } else if (tab === 'path') {
     content = <Path completed={completed} onOpen={setOpenItem} />
   } else if (tab === 'handbook') {
-    content = <Stub title="Prontuario" text="In costruzione." />
+    content = <Handbook completed={completed} onOpen={setOpenItem} />
   } else if (tab === 'tool') {
     content = <Stub title="Strumento" text="In costruzione. Qui si proverà liberamente lo strumento scelto." />
   } else {

@@ -32,7 +32,7 @@
 .path-line path {
   fill: none;
   stroke: var(--lavender);
-  stroke-opacity: 0.3;
+  stroke-opacity: 0.3; /* più basso = linea più scura */
   stroke-width: 7px;
   stroke-linecap: round;
   stroke-dasharray: 16 18;
@@ -192,4 +192,64 @@
   flex-direction: column;
   gap: 12px;
   margin-top: 12px;
+}
+
+/* Prontuario */
+.handbook {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 16px;
+}
+.hb-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 96px;
+  padding: 16px 18px 16px 22px;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hb-card:not(:disabled):active {
+  transform: scale(0.98);
+}
+.hb-card.is-locked {
+  opacity: 0.5;
+  cursor: default;
+}
+.hb-star {
+  flex: none;
+  width: 32px;
+  height: 32px;
+}
+.hb-text {
+  flex: 1;
+  min-width: 0;
+}
+.hb-title {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.hb-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lavender);
+}
+.hb-chevron {
+  flex: none;
+  width: 14px;
+  height: 24px;
+  color: var(--lavender);
 }
