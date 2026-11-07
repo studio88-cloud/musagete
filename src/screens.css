@@ -1,0 +1,195 @@
+/* Schermate principali: percorso, barra in basso, selettore strumento */
+
+.screen {
+  padding-bottom: calc(88px + env(safe-area-inset-bottom));
+}
+
+/* Selettore strumento a forma di pillola */
+.instrument select {
+  height: 38px;
+  padding: 0 38px 0 16px;
+  border: 2px solid var(--border);
+  border-radius: 19px;
+  background: var(--surface)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23C28AE3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 14px center / 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  font-size: 16px;
+}
+
+/* Percorso */
+.path {
+  position: relative;
+  width: 100%;
+}
+.path-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.path-line path {
+  fill: none;
+  stroke: var(--lavender);
+  stroke-opacity: 0.8;
+  stroke-width: 7px;
+  stroke-linecap: round;
+  stroke-dasharray: 16 18;
+}
+.stage {
+  position: absolute;
+  width: 170px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.stage-btn {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.stage-btn:disabled {
+  cursor: default;
+}
+.stage-btn:not(:disabled):active {
+  transform: scale(0.96);
+}
+.stage-img,
+.stage-disc,
+.stage-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+.stage-img {
+  width: 92px;
+  height: 92px;
+}
+.stage-disc,
+.stage-ring {
+  width: 144px;
+  height: 144px;
+}
+.stage-ring {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+.is-done .stage-img {
+  width: 100px;
+  height: 100px;
+}
+.ring-bar {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+.stage-polly {
+  position: absolute;
+  right: 54px;
+  bottom: 42px;
+  z-index: 2;
+  width: 112px;
+  height: 96px;
+  pointer-events: none;
+}
+.stage-polly.is-right {
+  right: auto;
+  left: 54px;
+}
+.stage-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: 800;
+  color: #fff;
+}
+.stage-title {
+  margin: 14px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+}
+.stage-title.is-locked {
+  color: #8a7cb0;
+}
+.stage-title.is-done,
+.stage-title.is-intro {
+  color: var(--lavender);
+}
+.stage-tag {
+  margin-top: 6px;
+  padding: 2px 10px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: rgba(76, 58, 122, 0.35);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lavender);
+}
+
+/* Barra in basso */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  z-index: 20;
+  width: 100%;
+  max-width: 430px;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--surface);
+  border-top: 2px solid var(--border);
+}
+.tab {
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 0;
+  background: none;
+  color: #8a7cb0;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tab.is-active {
+  color: var(--lavender);
+}
+.tab-icon {
+  width: 32px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Schermate provvisorie */
+.stub {
+  padding: 24px 16px;
+}
+.stub-back {
+  margin-top: 12px;
+}
+.stub-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}

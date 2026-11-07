@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 144 144">
+  <defs>
+    <style>
+      .cls-1{fill:#7c3aed;stroke:#7c3aed;stroke-width:2;stroke-miterlimit:10}
+    </style>
+    <filter id="filter-1" filterUnits="userSpaceOnUse" x="7" y="7" width="130" height="130" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceAlpha" stdDeviation="6" result="glow"/><feFlood flood-color="#4c1d95" flood-opacity="0.8"/><feComposite in2="glow" operator="in" result="paint"/><feMerge><feMergeNode in="paint"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <title>Untitled-2</title>
+  <g id="Asset_6" data-name="Asset 6">
+    <g filter="url(#filter-1)">
+      <path d="M28 72 C28 47.699 47.699 28 72 28 C96.301 28 116 47.699 116 72 C116 96.301 96.301 116 72 116 C47.699 116 28 96.301 28 72 Z" class="cls-1"/>
+    </g>
+  </g>
+</svg>
