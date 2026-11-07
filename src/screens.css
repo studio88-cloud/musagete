@@ -32,7 +32,7 @@
 .path-line path {
   fill: none;
   stroke: var(--lavender);
-  stroke-opacity: 0.8;
+  stroke-opacity: 0.5;
   stroke-width: 7px;
   stroke-linecap: round;
   stroke-dasharray: 16 18;
