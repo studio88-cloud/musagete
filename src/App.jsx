@@ -27,7 +27,7 @@ export default function App() {
   const [tab, setTab] = useState('path')
   const [openItem, setOpenItem] = useState(null)
   const [instrument, setInstrument] = useState(loadInstrument)
-  const { completed, completeNext, reset } = useProgress()
+  const { completed, intro, completeNext, toggleIntro, reset } = useProgress()
 
   useEffect(() => {
     try {
@@ -71,7 +71,15 @@ export default function App() {
   } else if (tab === 'tool') {
     content = <Stub title="Strumento" text="In costruzione. Qui si proverà liberamente lo strumento scelto." />
   } else {
-    content = <Profile completed={completed} onCompleteNext={completeNext} onReset={reset} />
+    content = (
+      <Profile
+        completed={completed}
+        intro={intro}
+        onCompleteNext={completeNext}
+        onToggleIntro={toggleIntro}
+        onReset={reset}
+      />
+    )
   }
 
   return (
