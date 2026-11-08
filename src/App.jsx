@@ -6,6 +6,7 @@ import { INSTRUMENTS } from './components/InstrumentMenu'
 import Path from './screens/Path'
 import Profile from './screens/Profile'
 import Handbook from './screens/Handbook'
+import Interchange from './screens/Interchange'
 import Stub from './screens/Stub'
 import { useProgress } from './lib/progress'
 import './screens.css'
@@ -51,7 +52,9 @@ export default function App() {
   }
 
   let content
-  if (openItem) {
+  if (openItem && openItem.id === 'interchange') {
+    content = <Interchange onBack={() => setOpenItem(null)} />
+  } else if (openItem) {
     const isChapter = openItem.kind === 'intro' || openItem.kind === 'chapter'
     content = (
       <Stub

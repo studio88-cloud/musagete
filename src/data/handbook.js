@@ -5,4 +5,5 @@ export const HANDBOOK = [
   { id: 'scales', title: 'Scale e Modi', subtitle: 'Maggiore, minore e interscambio modale', chapter: 1 },
   { id: 'cadences', title: 'Cadenze e Progressioni', subtitle: 'Risoluzioni e formule di accompagnamento', chapter: 4 },
   { id: 'circle', title: 'Circolo delle Quinte', subtitle: 'Mappa interattiva delle tonalità', chapter: 1 },
+  { id: 'interchange', title: 'Interscambio Modale', subtitle: 'Accordi presi in prestito dai modi', chapter: 8 },
 ]
