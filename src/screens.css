@@ -445,6 +445,10 @@
   background: var(--surface);
   border-right: 1px solid var(--border);
 }
+.ic-table .ic-corner,
+.ic-table .ic-rowhead {
+  text-align: left;
+}
 .ic-rowhead {
   font-size: 14px;
   font-weight: 700;
@@ -453,6 +457,15 @@
 .ic-table td {
   min-width: 52px;
   color: var(--text);
+}
+/* righe verticali per seguire le colonne con l'occhio */
+.ic-table thead th:not(.ic-corner),
+.ic-table td {
+  border-right: 1px solid var(--border);
+}
+.ic-table thead th:last-child,
+.ic-table td:last-child {
+  border-right: 0;
 }
 .ic-table td.is-empty {
   color: var(--border);

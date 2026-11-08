@@ -7,6 +7,7 @@ import Path from './screens/Path'
 import Profile from './screens/Profile'
 import Handbook from './screens/Handbook'
 import Interchange from './screens/Interchange'
+import Tool from './screens/Tool'
 import Stub from './screens/Stub'
 import { useProgress } from './lib/progress'
 import './screens.css'
@@ -72,7 +73,7 @@ export default function App() {
   } else if (tab === 'handbook') {
     content = <Handbook completed={completed} onOpen={setOpenItem} />
   } else if (tab === 'tool') {
-    content = <Stub title="Strumento" text="In costruzione. Qui si proverà liberamente lo strumento scelto." />
+    content = <Tool instrument={instrument} />
   } else {
     content = (
       <Profile
