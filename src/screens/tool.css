@@ -282,6 +282,20 @@
   color: var(--lavender);
   text-decoration: underline;
 }
-.tool-soon {
-  margin: 16px;
+.fb {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 36px;
+}
+.fb-num {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--lavender);
+}
+.fb-dot {
+  font-family: inherit;
+  font-weight: 800;
+  pointer-events: none;
 }

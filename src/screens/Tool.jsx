@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './tool.css'
 import Keyboard from '../components/Keyboard'
+import Fretboard from '../components/Fretboard'
 import MiniMap from '../components/MiniMap'
 import { CHORD_GROUPS, findChord } from '../data/chords'
 import { SCALE_GROUPS, findScale } from '../data/scales'
@@ -177,10 +178,7 @@ export default function Tool({ instrument }) {
           <Keyboard highlights={highlights} mode={st.mode} scrollReq={scrollReq} onView={setView} />
         </>
       ) : (
-        <div className="card tool-soon">
-          <h2>{instrument === 'guitar' ? 'Chitarra' : 'Basso'}</h2>
-          <p>In costruzione. Qui comparirà il manico con le note di {root.id} {def.name}.</p>
-        </div>
+        <Fretboard instrument={instrument} highlights={highlights} mode={st.mode} />
       )}
 
       <div className="legend">
