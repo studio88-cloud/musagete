@@ -145,9 +145,7 @@
 }
 .key.is-on {
   background: #cdb171;
-}
-.key.white.is-on {
-  border-color: #8f7a3a;
+  border: 2px solid #1b1428;
 }
 .dot {
   position: absolute;

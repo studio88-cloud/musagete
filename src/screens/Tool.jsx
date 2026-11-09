@@ -141,7 +141,7 @@ export default function Tool({ instrument }) {
     const isScale = st.kind === 'scale'
     if (isScale) midis.push(base + 12)
     setPlaying(true)
-    playNotes(midis, { sequence: isScale, onEnd: () => setPlaying(false) })
+    playNotes(midis, { kind: st.kind, onEnd: () => setPlaying(false) })
   }
 
   return (

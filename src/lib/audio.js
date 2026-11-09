@@ -51,8 +51,10 @@ export function stopPlaying() {
   current = null
 }
 
-// midis: elenco di note; sequence=true le suona una dopo l'altra (scale), altrimenti insieme (accordi)
-export function playNotes(midis, { sequence = false, onEnd } = {}) {
+// midis: elenco di note
+// kind 'scale': le note una dopo l'altra
+// kind 'chord': accordo insieme (block), poi in arpeggio, poi di nuovo insieme
+export function playNotes(midis, { kind = 'chord', onEnd } = {}) {
   stopPlaying()
   const c = getCtx()
   if (!c || midis.length === 0) {
@@ -62,12 +64,32 @@ export function playNotes(midis, { sequence = false, onEnd } = {}) {
   const master = c.createGain()
   master.gain.value = 0.5
   master.connect(c.destination)
+
+  const events = [] // { midi, at, dur, vol }
+  let total = 0
+
+  if (kind === 'scale') {
+    const step = 0.3
+    const dur = 0.55
+    midis.forEach((midi, i) => events.push({ midi, at: i * step, dur, vol: 0.5 }))
+    total = (midis.length - 1) * step + dur
+  } else {
+    const blockVol = 0.3 / Math.sqrt(midis.length)
+    const block = (dur) => {
+      midis.forEach((midi) => events.push({ midi, at: total, dur, vol: blockVol }))
+      total += dur
+    }
+    block(1.1) // 1) accordo insieme
+    total += 0.2
+    const step = 0.32
+    const noteDur = 0.7
+    midis.forEach((midi, i) => events.push({ midi, at: total + i * step, dur: noteDur, vol: 0.45 }))
+    total += (midis.length - 1) * step + noteDur + 0.15 // 2) arpeggio
+    block(1.8) // 3) di nuovo insieme
+  }
+
   const t0 = c.currentTime + 0.05
-  const step = 0.3
-  const dur = sequence ? 0.55 : 1.8
-  const vol = sequence ? 0.5 : 0.3 / Math.sqrt(midis.length)
-  midis.forEach((m, i) => tone(c, master, m, t0 + (sequence ? i * step : 0), dur, vol))
-  const total = (sequence ? (midis.length - 1) * step : 0) + dur
+  events.forEach((e) => tone(c, master, e.midi, t0 + e.at, e.dur, e.vol))
   const timer = setTimeout(() => {
     current = null
     onEnd?.()
