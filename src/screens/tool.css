@@ -299,3 +299,21 @@
   font-weight: 800;
   pointer-events: none;
 }
+
+/* Spartito */
+.staff-card {
+  margin-top: 16px;
+}
+.staff {
+  display: block;
+  width: calc(100% - 16px);
+  height: auto;
+  margin: 0 8px 8px;
+}
+.st-acc {
+  font-family: 'Noto Music', 'Segoe UI Symbol', system-ui, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}

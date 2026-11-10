@@ -49,6 +49,8 @@ export function spellNotes(root, formula) {
       deg,
       semi,
       pc,
+      letter, // 0-6 (Do...Si), serve per il pentagramma
+      acc: diff, // alterazione: -2 ♭♭ ... +2 ♯♯
       name: IT_NAMES[letter] + accidental(diff),
     }
   })

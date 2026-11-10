@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './tool.css'
 import Keyboard from '../components/Keyboard'
 import Fretboard from '../components/Fretboard'
+import Staff from '../components/Staff'
 import MiniMap from '../components/MiniMap'
 import { CHORD_GROUPS, findChord } from '../data/chords'
 import { SCALE_GROUPS, findScale } from '../data/scales'
@@ -10,7 +11,7 @@ import { scrollXFor } from '../lib/keys'
 import { playNotes, stopPlaying } from '../lib/audio'
 
 const KEY = 'musagete:tool'
-const DEFAULTS = { tonic: 'C', kind: 'chord', type: 'maj', mode: 'degrees', legend: true }
+const DEFAULTS = { tonic: 'C', kind: 'chord', type: 'maj', mode: 'degrees', legend: true, staff: true }
 const LEGEND = [
   [1, 'Fondamentale'], [2, 'Seconda'], [3, 'Terza'], [4, 'Quarta'], [5, 'Quinta'], [6, 'Sesta'], [7, 'Settima'],
 ]
@@ -180,6 +181,20 @@ export default function Tool({ instrument }) {
       ) : (
         <Fretboard instrument={instrument} highlights={highlights} mode={st.mode} />
       )}
+
+      <div className="legend staff-card">
+        <button type="button" className="legend-head" onClick={() => update({ staff: !st.staff })} aria-expanded={st.staff}>
+          <span>SPARTITO</span>
+          <span aria-hidden="true">{st.staff ? '▴' : '▾'}</span>
+        </button>
+        {st.staff && (
+          <Staff
+            notes={[...notes].sort((a, b) => a.semi - b.semi)}
+            base={baseMidi(root)}
+            kind={st.kind}
+          />
+        )}
+      </div>
 
       <div className="legend">
         <button type="button" className="legend-head" onClick={() => update({ legend: !st.legend })} aria-expanded={st.legend}>
