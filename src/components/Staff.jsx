@@ -142,7 +142,7 @@ export default function Staff({ notes, base, kind }) {
       <path d={brace(8, TB - 40, BB)} fill="none" stroke="#c4b5fd" strokeWidth="2.6" strokeLinecap="round" />
 
       {/* chiave di violino: origine sulla linea del Sol */}
-      <g transform={`translate(46 ${TB - 10}) scale(6.5 10)`} fill="none" stroke="#f5f3ff" strokeWidth="0.42" strokeLinecap="round" strokeLinejoin="round">
+      <g transform={`translate(46 ${TB - 10}) scale(5.0 8.5)`} fill="none" stroke="#f5f3ff" strokeWidth="0.42" strokeLinecap="round" strokeLinejoin="round">
         <path d="M -1.4 3.4 C -1.4 4.3 0.5 4.3 0.45 2.9 L 0.1 -7.6 C 0.9 -8.8 2.1 -7.6 1.8 -6.2 C 1.5 -4.8 0.3 -3.8 -0.9 -3.0 C -2.7 -1.8 -2.6 1.5 -0.2 2.0 C 2.0 2.4 3.0 0.4 2.2 -1.0 C 1.5 -2.2 -0.5 -2.1 -1.0 -0.8 C -1.3 0.3 -0.3 1.0 0.5 0.6" />
       </g>
       {/* chiave di basso: origine sulla linea del Fa */}
