@@ -484,3 +484,75 @@
   position: sticky;
   left: 12px;
 }
+
+/* Segnala un problema */
+.report-link {
+  min-height: 48px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: var(--lavender);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pf-help {
+  width: 100%;
+  margin-top: 24px;
+}
+.sheet-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(18, 11, 31, 0.7);
+}
+.sheet {
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
+  border-radius: 20px 20px 0 0;
+  background: var(--surface);
+}
+.sheet h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+}
+.sheet p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--lavender);
+}
+.sheet-note {
+  text-align: center;
+  word-break: break-all;
+}
+.sheet-note strong {
+  color: var(--text);
+}
+a.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.sheet-close {
+  min-height: 48px;
+  border: 0;
+  background: none;
+  color: var(--lavender);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}

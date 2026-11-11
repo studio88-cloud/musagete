@@ -3,6 +3,7 @@ import './tool.css'
 import Keyboard from '../components/Keyboard'
 import Fretboard from '../components/Fretboard'
 import Staff from '../components/Staff'
+import ReportButton from '../components/ReportButton'
 import MiniMap from '../components/MiniMap'
 import { CHORD_GROUPS, findChord } from '../data/chords'
 import { SCALE_GROUPS, findScale } from '../data/scales'
@@ -16,6 +17,7 @@ const LEGEND = [
   [1, 'Fondamentale'], [2, 'Seconda'], [3, 'Terza'], [4, 'Quarta'], [5, 'Quinta'], [6, 'Sesta'], [7, 'Settima'],
 ]
 
+const INSTRUMENT_LABELS = { keyboard: 'Tastiera', guitar: 'Chitarra', bass: 'Basso' }
 const findType = (kind, id) => (kind === 'chord' ? findChord(id) : findScale(id))
 
 function load() {
@@ -65,18 +67,48 @@ function TonicPanel({ value, onPick }) {
   )
 }
 
+// per la ricerca: minuscole, senza accenti, ♭ -> b e ♯ -> #
+const norm = (t) =>
+  t
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/♭/g, 'b')
+    .replace(/♯/g, '#')
+    .replace(/♮/g, '')
+
 function TypePanel({ kind, type, tab, onTab, onPick }) {
-  const groups = tab === 'chord' ? CHORD_GROUPS : SCALE_GROUPS
+  const [query, setQuery] = useState('')
+  const needle = norm(query.trim())
+  const source = tab === 'chord' ? CHORD_GROUPS : SCALE_GROUPS
+  const groups = source
+    .map((g) => ({ ...g, items: needle ? g.items.filter((it) => norm(it.name).includes(needle)) : g.items }))
+    .filter((g) => g.items.length > 0)
+
+  const changeTab = (t) => {
+    setQuery('')
+    onTab(t)
+  }
+
   return (
     <div className="panel panel-type" role="listbox" aria-label="Tipo">
       <div className="seg seg-small" role="group">
-        <button type="button" className={tab === 'chord' ? 'is-on' : ''} onClick={() => onTab('chord')}>
+        <button type="button" className={tab === 'chord' ? 'is-on' : ''} onClick={() => changeTab('chord')}>
           Accordi
         </button>
-        <button type="button" className={tab === 'scale' ? 'is-on' : ''} onClick={() => onTab('scale')}>
+        <button type="button" className={tab === 'scale' ? 'is-on' : ''} onClick={() => changeTab('scale')}>
           Scale
         </button>
       </div>
+      <input
+        type="search"
+        className="pick-search"
+        placeholder={tab === 'chord' ? 'Cerca un accordo' : 'Cerca una scala'}
+        aria-label={tab === 'chord' ? 'Cerca un accordo' : 'Cerca una scala'}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      {groups.length === 0 && <p className="pick-empty">Nessun risultato per “{query}”</p>}
       {groups.map((g) => (
         <div key={g.title}>
           <h3 className="pick-title">{g.title}</h3>
@@ -138,7 +170,8 @@ export default function Tool({ instrument }) {
       setPlaying(false)
       return
     }
-    const base = baseMidi(root)
+    // il basso suona un'ottava sotto la tastiera
+    const base = baseMidi(root) - (instrument === 'bass' ? 12 : 0)
     const midis = [...notes].sort((a, b) => a.semi - b.semi).map((n) => base + n.semi)
     const isScale = st.kind === 'scale'
     if (isScale) midis.push(base + 12)
@@ -213,6 +246,13 @@ export default function Tool({ instrument }) {
             ))}
           </ul>
         )}
+      </div>
+
+      <div className="report-wrap">
+        <ReportButton
+          variant="link"
+          context={`Strumento: ${root.id} ${def.name}, ${INSTRUMENT_LABELS[instrument]}`}
+        />
       </div>
 
       {menu && (

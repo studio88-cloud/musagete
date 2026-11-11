@@ -317,3 +317,32 @@
   text-anchor: middle;
   dominant-baseline: central;
 }
+
+/* Ricerca nel menu del tipo */
+.pick-search {
+  width: calc(100% - 8px);
+  height: 44px;
+  margin: 0 4px 6px;
+  padding: 0 14px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+}
+.pick-search::placeholder {
+  color: #8a7cb0;
+}
+.pick-empty {
+  margin: 16px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lavender);
+}
+.report-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

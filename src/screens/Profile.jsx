@@ -6,6 +6,7 @@ import avatar from '../assets/icons/icn_profilo.svg'
 import { CHAPTERS } from '../data/chapters'
 import { HANDBOOK } from '../data/handbook'
 import { chapterStatus, firstOpen } from '../lib/progress'
+import ReportButton from '../components/ReportButton'
 
 const NAME_KEY = 'musagete:name'
 const DEFAULT_NAME = 'Allievo'
@@ -98,6 +99,10 @@ export default function Profile({ completed, intro, onCompleteNext, onToggleIntr
             {intro ? 'Hai completato il modulo facoltativo' : 'Modulo facoltativo, ancora da fare'}
           </span>
         </div>
+      </div>
+
+      <div className="pf-help">
+        <ReportButton context="Profilo" />
       </div>
 
       <div className="pf-beta">
