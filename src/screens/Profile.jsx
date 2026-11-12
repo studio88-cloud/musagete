@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import backpack from '../assets/icons/icn_zaino.svg'
 import avatarImg from '../images/avatar-polly.webp'
 import xpIcon from '../assets/icons/icn_xp.svg'
@@ -9,6 +9,7 @@ import { CHAPTERS } from '../data/chapters'
 import { HANDBOOK } from '../data/handbook'
 import { chapterStatus, firstOpen } from '../lib/progress'
 import ReportButton from '../components/ReportButton'
+import { fileToAvatar, loadPhoto, savePhoto } from '../lib/photo'
 
 const NAME_KEY = 'musagete:name'
 const DEFAULT_NAME = 'Allievo'
@@ -24,6 +25,28 @@ function loadName() {
 export default function Profile({ completed, intro, stats, onCompleteNext, onToggleIntro, onReset }) {
   const [name, setName] = useState(loadName)
   const [editing, setEditing] = useState(false)
+  const [photo, setPhoto] = useState(loadPhoto)
+  const [photoError, setPhotoError] = useState(false)
+  const fileRef = useRef(null)
+
+  const pickPhoto = async (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    try {
+      const data = await fileToAvatar(file)
+      setPhoto(data)
+      savePhoto(data)
+      setPhotoError(false)
+    } catch {
+      setPhotoError(true)
+    }
+  }
+  const resetPhoto = () => {
+    setPhoto(null)
+    savePhoto(null)
+    setPhotoError(false)
+  }
 
   const saveName = (value) => {
     const clean = value.trim().slice(0, 24) || DEFAULT_NAME
@@ -45,9 +68,24 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
 
   return (
     <section className="profile">
-      <span className="avatar">
-        <img src={avatarImg} alt="Avatar di Polly" />
-      </span>
+      <button type="button" className="avatar-btn" aria-label="Cambia la foto del profilo" onClick={() => fileRef.current?.click()}>
+        <span className="avatar">
+          <img src={photo || avatarImg} alt={photo ? 'La tua foto' : 'Avatar di Polly'} />
+        </span>
+        <span className="avatar-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 8h3l1.5-2h7L17 8h3v11H4z" />
+            <circle cx="12" cy="13" r="3.5" />
+          </svg>
+        </span>
+      </button>
+      <input ref={fileRef} type="file" accept="image/*" hidden onChange={pickPhoto} />
+      {photo && (
+        <button type="button" className="pf-link" onClick={resetPhoto}>
+          Torna a Polly
+        </button>
+      )}
+      {photoError && <p className="pf-photo-error">Non riesco a usare questa immagine. Prova con un’altra foto.</p>}
 
       {editing ? (
         <>
