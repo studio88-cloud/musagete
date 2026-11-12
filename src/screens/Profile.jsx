@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import backpack from '../assets/icons/icn_zaino.svg'
-import avatarImg from '../images/polly-sit.webp'
+import avatarImg from '../images/avatar-polly.webp'
 import xpIcon from '../assets/icons/icn_xp.svg'
 import timeIcon from '../assets/icons/icn_time.svg'
 import accIcon from '../assets/icons/icn_accuracy.svg'

@@ -272,11 +272,10 @@
   background: var(--bg);
 }
 .avatar img {
-  position: absolute;
-  top: -6%;
-  left: -22%;
-  width: 144%;
-  height: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .pf-name,
 .pf-name-input {
