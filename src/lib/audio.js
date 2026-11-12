@@ -1,17 +1,17 @@
 // Audio con la Web Audio API (nessuna libreria).
 // Tastiera: campioni di pianoforte in public/samples/keyboard/<nota midi>.mp3 (una ogni 3 semitoni).
 // Basso: public/samples/bass/. Chitarra: public/samples/guitar/ (nome file = altezza MIDI reale).
-// Sotto la gamma dei campioni di chitarra (sotto il Mi3) si usa una corda pizzicata sintetica.
+// Se i campioni della chitarra non si caricano si usa una corda pizzicata sintetica.
 const BASE = import.meta.env?.BASE_URL || '/'
 const SAMPLE_NOTES = {
   keyboard: [48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84],
   bass: [28, 31, 34, 37, 40, 43, 46, 49, 52],
   // chitarra: i file hanno il nome un'ottava sotto l'altezza reale (Chitarra_Mi2 suona Mi3 = 52): qui contano le altezze reali
-  guitar: [52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88],
+  guitar: [40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88],
 }
-// Compensazione di volume per nota (porta ogni campione allo stesso livello, circa -20 dBFS RMS)
+// Compensazione di volume per nota (porta ogni campione allo stesso livello, circa -23 dBFS RMS)
 const SAMPLE_GAIN = {
-  guitar: { 52: 0.603, 55: 0.834, 58: 0.966, 61: 0.844, 64: 0.673, 67: 0.668, 70: 0.839, 73: 1.315, 76: 0.978, 79: 1.17, 82: 1.194, 85: 1.188, 88: 1.348 },
+  guitar: { 40: 0.933, 43: 0.936, 46: 0.938, 49: 0.916, 52: 0.427, 55: 0.591, 58: 0.684, 61: 0.597, 64: 0.477, 67: 0.473, 70: 0.594, 73: 0.931, 76: 0.692, 79: 0.828, 82: 0.845, 85: 0.841, 88: 0.954 },
 }
 const buffers = {} // strumento -> { midi: AudioBuffer }
 const loading = {} // strumento -> Promise (si risolve quando ha finito di scaricare)
@@ -69,8 +69,7 @@ function nearestSample(instrument, midi) {
   if (keys.length === 0) return null
   const lo = Math.min(...(SAMPLE_NOTES[instrument] || keys))
   const hi = Math.max(...(SAMPLE_NOTES[instrument] || keys))
-  // fuori gamma si trasporta al massimo di 2 semitoni (4 verso il basso per la chitarra, che ha campioni solo dal Mi3)
-  const maxD = midi < lo || midi > hi ? (instrument === 'guitar' && midi < lo ? 4 : 2) : 1
+  const maxD = midi < lo || midi > hi ? 2 : 1
   let best = null
   for (const k of keys) {
     const d = Math.abs(k - midi)
