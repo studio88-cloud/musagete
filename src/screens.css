@@ -105,8 +105,11 @@
   animation: polly-bob 3.4s ease-in-out infinite;
 }
 .stage-polly.is-right {
+  /* tappa a sinistra: Polly sta a destra e guarda verso la tappa (immagine specchiata) */
   right: auto;
   left: 40px;
+  transform: scaleX(-1);
+  animation-name: polly-bob-flip;
 }
 @keyframes polly-bob {
   0%,
@@ -115,6 +118,15 @@
   }
   50% {
     transform: translateY(-5px);
+  }
+}
+@keyframes polly-bob-flip {
+  0%,
+  100% {
+    transform: scaleX(-1) translateY(0);
+  }
+  50% {
+    transform: scaleX(-1) translateY(-5px);
   }
 }
 @media (prefers-reduced-motion: reduce) {
