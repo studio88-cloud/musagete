@@ -47,8 +47,8 @@ export default function StageNode({ kind, number, title, status, progress = 0, l
               className={`stage-polly${left < 50 ? ' is-right' : ''}`}
               src={pollyThink}
               alt=""
-              width="112"
-              height="96"
+              width="200"
+              height="171"
             />
           </>
         )}

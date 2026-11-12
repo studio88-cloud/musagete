@@ -95,16 +95,32 @@
 }
 .stage-polly {
   position: absolute;
-  right: 54px;
-  bottom: 42px;
+  right: 40px;
+  bottom: 30px;
   z-index: 2;
-  width: 112px;
-  height: 96px;
+  width: 200px;
+  height: 171px;
   pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+  animation: polly-bob 3.4s ease-in-out infinite;
 }
 .stage-polly.is-right {
   right: auto;
-  left: 54px;
+  left: 40px;
+}
+@keyframes polly-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage-polly {
+    animation: none;
+  }
 }
 .stage-num {
   position: absolute;
