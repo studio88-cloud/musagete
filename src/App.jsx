@@ -11,7 +11,9 @@ import Tool from './screens/Tool'
 import Stub from './screens/Stub'
 import ChapterSteps from './screens/ChapterSteps'
 import Lesson from './screens/Lesson'
-import { useProgress } from './lib/progress'
+import Quiz from './screens/Quiz'
+import { quizFor } from './data/quizzes'
+import { firstOpen, useProgress } from './lib/progress'
 import { useStepProgress } from './lib/stepProgress'
 import './screens.css'
 
@@ -62,8 +64,18 @@ export default function App() {
   if (openItem && openItem.id === 'interchange') {
     content = <Interchange onBack={() => setOpenItem(null)} />
   } else if (openItem && openItem.kind === 'chapter' && openStep) {
-    content = (
+    const finishStep = (passed) => {
+      if (passed) {
+        markStepDone(openItem.number, openStep.id)
+        // superato il quiz finale: si sblocca il capitolo successivo
+        if (openStep.kind === 'quiz' && firstOpen(completed) === openItem.number) completeNext()
+      }
+      setOpenStep(null)
+    }
+    content =
+      openStep.kind === 'lesson' || !quizFor(openItem.number, openStep.id) ? (
       <Lesson
+        chapter={openItem.number}
         step={openStep}
         instrument={instrument}
         onFinish={() => {
@@ -72,7 +84,9 @@ export default function App() {
         }}
         onExit={() => setOpenStep(null)}
       />
-    )
+      ) : (
+        <Quiz chapter={openItem.number} step={openStep} onDone={finishStep} onExit={() => setOpenStep(null)} />
+      )
   } else if (openItem && openItem.kind === 'chapter') {
     content = (
       <ChapterSteps

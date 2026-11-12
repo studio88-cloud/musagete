@@ -15,8 +15,8 @@ function BackArrow() {
   )
 }
 
-export default function Lesson({ step, instrument = 'keyboard', onFinish, onExit }) {
-  const lesson = lessonFor(step)
+export default function Lesson({ chapter, step, instrument = 'keyboard', onFinish, onExit }) {
+  const lesson = lessonFor(chapter, step.id)
   const [i, setI] = useState(0)
   const [askExit, setAskExit] = useState(false)
   const [playing, setPlaying] = useState(false)
@@ -72,11 +72,19 @@ export default function Lesson({ step, instrument = 'keyboard', onFinish, onExit
           <span>{page.remember}</span>
         </div>
 
-        <h3 className="lesson-sub">{instrument === 'keyboard' ? 'Sulla tastiera' : 'Sul manico'}</h3>
-        {instrument === 'keyboard' ? <LessonKeys notes={page.notes} /> : <Fretboard instrument={instrument} highlights={highlights} mode="degrees" />}
-        <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
-          {playing ? 'Ferma' : 'Ascolta'}
-        </button>
+        {page.notes.length > 0 && (
+          <>
+            <h3 className="lesson-sub">{instrument === 'keyboard' ? 'Sulla tastiera' : 'Sul manico'}</h3>
+            {instrument === 'keyboard' ? (
+              <LessonKeys notes={page.notes} base={page.base} />
+            ) : (
+              <Fretboard instrument={instrument} highlights={highlights} mode="degrees" />
+            )}
+            <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
+              {playing ? 'Ferma' : 'Ascolta'}
+            </button>
+          </>
+        )}
 
         <div className="lesson-polly">
           <img src={pollyImg} alt="" />

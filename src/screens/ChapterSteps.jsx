@@ -42,8 +42,8 @@ export default function ChapterSteps({ chapter, title, done, onToggle, onOpenSte
   const quizOpen = nonQuiz.every((s) => done.includes(s.id))
   const current = nonQuiz.find((s) => !done.includes(s.id))?.id
 
-  // Le lezioni si aprono; gli altri tipi di passo, per ora, si segnano fatti toccandoli.
-  const open = (s) => (s.kind === 'lesson' ? onOpenStep(s) : onToggle(s.id))
+  // Lezioni, esercizi all'orecchio e quiz si aprono; le pratiche, per ora, si segnano fatte toccandole.
+  const open = (s) => (['lesson', 'ear', 'quiz'].includes(s.kind) ? onOpenStep(s) : onToggle(s.id))
 
   const pct = Math.round((done.length / steps.length) * 100)
 
