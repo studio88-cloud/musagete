@@ -196,7 +196,7 @@ const CH0 = {
     pages: [
       {
         heading: 'Le durate delle note',
-        body: 'La forma della nota dice quanto dura. In 4/4 la semiminima vale una pulsazione: la minima ne vale due, la semibreve quattro, la croma mezza.',
+        body: 'La forma della nota dice quanto dura. In 4/4 la semiminima vale una pulsazione, la minima ne vale due, la semibreve quattro, la croma mezza.',
         remember: 'Semibreve 4 \u00b7 Minima 2 \u00b7 Semiminima 1 \u00b7 Croma \u00bd',
         staff: { items: [st(4, 'semibreve', 'whole'), st(4, 'minima', 'half'), st(4, 'semiminima', 'quarter'), st(4, 'croma', 'eighth')] },
         polly: 'La forma racconta la durata!',

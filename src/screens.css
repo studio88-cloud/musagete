@@ -1746,3 +1746,40 @@ a.btn {
   border-style: dashed;
   border-color: #e3b34b;
 }
+
+/* Prontuario: tabella dentro il riquadro ambra */
+.hbe-table {
+  width: 100%;
+  margin: 6px 0 4px;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+.hbe-table th {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--warn);
+  color: var(--warn);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+.hbe-table th:first-child,
+.hbe-table td:first-child {
+  text-align: left;
+}
+.hbe-table td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  text-align: center;
+}
+.hbe-table td:first-child {
+  font-weight: 600;
+}
+.hbe-table td:empty,
+.hbe-table-foot {
+  color: var(--lavender);
+}
+.hbe-table-foot {
+  font-size: 15px;
+  font-weight: 600;
+}

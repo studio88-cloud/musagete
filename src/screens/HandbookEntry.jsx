@@ -77,8 +77,32 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
         <p className="lesson-body">{entry.def}</p>
         {entry.formula && (
           <div className="lesson-remember">
-            <strong>Formula</strong>
-            <span>{entry.formula}</span>
+            <strong>{entry.formulaTable ? entry.formulaTable.title : 'Formula'}</strong>
+            {entry.formulaTable ? (
+              <>
+                <table className="hbe-table">
+                  <thead>
+                    <tr>
+                      {entry.formulaTable.head.map((h) => (
+                        <th key={h}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {entry.formulaTable.rows.map((r) => (
+                      <tr key={r[0]}>
+                        {r.map((c, k) => (
+                          <td key={k}>{c || '–'}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {entry.formulaTable.foot && <span className="hbe-table-foot">{entry.formulaTable.foot}</span>}
+              </>
+            ) : (
+              <span>{entry.formula}</span>
+            )}
           </div>
         )}
         {entry.points.length > 0 && (

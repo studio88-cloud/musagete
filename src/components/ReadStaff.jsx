@@ -17,6 +17,9 @@ export default function ReadStaff({ items, timeSig, endBar = false, label }) {
   const gap = items.length > 1 ? Math.min(52, span / (items.length - 1)) : 0
   const startX = items.length > 1 ? x0 : x0 + 40
   const xs = items.map((_, i) => startX + i * gap)
+  // etichette lunghe (semiminima…): si alternano su due altezze, bassa-alta-bassa-alta, per non sovrapporsi
+  const longest = Math.max(0, ...items.map((it) => (it.label ? it.label.length : 0)))
+  const stagger = items.length > 1 && longest * 7.4 > gap - 6
 
   return (
     <svg className="rstaff" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
@@ -84,7 +87,7 @@ export default function ReadStaff({ items, timeSig, endBar = false, label }) {
               />
             )}
             {it.label && (
-              <text x={x} y={H - 8} textAnchor="middle" fontSize="13" fontWeight="700" fill="#C28AE3">
+              <text x={x} y={stagger && i % 2 === 1 ? H - 28 : H - 8} textAnchor="middle" fontSize="13" fontWeight="700" fill="#C28AE3">
                 {it.label}
               </text>
             )}

@@ -47,8 +47,23 @@ export const HANDBOOK = [
   {
     id: 'intervals', chapter: 1, title: 'Intervalli', subtitle: 'La distanza tra due note',
     def: 'L’intervallo è la distanza tra due note. Si conta con un numero (seconda, terza, quarta…) e una qualità (giusto, maggiore, minore, eccedente, diminuito).',
-    formula: '2ª m=1 · M=2 · 3ª m=3 · M=4 · 4ª G=5 · 5ª G=7 · 6ª m=8 · M=9 · 7ª m=10 · M=11 (semitoni)',
-    points: ['Giusti: unisono, quarta, quinta, ottava', 'Maggiori o minori: seconda, terza, sesta, settima', 'Tritono: quarta eccedente o quinta diminuita (6 semitoni)'],
+    formula: 'Semitoni: unisono 0 · seconda minore 1, maggiore 2 · terza minore 3, maggiore 4 · quarta giusta 5 · quinta giusta 7 · sesta minore 8, maggiore 9 · settima minore 10, maggiore 11 · ottava 12',
+    formulaTable: {
+      title: 'Quanti semitoni contiene',
+      head: ['Intervallo', 'Minore', 'Maggiore', 'Giusto'],
+      rows: [
+        ['Unisono', '', '', '0'],
+        ['Seconda', '1', '2', ''],
+        ['Terza', '3', '4', ''],
+        ['Quarta', '', '', '5'],
+        ['Quinta', '', '', '7'],
+        ['Sesta', '8', '9', ''],
+        ['Settima', '10', '11', ''],
+        ['Ottava', '', '', '12'],
+      ],
+      foot: 'Un tono = 2 semitoni. Tra Do e Mi ci sono 4 semitoni: è una terza maggiore.',
+    },
+    points: ['Giusti: unisono, quarta, quinta, ottava', 'Maggiori o minori: seconda, terza, sesta, settima', 'Minore = un semitono in meno del maggiore', 'Eccedente = un semitono in più del giusto o del maggiore; diminuito = un semitono in meno del giusto o del minore', 'Tritono: quarta eccedente o quinta diminuita (6 semitoni)'],
     examples: [ch('Terza maggiore e quinta giusta sopra Do', 60, '1 3 5')],
   },
   {
