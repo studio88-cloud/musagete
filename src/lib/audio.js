@@ -1,13 +1,15 @@
 // Audio con la Web Audio API (nessuna libreria).
 // Tastiera: campioni di pianoforte in public/samples/keyboard/<nota midi>.mp3 (una ogni 3 semitoni).
-// Basso: public/samples/bass/. Chitarra: suono sintetico provvisorio, finché non arrivano i suoi campioni.
+// Basso: public/samples/bass/. Chitarra: corda pizzicata sintetica (provvisoria), finché non arrivano i suoi campioni.
 const BASE = import.meta.env?.BASE_URL || '/'
 const SAMPLE_NOTES = {
   keyboard: [48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84],
   bass: [28, 31, 34, 37, 40, 43, 46, 49, 52],
 }
 const buffers = {} // strumento -> { midi: AudioBuffer }
-const loading = {}
+const loading = {} // strumento -> Promise (si risolve quando ha finito di scaricare)
+const ready = {} // strumento -> true quando i campioni sono tutti pronti (o il tentativo è finito)
+let playToken = 0 // serve a ignorare un ascolto messo in attesa e poi fermato
 let ctx = null
 let current = null
 
@@ -24,22 +26,32 @@ function getCtx() {
 // Scarica i campioni di uno strumento (se ne ha). Si può chiamare in anticipo, anche più volte.
 export function preloadSamples(instrument) {
   const notes = SAMPLE_NOTES[instrument]
-  if (!notes || loading[instrument]) return
+  if (!notes) return Promise.resolve()
+  if (loading[instrument]) return loading[instrument]
   const c = getCtx()
-  if (!c) return
-  loading[instrument] = true
+  if (!c) return Promise.resolve()
   buffers[instrument] = {}
-  notes.forEach((m) => {
-    fetch(`${BASE}samples/${instrument}/${m}.mp3`)
-      .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error('campione mancante'))))
-      .then((ab) => c.decodeAudioData(ab))
-      .then((buf) => {
-        buffers[instrument][m] = buf
-      })
-      .catch(() => {
-        // senza campione si usa il suono sintetico
-      })
+  loading[instrument] = Promise.all(
+    notes.map((m) =>
+      fetch(`${BASE}samples/${instrument}/${m}.mp3`)
+        .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then((ab) => c.decodeAudioData(ab))
+        .then((buf) => {
+          buffers[instrument][m] = buf
+        })
+        .catch((e) => {
+          console.warn(`Campione ${instrument}/${m}.mp3 non caricato:`, e.message || e)
+        }),
+    ),
+  ).then(() => {
+    ready[instrument] = true
+    // se non è arrivato nessun campione si riprova al prossimo ascolto
+    if (Object.keys(buffers[instrument]).length === 0) {
+      delete loading[instrument]
+      delete ready[instrument]
+    }
   })
+  return loading[instrument]
 }
 
 // Campione più vicino alla nota (al massimo un semitono di differenza, due ai due estremi della gamma)
@@ -77,6 +89,43 @@ function sampleTone(c, out, smp, midi, start, dur, vol) {
 
 const freq = (midi) => 440 * Math.pow(2, (midi - 69) / 12)
 
+// Chitarra provvisoria (finché non arrivano i campioni veri): corda pizzicata, algoritmo Karplus-Strong.
+const plucks = {} // midi -> { buf, base }
+function pluckSample(c, midi) {
+  if (plucks[midi]) return plucks[midi]
+  const sr = c.sampleRate
+  const f = freq(midi)
+  const N = Math.max(2, Math.floor(sr / f + 0.5))
+  const real = sr / (N - 0.5) // frequenza che il ciclo produce davvero (la media dei due campioni toglie mezzo campione)
+  const len = Math.floor(sr * 2.4)
+  const buf = c.createBuffer(1, len, sr)
+  const d = buf.getChannelData(0)
+  // rumore iniziale (sempre lo stesso) leggermente smorzato: il "plettro"
+  let seed = 12345 + midi
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) * 2 - 1
+  const ring = new Float32Array(N)
+  let prev = 0
+  for (let i = 0; i < N; i++) {
+    prev = 0.6 * rnd() + 0.4 * prev
+    ring[i] = prev
+  }
+  const decay = f < 150 ? 0.9985 : f < 400 ? 0.997 : 0.9945
+  let idx = 0
+  let peak = 0
+  for (let n = 0; n < len; n++) {
+    const next = (idx + 1) % N
+    d[n] = ring[idx]
+    ring[idx] = 0.5 * (ring[idx] + ring[next]) * decay
+    idx = next
+    if (Math.abs(d[n]) > peak) peak = Math.abs(d[n])
+  }
+  const g = peak > 0 ? 0.9 / peak : 1
+  for (let n = 0; n < len; n++) d[n] *= g
+  // sample.base scelto in modo che la velocità di lettura corregga l'intonazione: 2^((midi-base)/12) = f/real
+  plucks[midi] = { buf, base: midi - 12 * Math.log2(f / real) }
+  return plucks[midi]
+}
+
 function tone(c, out, midi, start, dur, vol) {
   const g = c.createGain()
   const o1 = c.createOscillator()
@@ -101,6 +150,7 @@ function tone(c, out, midi, start, dur, vol) {
 }
 
 export function stopPlaying() {
+  playToken++
   if (!current) return
   clearTimeout(current.timer)
   try {
@@ -117,7 +167,21 @@ export function stopPlaying() {
 // kind 'scale': le note una dopo l'altra
 // kind 'chord': accordo insieme (block), poi in arpeggio, poi di nuovo insieme
 // arpeggio: chitarra e basso non suonano mai le note insieme, ma una dopo l'altra
-export function playNotes(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboard', onEnd } = {}) {
+export function playNotes(midis, opts = {}) {
+  stopPlaying()
+  const instrument = opts.instrument || 'keyboard'
+  // se i campioni dello strumento sono ancora in arrivo si aspetta (al massimo 3 secondi) invece di suonare il suono sintetico
+  if (SAMPLE_NOTES[instrument] && !ready[instrument]) {
+    const token = playToken
+    Promise.race([preloadSamples(instrument), new Promise((r) => setTimeout(r, 3000))]).then(() => {
+      if (token === playToken) playNow(midis, opts)
+    })
+    return
+  }
+  playNow(midis, opts)
+}
+
+function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboard', onEnd } = {}) {
   stopPlaying()
   const c = getCtx()
   if (!c || midis.length === 0) {
@@ -180,6 +244,7 @@ export function playNotes(midis, { kind = 'chord', arpeggio = false, instrument 
   events.forEach((e) => {
     const smp = nearestSample(instrument, e.midi)
     if (smp) sampleTone(c, master, smp, e.midi, t0 + e.at, e.dur, e.vol)
+    else if (instrument === 'guitar') sampleTone(c, master, pluckSample(c, e.midi), e.midi, t0 + e.at, e.dur, e.vol)
     else tone(c, master, e.midi, t0 + e.at, e.dur, e.vol)
   })
   const timer = setTimeout(() => {
