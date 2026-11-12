@@ -43,8 +43,13 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
     }
     setPlaying(true)
     const shift = instrument === 'bass' ? -12 : 0 // il basso suona un'ottava sotto
-    const midis = page.notes.map((n) => n.midi + shift).sort((a, b) => a - b)
-    playNotes(midis, { kind: 'scale', onEnd: () => setPlaying(false) })
+    const src = page.play || page.notes.map((n) => n.midi)
+    if (page.progression) {
+      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', onEnd: () => setPlaying(false) })
+    } else {
+      const midis = src.map((m) => m + shift).sort((a, b) => a - b)
+      playNotes(midis, { kind: page.chord ? 'chord' : 'scale', onEnd: () => setPlaying(false) })
+    }
   }
 
   return (
@@ -73,18 +78,23 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
           <span>{page.remember}</span>
         </div>
 
+        {page.chords && (
+          <div className="lchords" role="list" aria-label="Accordi della progressione">
+            {page.chords.map((c, k) => (
+              <span key={k} className="lchord" role="listitem">
+                <b>{c.fn}</b>
+                <i>{c.sym}</i>
+              </span>
+            ))}
+          </div>
+        )}
         {page.staff && (
           <>
             <h3 className="lesson-sub">Sul pentagramma</h3>
             <ReadStaff items={page.staff.items} timeSig={page.staff.timeSig} endBar={page.staff.endBar} label={`Pentagramma: ${page.staff.items.map((n) => n.label).join(', ')}`} />
-            {page.play && (
-              <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
-                {playing ? 'Ferma' : 'Ascolta'}
-              </button>
-            )}
           </>
         )}
-        {!page.staff && page.notes.length > 0 && (
+        {!page.staff && page.notes && page.notes.length > 0 && (
           <>
             <h3 className="lesson-sub">{instrument === 'keyboard' ? 'Sulla tastiera' : 'Sul manico'}</h3>
             {instrument === 'keyboard' ? (
@@ -92,10 +102,12 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
             ) : (
               <Fretboard instrument={instrument} highlights={highlights} mode="degrees" />
             )}
-            <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
-              {playing ? 'Ferma' : 'Ascolta'}
-            </button>
           </>
+        )}
+        {(page.play || (page.notes && page.notes.length > 0)) && (
+          <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
+            {playing ? 'Ferma' : 'Ascolta'}
+          </button>
         )}
 
         <div className="lesson-polly">

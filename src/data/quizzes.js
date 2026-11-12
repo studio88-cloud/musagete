@@ -1,3 +1,5 @@
+import { CONTENT } from './content'
+
 // Esercizi e quiz, per capitolo e numero di passo.
 // play: note (MIDI) da far ascoltare; answer: indice della risposta giusta;
 // hints[i]: spiegazione mostrata se si sceglie l'opzione i; explanation: spiegazione generale.
@@ -154,5 +156,6 @@ export const PLACEMENT = {
 
 export function quizFor(chapter, stepId) {
   if (chapter === 0) return CH0[stepId] || null
+  if (chapter >= 2) return CONTENT[chapter]?.quizzes?.[stepId] || null
   return (chapter === 1 && CH1[stepId]) || null
 }

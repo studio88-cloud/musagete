@@ -116,7 +116,7 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
       return
     }
     setPlaying(true)
-    playNotes(q.play, { kind: 'scale', onEnd: () => setPlaying(false) })
+    playNotes(q.play, { kind: q.kind || 'scale', onEnd: () => setPlaying(false) })
   }
 
   const check = () => {

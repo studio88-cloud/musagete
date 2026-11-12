@@ -2,6 +2,8 @@
 // Ogni lezione è una lista di pagine. notes: altezze MIDI da mostrare (60 = Do4);
 // deg: grado (per il colore), label: testo nel pallino. base: primo tasto della tastiera (un tasto bianco).
 
+import { CONTENT } from './content'
+
 const n = (midi, deg, label) => ({ midi, deg, label })
 
 // Do maggiore: 60..72
@@ -231,5 +233,6 @@ const PLACEHOLDER = {
 
 export function lessonFor(chapter, stepId) {
   if (chapter === 0) return CH0[stepId] || PLACEHOLDER
+  if (chapter >= 2) return CONTENT[chapter]?.lessons?.[stepId] || PLACEHOLDER
   return (chapter === 1 && CH1[stepId]) || PLACEHOLDER
 }

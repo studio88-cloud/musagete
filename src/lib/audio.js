@@ -68,7 +68,15 @@ export function playNotes(midis, { kind = 'chord', onEnd } = {}) {
   const events = [] // { midi, at, dur, vol }
   let total = 0
 
-  if (kind === 'scale') {
+  if (kind === 'progression') {
+    // midis = elenco di accordi: ogni accordo suona insieme, uno dopo l'altro
+    midis.forEach((chord) => {
+      const vol = 0.3 / Math.sqrt(chord.length)
+      chord.forEach((midi) => events.push({ midi, at: total, dur: 1.1, vol }))
+      total += 1.0
+    })
+    total += 0.4
+  } else if (kind === 'scale') {
     const step = 0.3
     const dur = 0.55
     midis.forEach((midi, i) => events.push({ midi, at: i * step, dur, vol: 0.5 }))

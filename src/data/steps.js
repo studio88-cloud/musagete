@@ -1,3 +1,5 @@
+import { CONTENT } from './content'
+
 // Passi di ogni capitolo. Per ora tutti i capitoli usano lo stesso schema di esempio:
 // i contenuti veri arriveranno capitolo per capitolo.
 // kind: 'lesson' | 'ear' | 'build' | 'apply' | 'quiz'
@@ -30,5 +32,6 @@ export const INTRO_STEPS = [
 ]
 
 export function stepsFor(chapter) {
-  return chapter === 0 ? INTRO_STEPS : SAMPLE_STEPS
+  if (chapter === 0) return INTRO_STEPS
+  return CONTENT[chapter]?.steps || SAMPLE_STEPS
 }
