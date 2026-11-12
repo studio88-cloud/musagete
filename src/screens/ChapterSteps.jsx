@@ -48,13 +48,13 @@ export default function ChapterSteps({ chapter, title, done, onToggle, onOpenSte
   const pct = Math.round((done.length / steps.length) * 100)
 
   return (
-    <section className="steps" aria-label={`Capitolo ${chapter}`}>
+    <section className="steps" aria-label={chapter === 0 ? title : `Capitolo ${chapter}`}>
       <header className="steps-head">
         <button type="button" className="steps-icbtn" aria-label="Indietro" onClick={onBack}>
           <BackArrow />
         </button>
         <div className="steps-titlebox">
-          <h1 className="steps-title">{`Capitolo ${chapter} · ${title}`}</h1>
+          <h1 className="steps-title">{chapter === 0 ? title : `Capitolo ${chapter} · ${title}`}</h1>
           <div className="steps-progress">
             <span className="steps-count">{`${done.length}/${steps.length}`}</span>
             <div

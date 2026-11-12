@@ -21,6 +21,14 @@ export const SAMPLE_STEPS = [
   { id: 9, kind: 'quiz', title: 'Quiz finale', min: 6 },
 ]
 
-export function stepsFor() {
-  return SAMPLE_STEPS
+// "Prima di partire" (capitolo 0): lettura della musica, circa 20 minuti
+export const INTRO_STEPS = [
+  { id: 1, kind: 'lesson', title: 'Il pentagramma e la chiave', min: 4 },
+  { id: 2, kind: 'lesson', title: 'Le note sul pentagramma', min: 5 },
+  { id: 3, kind: 'lesson', title: 'Le durate e il ritmo', min: 5 },
+  { id: 4, kind: 'quiz', title: 'Quiz finale', min: 4 },
+]
+
+export function stepsFor(chapter) {
+  return chapter === 0 ? INTRO_STEPS : SAMPLE_STEPS
 }

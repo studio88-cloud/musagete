@@ -9,16 +9,16 @@ function load() {
     if (raw) {
       const parsed = JSON.parse(raw)
       if (Array.isArray(parsed.completed)) {
-        return {
-          completed: parsed.completed.filter(Number.isInteger),
-          intro: parsed.intro === true,
-        }
+        const completed = parsed.completed.filter(Number.isInteger)
+        const intro = parsed.intro === true
+        // chi aveva già dei progressi non rivede la domanda iniziale
+        return { completed, intro, asked: parsed.asked === true || intro || completed.length > 0 }
       }
     }
   } catch {
     // storage non disponibile o dati rovinati: si riparte da zero
   }
-  return { completed: [], intro: false }
+  return { completed: [], intro: false, asked: false }
 }
 
 // Primo capitolo non ancora completato (quello "attuale")
@@ -52,7 +52,9 @@ export function useProgress() {
   }, [])
 
   const toggleIntro = useCallback(() => setState((s) => ({ ...s, intro: !s.intro })), [])
-  const reset = useCallback(() => setState({ completed: [], intro: false }), [])
+  const setIntroDone = useCallback(() => setState((s) => ({ ...s, intro: true })), [])
+  const setAsked = useCallback(() => setState((s) => ({ ...s, asked: true })), [])
+  const reset = useCallback(() => setState({ completed: [], intro: false, asked: false }), [])
 
-  return { completed: state.completed, intro: state.intro, completeNext, toggleIntro, reset }
+  return { completed: state.completed, intro: state.intro, asked: state.asked, completeNext, toggleIntro, setIntroDone, setAsked, reset }
 }

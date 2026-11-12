@@ -138,6 +138,85 @@ const CH1 = {
   },
 }
 
+
+// "Prima di partire": staff = note da disegnare sul pentagramma (vedi ReadStaff); play = note da ascoltare
+const st = (step, label, dur) => ({ step, label, dur })
+
+const CH0 = {
+  1: {
+    pages: [
+      {
+        heading: 'Il pentagramma',
+        body: 'La musica si scrive su cinque linee parallele, il pentagramma. Tra le linee ci sono quattro spazi. Linee e spazi si contano sempre dal basso verso l\u2019alto: pi\u00f9 una nota \u00e8 in alto, pi\u00f9 il suono \u00e8 acuto.',
+        remember: '5 linee e 4 spazi, contati dal basso.',
+        staff: { items: [st(0, '1\u00aa'), st(2, '2\u00aa'), st(4, '3\u00aa'), st(6, '4\u00aa'), st(8, '5\u00aa')] },
+        polly: 'Si parte sempre dal basso!',
+      },
+      {
+        heading: 'La chiave di violino',
+        body: 'All\u2019inizio del pentagramma c\u2019\u00e8 la chiave, che dice quale nota si trova su quale linea. La chiave di violino si avvolge intorno alla seconda linea: quella linea \u00e8 il Sol.',
+        remember: 'Chiave di violino: la seconda linea \u00e8 il Sol.',
+        staff: { items: [st(2, 'Sol')] },
+        play: [67],
+        polly: 'Ecco il tuo punto di riferimento!',
+      },
+    ],
+  },
+  2: {
+    pages: [
+      {
+        heading: 'Le note sulle linee',
+        body: 'In chiave di violino, dal basso, le cinque linee sono Mi, Sol, Si, Re, Fa. Una frase per ricordarle: \u201cMi Sol Si Re Fa\u201d, una nota ogni due.',
+        remember: 'Linee: Mi \u2013 Sol \u2013 Si \u2013 Re \u2013 Fa.',
+        staff: { items: [st(0, 'Mi'), st(2, 'Sol'), st(4, 'Si'), st(6, 'Re'), st(8, 'Fa')] },
+        play: [64, 67, 71, 74, 77],
+        polly: 'Una nota ogni due passi!',
+      },
+      {
+        heading: 'Le note negli spazi',
+        body: 'Gli spazi, dal basso, sono Fa, La, Do, Mi: la parola \u201cFALADOMI\u201d li riassume. Linee e spazi insieme formano la scala, nota dopo nota.',
+        remember: 'Spazi: Fa \u2013 La \u2013 Do \u2013 Mi.',
+        staff: { items: [st(1, 'Fa'), st(3, 'La'), st(5, 'Do'), st(7, 'Mi')] },
+        play: [65, 69, 72, 76],
+        polly: 'Gli spazi completano il quadro!',
+      },
+      {
+        heading: 'Il Do centrale',
+        body: 'Sotto il pentagramma si aggiungono piccole linee, i tagli addizionali. Il Do centrale sta sul primo taglio sotto le cinque linee: \u00e8 il Do al centro della tastiera.',
+        remember: 'Do centrale = primo taglio sotto il pentagramma.',
+        staff: { items: [st(-2, 'Do')] },
+        play: [60],
+        polly: 'Il Do centrale \u00e8 la tua casa!',
+      },
+    ],
+  },
+  3: {
+    pages: [
+      {
+        heading: 'Le durate delle note',
+        body: 'La forma della nota dice quanto dura. In 4/4 la semiminima vale una pulsazione: la minima ne vale due, la semibreve quattro, la croma mezza.',
+        remember: 'Semibreve 4 \u00b7 Minima 2 \u00b7 Semiminima 1 \u00b7 Croma \u00bd',
+        staff: { items: [st(4, 'semibreve', 'whole'), st(4, 'minima', 'half'), st(4, 'semiminima', 'quarter'), st(4, 'croma', 'eighth')] },
+        polly: 'La forma racconta la durata!',
+      },
+      {
+        heading: 'La battuta in 4/4',
+        body: 'Le note si raggruppano in battute, separate da una stanghetta. Il 4/4 ha quattro pulsazioni per battuta: i due numeri all\u2019inizio dicono quante e di che tipo (quarti).',
+        remember: '4/4 = quattro semiminime in ogni battuta.',
+        staff: { items: [st(4, '1', 'quarter'), st(4, '2', 'quarter'), st(4, '3', 'quarter'), st(4, '4', 'quarter')], timeSig: '44', endBar: true },
+        polly: 'Batti il tempo con me!',
+      },
+      {
+        heading: 'Le pause',
+        body: 'Anche il silenzio ha una durata. Ogni figura ha la sua pausa: stessa durata, ma senza suono. Nella musica le pause contano quanto le note.',
+        remember: 'Ogni nota ha la sua pausa, con la stessa durata.',
+        notes: [],
+        polly: 'Il silenzio fa parte della musica!',
+      },
+    ],
+  },
+}
+
 const PLACEHOLDER = {
   pages: [
     {
@@ -151,5 +230,6 @@ const PLACEHOLDER = {
 }
 
 export function lessonFor(chapter, stepId) {
+  if (chapter === 0) return CH0[stepId] || PLACEHOLDER
   return (chapter === 1 && CH1[stepId]) || PLACEHOLDER
 }

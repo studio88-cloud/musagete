@@ -91,6 +91,68 @@ const CH1 = {
   },
 }
 
+// "Prima di partire": quiz finale (passo 4)
+const CH0 = {
+  4: {
+    kind: 'quiz',
+    passMark: 0.8,
+    questions: [
+      {
+        prompt: 'Quante linee ha il pentagramma?',
+        options: ['4', '5', '6', '7'],
+        answer: 1,
+        explanation: 'Il pentagramma ha cinque linee e quattro spazi.',
+      },
+      {
+        prompt: 'Intorno a quale linea si avvolge la chiave di violino?',
+        options: ['La prima', 'La seconda', 'La terza', 'La quarta'],
+        answer: 1,
+        explanation: 'La chiave di violino gira intorno alla seconda linea, che \u00e8 il Sol.',
+      },
+      {
+        prompt: 'Come si chiamano, dal basso, le note negli spazi in chiave di violino?',
+        options: ['Fa \u2013 La \u2013 Do \u2013 Mi', 'Mi \u2013 Sol \u2013 Si \u2013 Re', 'Do \u2013 Re \u2013 Mi \u2013 Fa', 'La \u2013 Do \u2013 Mi \u2013 Sol'],
+        answer: 0,
+        explanation: 'Gli spazi sono Fa, La, Do, Mi (\u201cFALADOMI\u201d).',
+        hints: [null, 'Queste sono le note sulle linee (con il Fa in cima).', null, null],
+      },
+      {
+        prompt: 'In 4/4, quante pulsazioni dura una minima?',
+        options: ['1', '2', '3', '4'],
+        answer: 1,
+        explanation: 'La minima vale due pulsazioni, il doppio della semiminima.',
+      },
+      {
+        prompt: 'Quale figura dura quattro pulsazioni in 4/4?',
+        options: ['Croma', 'Semiminima', 'Minima', 'Semibreve'],
+        answer: 3,
+        explanation: 'La semibreve riempie da sola l\u2019intera battuta in 4/4.',
+      },
+    ],
+  },
+}
+
+// Domanda iniziale: due domande veloci, bisogna rispondere giusto a entrambe
+export const PLACEMENT = {
+  kind: 'quiz',
+  passMark: 1,
+  questions: [
+    {
+      prompt: 'Quale nota si trova sulla seconda linea in chiave di violino?',
+      options: ['Mi', 'Sol', 'Si', 'Re'],
+      answer: 1,
+      explanation: 'La chiave di violino si avvolge sulla seconda linea: \u00e8 il Sol.',
+    },
+    {
+      prompt: 'In 4/4, quante pulsazioni dura una minima?',
+      options: ['1', '2', '3', '4'],
+      answer: 1,
+      explanation: 'La minima vale due pulsazioni.',
+    },
+  ],
+}
+
 export function quizFor(chapter, stepId) {
+  if (chapter === 0) return CH0[stepId] || null
   return (chapter === 1 && CH1[stepId]) || null
 }

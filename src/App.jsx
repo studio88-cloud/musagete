@@ -12,7 +12,9 @@ import Stub from './screens/Stub'
 import ChapterSteps from './screens/ChapterSteps'
 import Lesson from './screens/Lesson'
 import Quiz from './screens/Quiz'
-import { quizFor } from './data/quizzes'
+import Placement from './screens/Placement'
+import { quizFor, PLACEMENT } from './data/quizzes'
+import { INTRO } from './data/chapters'
 import { firstOpen, useProgress } from './lib/progress'
 import { useStepProgress } from './lib/stepProgress'
 import './screens.css'
@@ -36,7 +38,8 @@ export default function App() {
   const [instrument, setInstrument] = useState(loadInstrument)
   const [openStep, setOpenStep] = useState(null)
   const { stepsDone, toggleStep, markStepDone } = useStepProgress()
-  const { completed, intro, completeNext, toggleIntro, reset } = useProgress()
+  const { completed, intro, asked, completeNext, toggleIntro, setIntroDone, setAsked, reset } = useProgress()
+  const [placing, setPlacing] = useState(false)
 
   useEffect(() => {
     try {
@@ -63,37 +66,57 @@ export default function App() {
   let content
   if (openItem && openItem.id === 'interchange') {
     content = <Interchange onBack={() => setOpenItem(null)} />
-  } else if (openItem && openItem.kind === 'chapter' && openStep) {
+  } else if (placing) {
+    content = (
+      <Quiz
+        chapter={0}
+        step={{ title: 'Test iniziale' }}
+        data={PLACEMENT}
+        skipResults
+        onDone={(passed) => {
+          setAsked()
+          setPlacing(false)
+          if (passed) setIntroDone()
+          else setOpenItem({ kind: 'intro', ...INTRO })
+        }}
+        onExit={() => setPlacing(false)}
+      />
+    )
+  } else if (openItem && (openItem.kind === 'chapter' || openItem.kind === 'intro') && openStep) {
+    const num = openItem.kind === 'intro' ? 0 : openItem.number
     const finishStep = (passed) => {
       if (passed) {
-        markStepDone(openItem.number, openStep.id)
-        // superato il quiz finale: si sblocca il capitolo successivo
-        if (openStep.kind === 'quiz' && firstOpen(completed) === openItem.number) completeNext()
+        markStepDone(num, openStep.id)
+        if (openStep.kind === 'quiz') {
+          if (num === 0) setIntroDone()
+          else if (firstOpen(completed) === num) completeNext()
+        }
       }
       setOpenStep(null)
     }
     content =
-      openStep.kind === 'lesson' || !quizFor(openItem.number, openStep.id) ? (
-      <Lesson
-        chapter={openItem.number}
-        step={openStep}
-        instrument={instrument}
-        onFinish={() => {
-          markStepDone(openItem.number, openStep.id)
-          setOpenStep(null)
-        }}
-        onExit={() => setOpenStep(null)}
-      />
+      openStep.kind === 'lesson' || !quizFor(num, openStep.id) ? (
+        <Lesson
+          chapter={num}
+          step={openStep}
+          instrument={instrument}
+          onFinish={() => {
+            markStepDone(num, openStep.id)
+            setOpenStep(null)
+          }}
+          onExit={() => setOpenStep(null)}
+        />
       ) : (
-        <Quiz chapter={openItem.number} step={openStep} onDone={finishStep} onExit={() => setOpenStep(null)} />
+        <Quiz chapter={num} step={openStep} onDone={finishStep} onExit={() => setOpenStep(null)} />
       )
-  } else if (openItem && openItem.kind === 'chapter') {
+  } else if (openItem && (openItem.kind === 'chapter' || openItem.kind === 'intro')) {
+    const num = openItem.kind === 'intro' ? 0 : openItem.number
     content = (
       <ChapterSteps
-        chapter={openItem.number}
+        chapter={num}
         title={openItem.title}
-        done={stepsDone[openItem.number] || []}
-        onToggle={(id) => toggleStep(openItem.number, id)}
+        done={stepsDone[num] || []}
+        onToggle={(id) => toggleStep(num, id)}
         onOpenStep={setOpenStep}
         onBack={() => setOpenItem(null)}
         onOpenHandbook={() => changeTab('handbook')}
@@ -110,6 +133,16 @@ export default function App() {
             : 'In costruzione. Qui comparirà la scheda del prontuario.'
         }
         onBack={() => setOpenItem(null)}
+      />
+    )
+  } else if (tab === 'path' && !asked) {
+    content = (
+      <Placement
+        onTest={() => setPlacing(true)}
+        onSkip={() => {
+          setAsked()
+          setIntroDone()
+        }}
       />
     )
   } else if (tab === 'path') {

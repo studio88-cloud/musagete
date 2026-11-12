@@ -46,7 +46,7 @@ function Results({ step, data, result, onRetry, onDone }) {
           <CloseX />
         </button>
         <div className="steps-titlebox">
-          <h1 className="steps-title">{`${step.id}. ${step.title}`}</h1>
+          <h1 className="steps-title">{`${step.id ? `${step.id}. ` : ''}${step.title}`}</h1>
         </div>
       </header>
       <article className="lesson-card res">
@@ -89,8 +89,8 @@ function Results({ step, data, result, onRetry, onDone }) {
   )
 }
 
-export default function Quiz({ chapter, step, onDone, onExit }) {
-  const data = quizFor(chapter, step.id)
+export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onDone, onExit }) {
+  const data = dataProp || quizFor(chapter, step.id)
   const total = data.questions.length
   const [i, setI] = useState(0)
   const [sel, setSel] = useState(null)
@@ -136,6 +136,10 @@ export default function Quiz({ chapter, step, onDone, onExit }) {
     }
     const seconds = Math.round((Date.now() - startRef.current) / 1000)
     const score = correct / total
+    if (skipResults) {
+      onDone(data.passMark ? score >= data.passMark : true)
+      return
+    }
     setResult({
       correct,
       total,
@@ -161,13 +165,13 @@ export default function Quiz({ chapter, step, onDone, onExit }) {
     : `Purtroppo no. La risposta giusta è: ${q.options[q.answer]}. ${(q.hints && q.hints[sel]) || q.explanation}`
 
   return (
-    <section className="lesson" aria-label={`${step.id}. ${step.title}`}>
+    <section className="lesson" aria-label={`${step.id ? `${step.id}. ` : ''}${step.title}`}>
       <header className="steps-head">
         <button type="button" className="steps-icbtn" aria-label="Esci" onClick={() => setAskExit(true)}>
           <BackArrow />
         </button>
         <div className="steps-titlebox">
-          <h1 className="steps-title">{`${step.id}. ${step.title}`}</h1>
+          <h1 className="steps-title">{`${step.id ? `${step.id}. ` : ''}${step.title}`}</h1>
           <div className="steps-progress">
             <span className="steps-count">{`Domanda ${i + 1} di ${total}`}</span>
             <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label="Avanzamento">

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ExitDialog from '../components/ExitDialog'
 import Fretboard from '../components/Fretboard'
 import LessonKeys from '../components/LessonKeys'
+import ReadStaff from '../components/ReadStaff'
 import pollyImg from '../images/polly-sit.webp'
 import { IT_NAMES } from '../lib/music'
 import { lessonFor } from '../data/lessons'
@@ -24,7 +25,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
   const total = lesson.pages.length
   const last = i === total - 1
   const highlights = new Map(
-    page.notes.map((n) => [n.midi % 12, { deg: n.deg, label: n.label, name: IT_NAMES[[0, 2, 4, 5, 7, 9, 11].indexOf(n.midi % 12)] ?? '' }]),
+    (page.notes || []).map((n) => [n.midi % 12, { deg: n.deg, label: n.label, name: IT_NAMES[[0, 2, 4, 5, 7, 9, 11].indexOf(n.midi % 12)] ?? '' }]),
   )
 
   useEffect(() => () => stopPlaying(), [])
@@ -72,7 +73,18 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
           <span>{page.remember}</span>
         </div>
 
-        {page.notes.length > 0 && (
+        {page.staff && (
+          <>
+            <h3 className="lesson-sub">Sul pentagramma</h3>
+            <ReadStaff items={page.staff.items} timeSig={page.staff.timeSig} endBar={page.staff.endBar} label={`Pentagramma: ${page.staff.items.map((n) => n.label).join(', ')}`} />
+            {page.play && (
+              <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
+                {playing ? 'Ferma' : 'Ascolta'}
+              </button>
+            )}
+          </>
+        )}
+        {!page.staff && page.notes.length > 0 && (
           <>
             <h3 className="lesson-sub">{instrument === 'keyboard' ? 'Sulla tastiera' : 'Sul manico'}</h3>
             {instrument === 'keyboard' ? (
