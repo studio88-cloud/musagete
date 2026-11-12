@@ -556,3 +556,268 @@ a.btn {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* Elenco dei passi di un capitolo */
+.steps {
+  padding: 16px 16px 24px;
+}
+.steps-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.steps-icbtn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--lavender);
+  cursor: pointer;
+}
+.steps-titlebox {
+  flex: 1;
+  min-width: 0;
+}
+.steps-title {
+  margin: 0;
+  font-size: clamp(19px, 5.4vw, 24px);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left;
+}
+.steps-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.steps-count {
+  color: var(--lavender);
+  font-size: 14px;
+  font-weight: 700;
+}
+.steps-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+.steps-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--primary);
+}
+.steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.step-ico {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  color: var(--lavender);
+}
+.step-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.step-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+.step-sub,
+.step-note {
+  color: var(--lavender);
+  font-size: 14px;
+  font-weight: 600;
+}
+.step-note {
+  font-style: italic;
+}
+.step-state {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+}
+.step.is-quiz {
+  min-height: 96px;
+  padding: 16px 14px;
+  border-color: var(--gold);
+}
+.step.is-locked {
+  cursor: not-allowed;
+}
+
+/* Finestra di conferma uscita: copre tutto lo schermo, testata e barra comprese */
+.dlg-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(18, 11, 31, 0.78);
+}
+.dlg {
+  width: 100%;
+  max-width: 398px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 28px 24px 24px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  text-align: center;
+}
+.dlg-icon {
+  align-self: center;
+}
+.dlg-title {
+  margin: 4px 0 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+.dlg-text {
+  margin: 0 0 8px;
+  color: var(--lavender);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.dlg-leave {
+  background: transparent;
+}
+
+/* Lezione */
+.lesson {
+  padding: 16px 16px 0;
+}
+.lesson-card {
+  padding: 20px 18px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+}
+.lesson-h {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 800;
+  text-align: left;
+}
+.lesson-body {
+  margin: 0 0 20px;
+  color: var(--lavender);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+.lesson-remember {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 2px solid var(--warn);
+  border-radius: 14px;
+  background: var(--bg);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.lesson-remember strong {
+  color: var(--warn);
+  font-weight: 800;
+}
+.lesson-sub {
+  margin: 0 0 8px;
+  color: var(--warn);
+  font-size: 18px;
+  font-weight: 800;
+  text-align: left;
+}
+.lkeys {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.lesson-listen {
+  margin-top: 12px;
+}
+.lesson-polly {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+.lesson-polly img {
+  flex: none;
+  width: 84px;
+  height: auto;
+}
+.lesson-polly p {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  font-size: 16px;
+  font-weight: 600;
+}
+.lesson-foot {
+  position: sticky;
+  bottom: calc(88px + env(safe-area-inset-bottom));
+  z-index: 5;
+  margin: 0 -16px;
+  padding: 12px 16px 12px;
+  background: linear-gradient(to bottom, rgba(27, 20, 40, 0), var(--bg) 28%);
+}
+
+.lesson .btn {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 18px;
+}
+
+.step-kind {
+  display: block;
+}
+.step-empty {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--lavender);
+  border-radius: 50%;
+  opacity: 0.75;
+}

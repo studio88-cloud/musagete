@@ -9,7 +9,10 @@ import Handbook from './screens/Handbook'
 import Interchange from './screens/Interchange'
 import Tool from './screens/Tool'
 import Stub from './screens/Stub'
+import ChapterSteps from './screens/ChapterSteps'
+import Lesson from './screens/Lesson'
 import { useProgress } from './lib/progress'
+import { useStepProgress } from './lib/stepProgress'
 import './screens.css'
 
 const STORAGE_KEY = 'musagete:instrument'
@@ -29,6 +32,8 @@ export default function App() {
   const [tab, setTab] = useState('path')
   const [openItem, setOpenItem] = useState(null)
   const [instrument, setInstrument] = useState(loadInstrument)
+  const [openStep, setOpenStep] = useState(null)
+  const { stepsDone, toggleStep, markStepDone } = useStepProgress()
   const { completed, intro, completeNext, toggleIntro, reset } = useProgress()
 
   useEffect(() => {
@@ -49,14 +54,39 @@ export default function App() {
 
   const changeTab = (id) => {
     setOpenItem(null)
+    setOpenStep(null)
     setTab(id)
   }
 
   let content
   if (openItem && openItem.id === 'interchange') {
     content = <Interchange onBack={() => setOpenItem(null)} />
+  } else if (openItem && openItem.kind === 'chapter' && openStep) {
+    content = (
+      <Lesson
+        step={openStep}
+        instrument={instrument}
+        onFinish={() => {
+          markStepDone(openItem.number, openStep.id)
+          setOpenStep(null)
+        }}
+        onExit={() => setOpenStep(null)}
+      />
+    )
+  } else if (openItem && openItem.kind === 'chapter') {
+    content = (
+      <ChapterSteps
+        chapter={openItem.number}
+        title={openItem.title}
+        done={stepsDone[openItem.number] || []}
+        onToggle={(id) => toggleStep(openItem.number, id)}
+        onOpenStep={setOpenStep}
+        onBack={() => setOpenItem(null)}
+        onOpenHandbook={() => changeTab('handbook')}
+      />
+    )
   } else if (openItem) {
-    const isChapter = openItem.kind === 'intro' || openItem.kind === 'chapter'
+    const isChapter = openItem.kind === 'intro'
     content = (
       <Stub
         title={openItem.number ? `${openItem.number} ${openItem.title}` : openItem.title}
