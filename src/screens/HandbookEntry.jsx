@@ -30,12 +30,12 @@ function Example({ ex, instrument }) {
       return
     }
     setPlaying(true)
-    const shift = instrument === 'bass' ? -12 : 0
+    const shift = instrument === 'bass' ? -24 : 0
     if (ex.progression) {
-      playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+      playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     } else {
       const midis = ex.play.map((m) => m + shift).sort((a, b) => a - b)
-      playNotes(midis, { kind: ex.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+      playNotes(midis, { kind: ex.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     }
   }
 

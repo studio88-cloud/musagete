@@ -20,6 +20,7 @@ import { INTRO } from './data/chapters'
 import { firstOpen, useProgress } from './lib/progress'
 import { useStepProgress } from './lib/stepProgress'
 import { useStats } from './lib/stats'
+import { preloadSamples } from './lib/audio'
 import './screens.css'
 
 const STORAGE_KEY = 'musagete:instrument'
@@ -45,6 +46,10 @@ export default function App() {
   const [placing, setPlacing] = useState(false)
   const [placeResult, setPlaceResult] = useState(null) // null | 'pass' | 'fail'
   const { stats, addAnswer, resetStats } = useStats(Boolean(openStep) || placing)
+
+  useEffect(() => {
+    preloadSamples(instrument) // i campioni si scaricano in anticipo, così il primo ascolto è già quello vero
+  }, [instrument])
 
   useEffect(() => {
     try {

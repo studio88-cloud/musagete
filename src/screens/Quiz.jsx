@@ -116,9 +116,9 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
       return
     }
     setPlaying(true)
-    const shift = instrument === 'bass' ? -12 : 0
+    const shift = instrument === 'bass' ? -24 : 0
     const src = Array.isArray(q.play[0]) ? q.play.map((c) => c.map((m) => m + shift)) : q.play.map((m) => m + shift)
-    playNotes(src, { kind: q.kind || 'scale', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+    playNotes(src, { kind: q.kind || 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
   }
 
   const check = () => {

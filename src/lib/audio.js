@@ -1,5 +1,13 @@
-// Suono provvisorio con la Web Audio API (nessuna libreria).
-// Verrà sostituito dai campioni di tastiera, chitarra e basso.
+// Audio con la Web Audio API (nessuna libreria).
+// Tastiera: campioni di pianoforte in public/samples/keyboard/<nota midi>.mp3 (una ogni 3 semitoni).
+// Basso: public/samples/bass/. Chitarra: suono sintetico provvisorio, finché non arrivano i suoi campioni.
+const BASE = import.meta.env?.BASE_URL || '/'
+const SAMPLE_NOTES = {
+  keyboard: [48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84],
+  bass: [28, 31, 34, 37, 40, 43, 46, 49, 52],
+}
+const buffers = {} // strumento -> { midi: AudioBuffer }
+const loading = {}
 let ctx = null
 let current = null
 
@@ -11,6 +19,60 @@ function getCtx() {
   }
   if (ctx.state === 'suspended') ctx.resume()
   return ctx
+}
+
+// Scarica i campioni di uno strumento (se ne ha). Si può chiamare in anticipo, anche più volte.
+export function preloadSamples(instrument) {
+  const notes = SAMPLE_NOTES[instrument]
+  if (!notes || loading[instrument]) return
+  const c = getCtx()
+  if (!c) return
+  loading[instrument] = true
+  buffers[instrument] = {}
+  notes.forEach((m) => {
+    fetch(`${BASE}samples/${instrument}/${m}.mp3`)
+      .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error('campione mancante'))))
+      .then((ab) => c.decodeAudioData(ab))
+      .then((buf) => {
+        buffers[instrument][m] = buf
+      })
+      .catch(() => {
+        // senza campione si usa il suono sintetico
+      })
+  })
+}
+
+// Campione più vicino alla nota (al massimo un semitono di differenza, due ai due estremi della gamma)
+function nearestSample(instrument, midi) {
+  const set = buffers[instrument]
+  if (!set) return null
+  const keys = Object.keys(set).map(Number)
+  if (keys.length === 0) return null
+  const lo = Math.min(...(SAMPLE_NOTES[instrument] || keys))
+  const hi = Math.max(...(SAMPLE_NOTES[instrument] || keys))
+  const maxD = midi < lo || midi > hi ? 2 : 1
+  let best = null
+  for (const k of keys) {
+    const d = Math.abs(k - midi)
+    if (d <= maxD && (best === null || d < Math.abs(best - midi))) best = k
+  }
+  return best === null ? null : { base: best, buf: set[best] }
+}
+
+function sampleTone(c, out, smp, midi, start, dur, vol) {
+  const src = c.createBufferSource()
+  src.buffer = smp.buf
+  src.playbackRate.value = Math.pow(2, (midi - smp.base) / 12)
+  const g = c.createGain()
+  const level = vol * 1.8
+  const release = Math.min(0.35, dur)
+  g.gain.setValueAtTime(level, start)
+  g.gain.setValueAtTime(level, start + Math.max(dur - release, 0.05))
+  g.gain.linearRampToValueAtTime(0.0001, start + dur + 0.1)
+  src.connect(g)
+  g.connect(out)
+  src.start(start)
+  src.stop(start + dur + 0.15)
 }
 
 const freq = (midi) => 440 * Math.pow(2, (midi - 69) / 12)
@@ -55,7 +117,7 @@ export function stopPlaying() {
 // kind 'scale': le note una dopo l'altra
 // kind 'chord': accordo insieme (block), poi in arpeggio, poi di nuovo insieme
 // arpeggio: chitarra e basso non suonano mai le note insieme, ma una dopo l'altra
-export function playNotes(midis, { kind = 'chord', arpeggio = false, onEnd } = {}) {
+export function playNotes(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboard', onEnd } = {}) {
   stopPlaying()
   const c = getCtx()
   if (!c || midis.length === 0) {
@@ -110,7 +172,12 @@ export function playNotes(midis, { kind = 'chord', arpeggio = false, onEnd } = {
   }
 
   const t0 = c.currentTime + 0.05
-  events.forEach((e) => tone(c, master, e.midi, t0 + e.at, e.dur, e.vol))
+  preloadSamples(instrument)
+  events.forEach((e) => {
+    const smp = nearestSample(instrument, e.midi)
+    if (smp) sampleTone(c, master, smp, e.midi, t0 + e.at, e.dur, e.vol)
+    else tone(c, master, e.midi, t0 + e.at, e.dur, e.vol)
+  })
   const timer = setTimeout(() => {
     current = null
     onEnd?.()

@@ -42,13 +42,13 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
       return
     }
     setPlaying(true)
-    const shift = instrument === 'bass' ? -12 : 0 // il basso suona un'ottava sotto
+    const shift = instrument === 'bass' ? -24 : 0 // il basso suona due ottave sotto (la sua gamma reale)
     const src = page.play || page.notes.map((n) => n.midi)
     if (page.progression) {
-      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     } else {
       const midis = src.map((m) => m + shift).sort((a, b) => a - b)
-      playNotes(midis, { kind: page.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+      playNotes(midis, { kind: page.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     }
   }
 
