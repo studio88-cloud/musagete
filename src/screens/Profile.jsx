@@ -50,17 +50,21 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
       </span>
 
       {editing ? (
-        <input
-          className="pf-name-input"
-          autoFocus
-          defaultValue={name}
-          maxLength={24}
-          aria-label="Il tuo nome"
-          onBlur={(e) => saveName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') e.currentTarget.blur()
-          }}
-        />
+        <>
+          <input
+            className="pf-name-input"
+            autoFocus
+            defaultValue={name}
+            maxLength={24}
+            enterKeyHint="done"
+            aria-label="Il tuo nome"
+            onBlur={(e) => saveName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') e.currentTarget.blur()
+            }}
+          />
+          <p className="pf-name-hint">Massimo 24 caratteri. Premi Invio per salvare.</p>
+        </>
       ) : (
         <button type="button" className="pf-name" onClick={() => setEditing(true)} title="Tocca per modificare">
           {name}
@@ -89,6 +93,8 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
           <span className="pf-stat-label">XP</span>
         </div>
       </div>
+
+      {stats.answered === 0 && <p className="pf-hint">Fai il tuo primo quiz e qui compariranno i tuoi progressi</p>}
 
       <div className="pf-mini">
         <div className="pf-mini-card">
