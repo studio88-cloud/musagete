@@ -7,6 +7,7 @@ import Path from './screens/Path'
 import Profile from './screens/Profile'
 import Handbook from './screens/Handbook'
 import Interchange from './screens/Interchange'
+import HandbookEntry from './screens/HandbookEntry'
 import Tool from './screens/Tool'
 import Stub from './screens/Stub'
 import ChapterSteps from './screens/ChapterSteps'
@@ -70,6 +71,8 @@ export default function App() {
   let content
   if (openItem && openItem.id === 'interchange') {
     content = <Interchange onBack={() => setOpenItem(null)} />
+  } else if (openItem && openItem.examples) {
+    content = <HandbookEntry entry={openItem} instrument={instrument} onBack={() => setOpenItem(null)} />
   } else if (placeResult) {
     content = (
       <PlacementResult
@@ -87,6 +90,7 @@ export default function App() {
         chapter={0}
         step={{ title: 'Test iniziale' }}
         data={PLACEMENT}
+        instrument={instrument}
         skipResults
         onAnswer={addAnswer}
         onDone={(passed) => {
@@ -123,7 +127,7 @@ export default function App() {
           onExit={() => setOpenStep(null)}
         />
       ) : (
-        <Quiz chapter={num} step={openStep} onAnswer={addAnswer} onDone={finishStep} onExit={() => setOpenStep(null)} />
+        <Quiz chapter={num} step={openStep} instrument={instrument} onAnswer={addAnswer} onDone={finishStep} onExit={() => setOpenStep(null)} />
       )
   } else if (openItem && (openItem.kind === 'chapter' || openItem.kind === 'intro')) {
     const num = openItem.kind === 'intro' ? 0 : openItem.number

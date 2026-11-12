@@ -45,10 +45,10 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
     const shift = instrument === 'bass' ? -12 : 0 // il basso suona un'ottava sotto
     const src = page.play || page.notes.map((n) => n.midi)
     if (page.progression) {
-      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', onEnd: () => setPlaying(false) })
+      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
     } else {
       const midis = src.map((m) => m + shift).sort((a, b) => a - b)
-      playNotes(midis, { kind: page.chord ? 'chord' : 'scale', onEnd: () => setPlaying(false) })
+      playNotes(midis, { kind: page.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
     }
   }
 

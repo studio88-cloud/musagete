@@ -1,0 +1,99 @@
+import { useEffect, useState } from 'react'
+import Fretboard from '../components/Fretboard'
+import LessonKeys from '../components/LessonKeys'
+import CircleOfFifths from '../components/CircleOfFifths'
+import { IT_NAMES } from '../lib/music'
+import { playNotes, stopPlaying } from '../lib/audio'
+import { CHAPTERS } from '../data/chapters'
+
+const WHITE = [0, 2, 4, 5, 7, 9, 11]
+
+// Porta nel campo della tastiera di un'ottava le note che ne escono (es. la 9ª)
+function fold(notes, base) {
+  const seen = new Set()
+  return notes
+    .map((n) => (n.midi > base + 12 ? { ...n, midi: n.midi - 12 * Math.ceil((n.midi - base - 12) / 12) } : n))
+    .filter((n) => (seen.has(n.midi) ? false : seen.add(n.midi)))
+}
+
+function Example({ ex, instrument }) {
+  const [playing, setPlaying] = useState(false)
+  useEffect(() => () => stopPlaying(), [])
+  const base = ex.base ?? 60
+  const shown = ex.notes && ex.notes.length ? fold(ex.notes, base) : []
+  const hl = new Map(shown.map((n) => [n.midi % 12, { deg: n.deg, label: n.label, name: IT_NAMES[WHITE.indexOf(n.midi % 12)] ?? '' }]))
+
+  const listen = () => {
+    if (playing) {
+      stopPlaying()
+      setPlaying(false)
+      return
+    }
+    setPlaying(true)
+    const shift = instrument === 'bass' ? -12 : 0
+    if (ex.progression) {
+      playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+    } else {
+      const midis = ex.play.map((m) => m + shift).sort((a, b) => a - b)
+      playNotes(midis, { kind: ex.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
+    }
+  }
+
+  return (
+    <div className="hbe-ex">
+      <h3 className="lesson-sub">{ex.label}</h3>
+      {ex.chords && (
+        <div className="lchords" role="list" aria-label="Accordi">
+          {ex.chords.map((c, k) => (
+            <span key={k} className="lchord" role="listitem">
+              <b>{c.fn}</b>
+              <i>{c.sym}</i>
+            </span>
+          ))}
+        </div>
+      )}
+      {shown.length > 0 && (instrument === 'keyboard' ? <LessonKeys notes={shown} base={base} /> : <Fretboard instrument={instrument} highlights={hl} mode="degrees" />)}
+      <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
+        {playing ? 'Ferma' : 'Ascolta'}
+      </button>
+    </div>
+  )
+}
+
+export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0 })
+  }, [entry.id])
+  const chapter = CHAPTERS.find((c) => c.n === entry.chapter)
+  return (
+    <section className="hbe">
+      <button type="button" className="ic-back" onClick={onBack}>
+        ‹ Prontuario
+      </button>
+      <h2 className="ic-title">{entry.title}</h2>
+      <p className="hbe-sub">{entry.subtitle}</p>
+
+      <article className="lesson-card">
+        <p className="lesson-body">{entry.def}</p>
+        {entry.formula && (
+          <div className="lesson-remember">
+            <strong>Formula</strong>
+            <span>{entry.formula}</span>
+          </div>
+        )}
+        {entry.points.length > 0 && (
+          <ul className="hbe-points">
+            {entry.points.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+        )}
+        {entry.id === 'circle' && <CircleOfFifths />}
+        {entry.examples.map((ex) => (
+          <Example key={ex.label} ex={ex} instrument={instrument} />
+        ))}
+        {chapter && <p className="hbe-chapter">Capitolo {chapter.n} · {chapter.title}</p>}
+      </article>
+    </section>
+  )
+}

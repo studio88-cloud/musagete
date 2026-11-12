@@ -89,7 +89,7 @@ function Results({ step, data, result, onRetry, onDone }) {
   )
 }
 
-export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onAnswer, onDone, onExit }) {
+export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onAnswer, onDone, onExit, instrument = 'keyboard' }) {
   const data = dataProp || quizFor(chapter, step.id)
   const total = data.questions.length
   const [i, setI] = useState(0)
@@ -116,7 +116,9 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
       return
     }
     setPlaying(true)
-    playNotes(q.play, { kind: q.kind || 'scale', onEnd: () => setPlaying(false) })
+    const shift = instrument === 'bass' ? -12 : 0
+    const src = Array.isArray(q.play[0]) ? q.play.map((c) => c.map((m) => m + shift)) : q.play.map((m) => m + shift)
+    playNotes(src, { kind: q.kind || 'scale', arpeggio: instrument !== 'keyboard', onEnd: () => setPlaying(false) })
   }
 
   const check = () => {

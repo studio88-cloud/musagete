@@ -1303,3 +1303,99 @@ a.btn {
   font-weight: 600;
   text-align: center;
 }
+
+/* Prontuario: gruppi e scheda */
+.hb-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hb-chap {
+  margin: 0;
+  padding-left: 4px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--warn);
+  text-align: left;
+}
+.hbe {
+  padding: 16px 16px 24px;
+}
+.hbe .ic-back,
+.hbe .ic-title {
+  margin-left: 0;
+  margin-right: 0;
+}
+.hbe-sub {
+  margin: 0 0 16px;
+  color: var(--lavender);
+  font-size: 15px;
+  font-weight: 600;
+}
+.hbe-points {
+  margin: 0 0 8px;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.hbe-points li {
+  margin-bottom: 6px;
+}
+.hbe-ex {
+  margin-top: 20px;
+}
+.hbe-chapter {
+  margin: 20px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lavender);
+}
+.cof-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 320px;
+  margin: 8px auto;
+}
+.cof-maj,
+.cof-min {
+  fill: var(--bg);
+  stroke: var(--border);
+  stroke-width: 2;
+}
+.cof-maj.is-on,
+.cof-min.is-on {
+  fill: var(--warn);
+  stroke: var(--warn);
+}
+.cof-t,
+.cof-t2 {
+  fill: var(--text);
+  font-weight: 800;
+  pointer-events: none;
+}
+.cof-t {
+  font-size: 13px;
+}
+.cof-t2 {
+  font-size: 9.5px;
+  fill: var(--lavender);
+}
+.cof-min.is-on + .cof-t2,
+.cof-maj.is-on + .cof-t {
+  fill: #1b1428;
+}
+.cof-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--bg);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.cof-info span {
+  color: var(--lavender);
+}

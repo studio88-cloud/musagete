@@ -54,7 +54,8 @@ export function stopPlaying() {
 // midis: elenco di note
 // kind 'scale': le note una dopo l'altra
 // kind 'chord': accordo insieme (block), poi in arpeggio, poi di nuovo insieme
-export function playNotes(midis, { kind = 'chord', onEnd } = {}) {
+// arpeggio: chitarra e basso non suonano mai le note insieme, ma una dopo l'altra
+export function playNotes(midis, { kind = 'chord', arpeggio = false, onEnd } = {}) {
   stopPlaying()
   const c = getCtx()
   if (!c || midis.length === 0) {
@@ -71,9 +72,15 @@ export function playNotes(midis, { kind = 'chord', onEnd } = {}) {
   if (kind === 'progression') {
     // midis = elenco di accordi: ogni accordo suona insieme, uno dopo l'altro
     midis.forEach((chord) => {
-      const vol = 0.3 / Math.sqrt(chord.length)
-      chord.forEach((midi) => events.push({ midi, at: total, dur: 1.1, vol }))
-      total += 1.0
+      if (arpeggio) {
+        const sorted = [...chord].sort((a, b) => a - b)
+        sorted.forEach((midi, i) => events.push({ midi, at: total + i * 0.17, dur: 1.2, vol: 0.45 }))
+        total += 1.2
+      } else {
+        const vol = 0.3 / Math.sqrt(chord.length)
+        chord.forEach((midi) => events.push({ midi, at: total, dur: 1.1, vol }))
+        total += 1.0
+      }
     })
     total += 0.4
   } else if (kind === 'scale') {
@@ -81,6 +88,12 @@ export function playNotes(midis, { kind = 'chord', onEnd } = {}) {
     const dur = 0.55
     midis.forEach((midi, i) => events.push({ midi, at: i * step, dur, vol: 0.5 }))
     total = (midis.length - 1) * step + dur
+  } else if (arpeggio) {
+    // accordo in arpeggio: su e poi di nuovo giù-su più lento
+    const step = 0.3
+    const noteDur = 1.1
+    midis.forEach((midi, i) => events.push({ midi, at: i * step, dur: noteDur, vol: 0.45 }))
+    total = (midis.length - 1) * step + noteDur
   } else {
     const blockVol = 0.3 / Math.sqrt(midis.length)
     const block = (dur) => {
