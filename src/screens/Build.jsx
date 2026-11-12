@@ -148,7 +148,7 @@ export default function Build({ chapter, step, instrument = 'keyboard', onAnswer
       <article className="lesson-card bld">
         <h2 className="bld-q">{q.prompt}</h2>
         <p className="bld-sub">{`Tocca ${need} ${need === 1 ? 'nota' : 'note'}`}</p>
-        <p className={`bld-count${over ? ' is-over' : ''}`} aria-live="polite">{`${count} / ${need} note`}</p>
+        <p className={`bld-count${over ? ' is-over' : ''}`} aria-live="polite">{`${count}/${need} Note`}</p>
 
         <div className="bld-panel">
           <BuildInstrument instrument={instrument} selected={selected} onTap={tap} result={result} helpPc={helpPc} />

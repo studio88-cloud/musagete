@@ -170,27 +170,27 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
             {q.chords.map((x, k) => {
               const st = k < c || (k === c && result?.ok) ? (done[k] === false ? 'miss' : 'done') : k === c ? 'now' : 'todo'
               return (
-                <span key={k} className={`apl-chip is-${st}`} role="listitem" aria-current={k === c ? 'step' : undefined}>
-                  <b>{x.fn}</b>
-                  <i>{x.sym}</i>
+                <span key={k} className={`apl-chip is-${st}`} role="listitem" aria-current={k === c ? 'step' : undefined} aria-label={x.fn ? `${x.sym}, ${x.fn} grado` : x.sym}>
+                  {x.sym}
                 </span>
               )
             })}
           </div>
 
-          <p className="bld-sub">{`Suona ${ch.sym}: tocca ${need} note`}</p>
-          <p className="bld-count" aria-live="polite">{`${pcs.size} / ${need} note`}</p>
-
           <div className="bld-panel">
             <BuildInstrument instrument={instrument} selected={selected} onTap={tap} result={result} helpPc={null} />
           </div>
 
-          <div className="bld-tools">
-            <button type="button" className="bld-link" onClick={() => { stopPlaying(); setSelected([]); setResult(null) }} disabled={selected.length === 0}>
+          <div className="apl-meta">
+            <div className="apl-count">
+              <span className="apl-pill" aria-live="polite">{`${pcs.size}/${need} Note`}</span>
+              <span className="apl-hint">{`Tocca ${need} note`}</span>
+            </div>
+            <button type="button" className="apl-btn" onClick={() => { stopPlaying(); setSelected([]); setResult(null) }} disabled={selected.length === 0}>
               Azzera
             </button>
-            <button type="button" className="bld-link" onClick={() => listen(q.chords.map((x) => x.midis))}>
-              {playing ? 'Ferma' : 'Ascolta tutto'}
+            <button type="button" className="apl-btn" onClick={() => listen(q.chords.map((x) => x.midis))}>
+              {playing ? 'Ferma' : 'Ascolta'}
             </button>
           </div>
 
