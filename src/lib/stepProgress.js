@@ -38,5 +38,7 @@ export function useStepProgress() {
     })
   }, [])
 
-  return { stepsDone: all, toggleStep: toggle, markStepDone: markDone }
+  const resetSteps = useCallback(() => setAll({}), [])
+
+  return { stepsDone: all, toggleStep: toggle, markStepDone: markDone, resetSteps }
 }

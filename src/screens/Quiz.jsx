@@ -89,7 +89,7 @@ function Results({ step, data, result, onRetry, onDone }) {
   )
 }
 
-export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onDone, onExit }) {
+export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onAnswer, onDone, onExit }) {
   const data = dataProp || quizFor(chapter, step.id)
   const total = data.questions.length
   const [i, setI] = useState(0)
@@ -123,6 +123,7 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
     stopPlaying()
     setPlaying(false)
     setChecked(true)
+    onAnswer?.(sel === q.answer)
     if (sel === q.answer) setCorrect((c) => c + 1)
   }
 

@@ -18,6 +18,7 @@ import { quizFor, PLACEMENT } from './data/quizzes'
 import { INTRO } from './data/chapters'
 import { firstOpen, useProgress } from './lib/progress'
 import { useStepProgress } from './lib/stepProgress'
+import { useStats } from './lib/stats'
 import './screens.css'
 
 const STORAGE_KEY = 'musagete:instrument'
@@ -38,10 +39,11 @@ export default function App() {
   const [openItem, setOpenItem] = useState(null)
   const [instrument, setInstrument] = useState(loadInstrument)
   const [openStep, setOpenStep] = useState(null)
-  const { stepsDone, toggleStep, markStepDone } = useStepProgress()
+  const { stepsDone, toggleStep, markStepDone, resetSteps } = useStepProgress()
   const { completed, intro, asked, completeNext, toggleIntro, setIntroDone, setAsked, reset } = useProgress()
   const [placing, setPlacing] = useState(false)
   const [placeResult, setPlaceResult] = useState(null) // null | 'pass' | 'fail'
+  const { stats, addAnswer, resetStats } = useStats(Boolean(openStep) || placing)
 
   useEffect(() => {
     try {
@@ -86,6 +88,7 @@ export default function App() {
         step={{ title: 'Test iniziale' }}
         data={PLACEMENT}
         skipResults
+        onAnswer={addAnswer}
         onDone={(passed) => {
           setAsked()
           setPlacing(false)
@@ -120,7 +123,7 @@ export default function App() {
           onExit={() => setOpenStep(null)}
         />
       ) : (
-        <Quiz chapter={num} step={openStep} onDone={finishStep} onExit={() => setOpenStep(null)} />
+        <Quiz chapter={num} step={openStep} onAnswer={addAnswer} onDone={finishStep} onExit={() => setOpenStep(null)} />
       )
   } else if (openItem && (openItem.kind === 'chapter' || openItem.kind === 'intro')) {
     const num = openItem.kind === 'intro' ? 0 : openItem.number
@@ -171,7 +174,12 @@ export default function App() {
         intro={intro}
         onCompleteNext={completeNext}
         onToggleIntro={toggleIntro}
-        onReset={reset}
+        stats={stats}
+        onReset={() => {
+          reset()
+          resetSteps()
+          resetStats()
+        }}
       />
     )
   }

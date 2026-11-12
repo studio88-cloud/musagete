@@ -1,6 +1,6 @@
 // Segnalazione di un problema: apre la posta con un messaggio già compilato.
-// ⚠️ Sostituisci l'indirizzo con quello che riceverà le segnalazioni.
-export const REPORT_EMAIL = 'tua-email@esempio.it'
+// Indirizzo che riceve le segnalazioni.
+export const REPORT_EMAIL = 'musagete.learn@gmail.com'
 export const APP_VERSION = 'beta 1'
 
 export function buildReport(context) {

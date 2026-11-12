@@ -262,8 +262,21 @@
   padding: 40px 16px 24px;
 }
 .avatar {
-  width: 98px;
-  height: 98px;
+  position: relative;
+  display: block;
+  width: 118px;
+  height: 118px;
+  overflow: hidden;
+  border: 4px solid var(--primary);
+  border-radius: 50%;
+  background: var(--bg);
+}
+.avatar img {
+  position: absolute;
+  top: -6%;
+  left: -22%;
+  width: 144%;
+  height: auto;
 }
 .pf-name,
 .pf-name-input {
@@ -286,15 +299,19 @@
   border-bottom: 2px solid var(--lavender);
 }
 .pf-level {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   font-size: 18px;
   font-weight: 600;
   line-height: 1.3;
-  color: var(--lavender);
+  color: var(--text);
   text-align: center;
 }
 .pf-level span {
   display: block;
+  color: var(--lavender);
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 500;
 }
 .pf-stats {
   display: grid;
@@ -1134,4 +1151,79 @@ a.btn {
 .pres-polly.is-tall {
   width: 58%;
   max-width: 240px;
+}
+
+/* Profilo: precisione, tempo, XP e riquadri */
+.pf-study {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-top: 28px;
+}
+.pf-study .pf-stat {
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-height: 96px;
+  padding: 10px 4px;
+  border-width: 1.5px;
+  text-align: center;
+}
+.pf-study .pf-stat img {
+  width: 30px;
+  height: 30px;
+}
+.pf-study .pf-stat-value {
+  font-size: 19px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pf-study .pf-stat-label {
+  margin: 0;
+  color: var(--lavender);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.pf-stat-value.is-ok {
+  color: #22c58b;
+}
+.pf-stat-value.is-time {
+  color: var(--lavender);
+}
+.pf-stat-value.is-xp {
+  color: #f5a524;
+}
+.pf-mini {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 16px;
+}
+.pf-mini-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 76px;
+  padding: 12px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  text-align: center;
+}
+.pf-mini-label {
+  color: var(--lavender);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.pf-mini-value {
+  font-size: 22px;
+  font-weight: 600;
 }

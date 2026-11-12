@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import star from '../assets/icons/icn_stella.svg'
-import check from '../assets/icons/icn_spunta.svg'
 import backpack from '../assets/icons/icn_zaino.svg'
-import avatar from '../assets/icons/icn_profilo.svg'
+import avatarImg from '../images/polly-sit.webp'
+import xpIcon from '../assets/icons/icn_xp.svg'
+import timeIcon from '../assets/icons/icn_time.svg'
+import accIcon from '../assets/icons/icn_accuracy.svg'
+import { formatAccuracy, formatTime, formatXp } from '../lib/stats'
 import { CHAPTERS } from '../data/chapters'
 import { HANDBOOK } from '../data/handbook'
 import { chapterStatus, firstOpen } from '../lib/progress'
@@ -19,7 +21,7 @@ function loadName() {
   }
 }
 
-export default function Profile({ completed, intro, onCompleteNext, onToggleIntro, onReset }) {
+export default function Profile({ completed, intro, stats, onCompleteNext, onToggleIntro, onReset }) {
   const [name, setName] = useState(loadName)
   const [editing, setEditing] = useState(false)
 
@@ -43,7 +45,9 @@ export default function Profile({ completed, intro, onCompleteNext, onToggleIntr
 
   return (
     <section className="profile">
-      <img className="avatar" src={avatar} alt="Avatar" width="98" height="98" />
+      <span className="avatar">
+        <img src={avatarImg} alt="Avatar di Polly" />
+      </span>
 
       {editing ? (
         <input
@@ -68,24 +72,36 @@ export default function Profile({ completed, intro, onCompleteNext, onToggleIntr
         {currentTitle && <span>{currentTitle}</span>}
       </p>
 
-      <div className="pf-stats">
+      <div className="pf-study">
         <div className="pf-stat">
-          <img src={star} alt="" />
-          <div className="pf-stat-text">
-            <span className="pf-stat-value">
-              {unlockedHandbook} / {HANDBOOK.length}
-            </span>
-            <span className="pf-stat-label">Voci del Prontuario</span>
-          </div>
+          <img src={accIcon} alt="" />
+          <span className="pf-stat-value is-ok">{formatAccuracy(stats)}</span>
+          <span className="pf-stat-label">Precisione</span>
         </div>
         <div className="pf-stat">
-          <img src={check} alt="" />
-          <div className="pf-stat-text">
-            <span className="pf-stat-value">
-              {unlockedChapters} / {CHAPTERS.length}
-            </span>
-            <span className="pf-stat-label">Capitoli sbloccati</span>
-          </div>
+          <img src={timeIcon} alt="" />
+          <span className="pf-stat-value is-time">{formatTime(stats.seconds)}</span>
+          <span className="pf-stat-label">Tempo</span>
+        </div>
+        <div className="pf-stat">
+          <img src={xpIcon} alt="" />
+          <span className="pf-stat-value is-xp">{formatXp(stats.xp)}</span>
+          <span className="pf-stat-label">XP</span>
+        </div>
+      </div>
+
+      <div className="pf-mini">
+        <div className="pf-mini-card">
+          <span className="pf-mini-label">Voci Prontuario</span>
+          <span className="pf-mini-value">
+            {unlockedHandbook} / {HANDBOOK.length}
+          </span>
+        </div>
+        <div className="pf-mini-card">
+          <span className="pf-mini-label">Capitoli sbloccati</span>
+          <span className="pf-mini-value">
+            {unlockedChapters} / {CHAPTERS.length}
+          </span>
         </div>
       </div>
 
