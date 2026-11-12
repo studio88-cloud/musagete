@@ -140,8 +140,8 @@ export const PLACEMENT = {
   passMark: 1,
   questions: [
     {
-      prompt: 'Quale nota si trova sulla seconda linea in chiave di violino?',
-      options: ['Mi', 'Sol', 'Si', 'Re'],
+      prompt: 'Qual \u00e8 la nota posizionata sulla seconda linea del pentagramma in chiave di violino?',
+      options: ['Do', 'Sol', 'Mi', 'La'],
       answer: 1,
       explanation: 'La chiave di violino si avvolge sulla seconda linea: \u00e8 il Sol.',
     },

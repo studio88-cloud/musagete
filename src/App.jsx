@@ -13,6 +13,7 @@ import ChapterSteps from './screens/ChapterSteps'
 import Lesson from './screens/Lesson'
 import Quiz from './screens/Quiz'
 import Placement from './screens/Placement'
+import PlacementResult from './screens/PlacementResult'
 import { quizFor, PLACEMENT } from './data/quizzes'
 import { INTRO } from './data/chapters'
 import { firstOpen, useProgress } from './lib/progress'
@@ -40,6 +41,7 @@ export default function App() {
   const { stepsDone, toggleStep, markStepDone } = useStepProgress()
   const { completed, intro, asked, completeNext, toggleIntro, setIntroDone, setAsked, reset } = useProgress()
   const [placing, setPlacing] = useState(false)
+  const [placeResult, setPlaceResult] = useState(null) // null | 'pass' | 'fail'
 
   useEffect(() => {
     try {
@@ -66,6 +68,17 @@ export default function App() {
   let content
   if (openItem && openItem.id === 'interchange') {
     content = <Interchange onBack={() => setOpenItem(null)} />
+  } else if (placeResult) {
+    content = (
+      <PlacementResult
+        passed={placeResult === 'pass'}
+        onContinue={() => {
+          const failed = placeResult === 'fail'
+          setPlaceResult(null)
+          if (failed) setOpenItem({ kind: 'intro', ...INTRO })
+        }}
+      />
+    )
   } else if (placing) {
     content = (
       <Quiz
@@ -77,7 +90,7 @@ export default function App() {
           setAsked()
           setPlacing(false)
           if (passed) setIntroDone()
-          else setOpenItem({ kind: 'intro', ...INTRO })
+          setPlaceResult(passed ? 'pass' : 'fail')
         }}
         onExit={() => setPlacing(false)}
       />
