@@ -31,12 +31,14 @@ function CloseX() {
 
 const fmtTime = (s) => `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, '0')}s`
 
-function Results({ step, data, result, onRetry, onDone }) {
+export function Results({ step, data, result, onRetry, onDone, retryLabel = 'Riprova il quiz' }) {
   const pct = Math.round((result.correct / result.total) * 100)
   const passed = result.passed
   const isQuiz = data.kind === 'quiz'
   const title = passed ? (isQuiz ? 'Quiz superato!' : 'Esercizio completato!') : 'Non ancora!'
-  const sub = passed
+  const sub = result.sub
+    ? result.sub
+    : passed
     ? `Hai risposto correttamente a ${result.correct} domande su ${result.total}.`
     : `Servono almeno ${Math.round(data.passMark * 100)}% di risposte giuste. Ripassa le lezioni e riprova.`
   return (
@@ -77,7 +79,7 @@ function Results({ step, data, result, onRetry, onDone }) {
         ) : (
           <>
             <button type="button" className="btn btn-primary" onClick={onRetry}>
-              Riprova il quiz
+              {retryLabel}
             </button>
             <button type="button" className="btn btn-secondary res-second" onClick={() => onDone(false)}>
               Torna ai passi del capitolo

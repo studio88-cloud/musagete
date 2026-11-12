@@ -13,6 +13,9 @@ import Stub from './screens/Stub'
 import ChapterSteps from './screens/ChapterSteps'
 import Lesson from './screens/Lesson'
 import Quiz from './screens/Quiz'
+import Apply from './screens/Apply'
+import { applyFor } from './data/apply'
+import Build from './screens/Build'
 import Placement from './screens/Placement'
 import PlacementResult from './screens/PlacementResult'
 import { quizFor, PLACEMENT } from './data/quizzes'
@@ -120,7 +123,25 @@ export default function App() {
       setOpenStep(null)
     }
     content =
-      openStep.kind === 'lesson' || !quizFor(num, openStep.id) ? (
+      openStep.kind === 'apply' && applyFor(num) ? (
+        <Apply
+          chapter={num}
+          step={openStep}
+          instrument={instrument}
+          onAnswer={addAnswer}
+          onDone={() => finishStep(true)}
+          onExit={() => setOpenStep(null)}
+        />
+      ) : openStep.kind === 'build' ? (
+        <Build
+          chapter={num}
+          step={openStep}
+          instrument={instrument}
+          onAnswer={addAnswer}
+          onDone={() => finishStep(true)}
+          onExit={() => setOpenStep(null)}
+        />
+      ) : openStep.kind === 'lesson' || !quizFor(num, openStep.id) ? (
         <Lesson
           chapter={num}
           step={openStep}

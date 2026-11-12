@@ -7,6 +7,8 @@ import iconEar from '../assets/icons/icona_pratica.svg' // il grafico ha scambia
 import iconBuild from '../assets/icons/icona_esercizio.svg' // e questo è la matita
 import iconScore from '../assets/icons/icn_spartito.png'
 import { KIND_LABEL, stepsFor } from '../data/steps'
+import { buildFor } from '../data/build'
+import { applyFor } from '../data/apply'
 
 // ---- icone del grafico (src/assets/icons) ----
 const KIND_ICON = {
@@ -42,8 +44,11 @@ export default function ChapterSteps({ chapter, title, done, onToggle, onOpenSte
   const quizOpen = nonQuiz.every((s) => done.includes(s.id))
   const current = nonQuiz.find((s) => !done.includes(s.id))?.id
 
-  // Lezioni, esercizi all'orecchio e quiz si aprono; le pratiche, per ora, si segnano fatte toccandole.
-  const open = (s) => (['lesson', 'ear', 'quiz'].includes(s.kind) ? onOpenStep(s) : onToggle(s.id))
+  // Lezioni, esercizi all'orecchio, "Costruisci" e quiz si aprono; le applicazioni, per ora, si segnano fatte toccandole.
+  const open = (s) =>
+    (['lesson', 'ear', 'build', 'apply', 'quiz'].includes(s.kind) && !(s.kind === 'build' && !buildFor(chapter)) && !(s.kind === 'apply' && !applyFor(chapter))
+      ? onOpenStep(s)
+      : onToggle(s.id))
 
   const pct = Math.round((done.length / steps.length) * 100)
 

@@ -1399,3 +1399,274 @@ a.btn {
 .cof-info span {
   color: var(--lavender);
 }
+
+/* Esercizio "Costruisci" */
+.bld {
+  text-align: center;
+}
+.bld-q {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+.bld-sub {
+  margin: 0 0 12px;
+  color: var(--lavender);
+  font-size: 16px;
+  font-weight: 600;
+}
+.bld-count {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 8px 22px;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.bld-count.is-over {
+  border-color: var(--error);
+  color: var(--error);
+}
+.bld-panel {
+  padding: 10px 8px 8px;
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  background: var(--bg);
+}
+.bld-tools {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 14px 0 0;
+}
+.bld-link {
+  min-width: 112px;
+  padding: 10px 22px;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  background: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bld-link:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.bld .quiz-check {
+  margin-top: 8px;
+}
+.sheet.is-compact .sheet-row {
+  margin-bottom: 12px;
+}
+.sheet.is-compact .sheet-row img {
+  width: 64px;
+}
+.sheet.is-compact .sheet-bubble {
+  font-size: 15px;
+}
+.sheet-btns {
+  display: flex;
+  gap: 10px;
+}
+.sheet-btns .btn {
+  flex: 1;
+}
+
+/* Strumento da toccare */
+.bi {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.bi g[role='button'] {
+  cursor: pointer;
+  outline: none;
+}
+.bi g[role='button']:focus-visible rect.bi-key {
+  stroke: var(--lavender);
+  stroke-width: 3;
+}
+.bi-lbl {
+  fill: var(--lavender);
+  font-size: 13px;
+  font-weight: 700;
+}
+.bi-key.is-white {
+  fill: #f5f3ff;
+}
+.bi-key.is-black {
+  fill: #2a1f42;
+  stroke: #1b1428;
+  stroke-width: 2;
+}
+.bi-key.is-white.is-pick {
+  fill: #cdb171;
+}
+.bi-key.is-black.is-pick {
+  fill: var(--primary);
+}
+.bi-key.is-white.is-ok {
+  fill: #cdb171;
+}
+.bi-key.is-black.is-ok {
+  fill: var(--primary);
+}
+.bi-key.is-white.is-bad,
+.bi-key.is-black.is-bad {
+  fill: var(--error);
+}
+.bi-bad-dark {
+  fill: #1b1428;
+}
+.bi-miss {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-dasharray: 7 5;
+}
+.bi-pick {
+  fill: var(--primary);
+  stroke: #fff;
+  stroke-width: 2;
+}
+.bi-bad {
+  fill: var(--error);
+}
+.bi-ghost {
+  fill: none;
+  stroke: #f5f3ff;
+  stroke-width: 3;
+  stroke-dasharray: 5 4;
+}
+
+/* Commento dentro la scheda (Costruisci) */
+.bld-fb {
+  margin: 14px 0 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+}
+.bld-fb.is-ok {
+  background: #0f7a55;
+}
+.bld-fb.is-bad {
+  background: #9b2c2c;
+}
+.bld-btns {
+  margin-top: 8px;
+}
+.bld .quiz-check,
+.bld-btns {
+  scroll-margin-bottom: 104px; /* sopra la barra in basso */
+}
+
+/* Modello C · Applica (provvisorio) */
+.apl-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.apl-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 62px;
+  padding: 6px 10px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  line-height: 1.2;
+}
+.apl-chip b {
+  color: var(--lavender);
+  font-size: 13px;
+  font-weight: 700;
+}
+.apl-chip i {
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 800;
+}
+.apl-chip.is-todo {
+  opacity: 0.5;
+}
+.apl-chip.is-now {
+  border-color: var(--primary);
+  background: rgba(155, 107, 208, 0.22);
+}
+.apl-chip.is-done {
+  border-color: #0f7a55;
+}
+.apl-chip.is-miss {
+  border-color: var(--error);
+}
+.apl-bars {
+  display: grid;
+  gap: 12px;
+  margin: 8px 0 4px;
+}
+.apl-barlbl {
+  display: block;
+  margin: 0 0 6px;
+  color: var(--lavender);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+.apl-opts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.apl-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: none;
+  color: var(--text);
+  font-family: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.apl-opt b {
+  color: var(--lavender);
+  font-size: 12px;
+  font-weight: 700;
+}
+.apl-opt i {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+}
+.apl-opt.is-on {
+  border-color: var(--primary);
+  background: rgba(155, 107, 208, 0.28);
+}
+.apl-opt.is-ok {
+  border-color: #0f7a55;
+  background: rgba(15, 122, 85, 0.35);
+}
+.apl-opt.is-bad {
+  border-color: var(--error);
+  background: rgba(155, 44, 44, 0.35);
+}
+.apl-opt.is-want {
+  border-style: dashed;
+  border-color: #e3b34b;
+}

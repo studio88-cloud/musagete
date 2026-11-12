@@ -131,7 +131,11 @@ export function playNotes(midis, { kind = 'chord', arpeggio = false, instrument 
   const events = [] // { midi, at, dur, vol }
   let total = 0
 
-  if (kind === 'progression') {
+  if (kind === 'note') {
+    // una sola nota toccata sullo strumento
+    midis.forEach((midi) => events.push({ midi, at: 0, dur: 1.2, vol: 0.5 }))
+    total = 1.2
+  } else if (kind === 'progression') {
     // midis = elenco di accordi: ogni accordo suona insieme, uno dopo l'altro
     midis.forEach((chord) => {
       if (arpeggio) {
