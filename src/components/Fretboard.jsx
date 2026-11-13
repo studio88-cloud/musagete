@@ -48,6 +48,7 @@ function pickPosition(instrument, highlights) {
   const inWin = (fr) => (nut ? fr >= 0 && fr <= POS_COLS : fr >= base && fr < base + POS_COLS)
   const dots = []
   let maxFret = base + POS_COLS - 1
+  const scalePlaced = entries.length >= 6 ? placeScale(tuning, entries, rootMidi, rs, rf) : null
   entries.forEach(([key, note]) => {
     const pc = note.pc ?? key // l'ottava alta ha chiave pc + 100
     let target = rootMidi
@@ -65,7 +66,11 @@ function pickPosition(instrument, highlights) {
         }
       })
     }
-    if (exact) {
+    if (scalePlaced && scalePlaced.has(key)) {
+      const p = scalePlaced.get(key)
+      best = { s: p.s, fr: p.fr, cost: 0 }
+    }
+    if (!best && exact) {
       consider(inWin, 12, true)
       if (!best) consider((fr) => fr <= base + 7, 15, true) // fuori dalla posizione: la finestra si allarga (al massimo 8 tasti)
     }
@@ -86,6 +91,49 @@ function pickPosition(instrument, highlights) {
   }
   const cols = Math.min(Math.max(POS_COLS, maxFret - b + 1), 8)
   return { nut: n, base: b, dots, cols }
+}
+
+// Scale: dalla tonica alla settima (e ottava) in fila. Ogni nota all'altezza esatta, sulla stessa corda
+// o su quella più acuta della precedente, con la minima estensione sul manico (al massimo 6 tasti).
+function placeScale(tuning, entries, rootMidi, rs, rf) {
+  const notes = entries
+    .filter(([, n]) => n.rel !== undefined)
+    .map(([key, n]) => ({ key, rel: n.rel }))
+    .sort((a, b) => a.rel - b.rel)
+  if (notes.length < 6 || notes[0].rel !== 0 || notes[notes.length - 1].rel > 12) return null // solo scale, non accordi con estensioni
+  const cands = notes.map((n, i) => {
+    if (i === 0) return [{ s: rs, fr: rf }]
+    const out = []
+    tuning.forEach((open, s) => {
+      const fr = rootMidi + n.rel - open
+      if (fr >= 0 && fr <= 15) out.push({ s, fr })
+    })
+    return out
+  })
+  let best = null
+  const cur = []
+  const walk = (i) => {
+    if (i === notes.length) {
+      const fr = cur.map((c) => c.fr)
+      const lo = Math.min(...fr.filter((f) => f > 0), 99)
+      const hi = Math.max(...fr)
+      const span = fr.includes(0) ? hi : hi - lo
+      if (span > 6) return
+      let cost = span * 10 + cur.reduce((t, c) => t + Math.abs(c.fr - rf), 0)
+      if (rf > 0) cost += fr.filter((f) => f === 0).length * 15 // si evitano le corde a vuoto, che spezzano la fila
+      for (let i = 1; i < cur.length; i++) if (cur[i].s !== cur[i - 1].s) cost += Math.abs(cur[i].fr - cur[i - 1].fr) * 3 // al cambio di corda si resta vicini
+      if (!best || cost < best.cost) best = { cost, picks: cur.map((c) => ({ ...c })) }
+      return
+    }
+    for (const c of cands[i]) {
+      if (i > 0 && c.s > cur[i - 1].s) continue // mai su una corda più grave
+      cur[i] = c
+      walk(i + 1)
+    }
+  }
+  walk(0)
+  if (!best) return null
+  return new Map(notes.map((n, i) => [n.key, best.picks[i]]))
 }
 
 // highlights: Map pitch class -> nota; mode: 'degrees' | 'notes'
