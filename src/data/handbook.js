@@ -97,25 +97,18 @@ export const HANDBOOK = [
 
   // ——— Capitolo 2 · Accordi
   {
-    id: 'triads', chapter: 2, title: 'Triadi', subtitle: 'Accordi di tre note: maggiore e minore',
-    def: 'La triade si costruisce sovrapponendo due terze: fondamentale, terza e quinta. La qualità dipende dalla terza: maggiore se è maggiore, minore se è minore.',
-    formula: 'Maggiore 1 3 5 · Minore 1 ♭3 5',
-    points: ['Sigla: C maggiore, Cm minore', 'La quinta resta giusta in entrambe', 'La terza decide il “carattere” dell’accordo'],
-    examples: [ch('Do maggiore', 60, '1 3 5'), ch('Do minore', 60, '1 ♭3 5')],
+    id: 'triads', chapter: 2, title: 'Triadi', subtitle: 'Accordi di tre note: le quattro qualità',
+    def: 'La triade si costruisce sovrapponendo due terze: fondamentale, terza e quinta. La qualità dipende dalle due terze: maggiore e minore sono stabili, diminuita ed eccedente sono instabili e vogliono risolvere.',
+    formula: 'Maggiore 1 3 5 · Minore 1 ♭3 5 · Diminuita 1 ♭3 ♭5 · Eccedente 1 3 ♯5',
+    points: ['Sigla: C maggiore, Cm minore, C° (o Cdim) diminuita, C+ (o Caug) eccedente', 'Maggiore e minore hanno la quinta giusta: la terza ne decide il “carattere”', 'La diminuita ha due terze minori sovrapposte e compare sul VII grado della scala maggiore', 'L’eccedente ha due terze maggiori ed è simmetrica: divide l’ottava in tre parti uguali'],
+    examples: [ch('Do maggiore', 60, '1 3 5'), ch('Do minore', 60, '1 ♭3 5'), ch('Do diminuito', 60, '1 ♭3 ♭5'), ch('Do eccedente', 60, '1 3 ♯5')],
   },
   {
-    id: 'dimaug', chapter: 2, title: 'Triade diminuita ed eccedente', subtitle: 'Le due triadi instabili',
-    def: 'La triade diminuita ha due terze minori sovrapposte, quella eccedente due terze maggiori. Entrambe sono instabili e vogliono risolvere.',
-    formula: 'Diminuita 1 ♭3 ♭5 · Eccedente 1 3 ♯5',
-    points: ['Sigla: C° (o Cdim), C+ (o Caug)', 'La diminuita compare sul VII grado della scala maggiore', 'L’eccedente è simmetrica: divide l’ottava in tre parti uguali'],
-    examples: [ch('Do diminuito', 60, '1 ♭3 ♭5'), ch('Do eccedente', 60, '1 3 ♯5')],
-  },
-  {
-    id: 'sevenths', chapter: 2, title: 'Accordi di settima', subtitle: 'Quattro note, sette qualità',
-    def: 'Aggiungendo la settima alla triade si ottiene un accordo di quattro note, più ricco e più “di movimento”. Le qualità principali sono sette.',
-    formula: 'maj7 1 3 5 7 · 7 1 3 5 ♭7 · m7 1 ♭3 5 ♭7 · m7♭5 1 ♭3 ♭5 ♭7 · dim7 1 ♭3 ♭5 ♭♭7 · mΔ 1 ♭3 5 7 · Δ♯5 1 3 ♯5 7',
-    points: ['Cmaj7 (CΔ): settima maggiore', 'C7: dominante, ha la ♭7 e la 3 maggiore', 'Cm7♭5 si scrive anche Cø', 'CmΔ: triade minore con settima maggiore', 'CΔ♯5: settima maggiore con quinta eccedente'],
-    examples: [ch('Do maggiore settima', 60, '1 3 5 7'), ch('Do settima di dominante', 60, '1 3 5 ♭7'), ch('Do minore settima', 60, '1 ♭3 5 ♭7'), ch('Do semidiminuito', 60, '1 ♭3 ♭5 ♭7'), ch('Do minore maggiore settima', 60, '1 ♭3 5 7'), ch('Do settima maggiore eccedente', 60, '1 3 ♯5 7')],
+    id: 'sevenths', chapter: 2, title: 'Quadriadi', subtitle: 'Accordi di quattro note: le sette qualità',
+    def: 'Aggiungendo la settima alla triade si ottiene un accordo di quattro note, più ricco e più “di movimento”. Le qualità sono sette.',
+    formula: 'Δ (maj7) 1 3 5 7 · 7 1 3 5 ♭7 · m7 1 ♭3 5 ♭7 · ø7 (m7♭5) 1 ♭3 ♭5 ♭7 · °7 (dim7) 1 ♭3 ♭5 ♭♭7 · mΔ 1 ♭3 5 7 · Δ♯5 1 3 ♯5 7',
+    points: ['CΔ (Cmaj7): triade maggiore con settima maggiore', 'C7: dominante, triade maggiore con ♭7', 'Cm7: triade minore con ♭7', 'Cø7 (Cm7♭5): semidiminuito, triade diminuita con ♭7', 'C°7: diminuito, triade diminuita con ♭♭7, tutte terze minori', 'CmΔ: triade minore con settima maggiore', 'CΔ♯5: settima maggiore con quinta eccedente'],
+    examples: [ch('Do maggiore settima', 60, '1 3 5 7'), ch('Do settima di dominante', 60, '1 3 5 ♭7'), ch('Do minore settima', 60, '1 ♭3 5 ♭7'), ch('Do semidiminuito', 60, '1 ♭3 ♭5 ♭7'), ch('Do diminuito settima', 60, '1 ♭3 ♭5 ♭♭7'), ch('Do minore maggiore settima', 60, '1 ♭3 5 7'), ch('Do settima maggiore eccedente', 60, '1 3 ♯5 7')],
   },
   {
     id: 'symbols', chapter: 2, title: 'Sigle degli accordi', subtitle: 'Come si legge un cifrato',
