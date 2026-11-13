@@ -15,7 +15,7 @@ export default function Path({ completed, onOpen }) {
     ...CHAPTERS.map((c) => ({ kind: 'chapter', id: c.n, number: c.n, title: c.title })),
   ]
   const finished = CHAPTERS.every((c) => completed.includes(c.n)) // percorso completato: Polly festeggia in fondo
-  const height = TOP + items.length * ROW + 24 + (finished ? 190 : 0)
+  const height = TOP + items.length * ROW + 24
   const center = (i) => ({ x: i % 2 === 0 ? LEFT : RIGHT, y: TOP + i * ROW + HALF })
 
   const segments = items.slice(0, -1).map((_, i) => {
@@ -48,7 +48,7 @@ export default function Path({ completed, onOpen }) {
           onOpen={() => onOpen(item)}
         />
       ))}
-      {finished && <img className="path-polly" src={pollyCelebrate} alt="Polly festeggia: hai completato il percorso!" />}
+      {finished && <img className="path-polly" style={{ top: TOP + (items.length - 1) * ROW + 30 }} src={pollyCelebrate} alt="Polly festeggia: hai completato il percorso!" />}
     </div>
   )
 }
