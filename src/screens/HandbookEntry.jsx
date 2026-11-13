@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Fretboard from '../components/Fretboard'
 import LessonKeys from '../components/LessonKeys'
 import CircleOfFifths from '../components/CircleOfFifths'
+import NegativeAxis from '../components/NegativeAxis'
 import { IT_NAMES, highlightMap } from '../lib/music'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
 import { splitLines } from '../lib/text'
@@ -90,6 +91,7 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
 
       <article className="lesson-card">
         <p className="lesson-body">{entry.def}</p>
+        {entry.id === 'negmirror' && <NegativeAxis instrument={instrument} />}
         {entry.formula && (
           <div className="lesson-remember">
             <strong>{entry.formulaTable ? entry.formulaTable.title : 'Formula'}</strong>
@@ -143,6 +145,31 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
             )}
           </div>
         )}
+        {entry.moreTables &&
+          entry.moreTables.map((t) => (
+            <div key={t.title} className="lesson-remember">
+              <strong>{t.title}</strong>
+              <table className="hbe-table">
+                <thead>
+                  <tr>
+                    {t.head.map((h) => (
+                      <th key={h}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.rows.map((r) => (
+                    <tr key={r[0]}>
+                      {r.map((c, k) => (
+                        <td key={k}>{c || '–'}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {t.foot && <span className="hbe-table-foot">{t.foot}</span>}
+            </div>
+          ))}
         {entry.points.length > 0 && (
           <ul className="hbe-points">
             {entry.points.map((p) => (

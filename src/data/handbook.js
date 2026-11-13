@@ -520,13 +520,70 @@ export const HANDBOOK = [
 
   // ——— Capitolo 17 · Armonia negativa
   {
-    id: 'negative', chapter: 17, title: 'Armonia negativa', subtitle: 'Riflettere le note come in uno specchio',
-    def: 'Ogni nota viene specchiata rispetto a un asse. Con l’asse di Do (tra Mi♭ e Mi) le note si scambiano a coppie. È un metodo di calcolo per trovare accordi nuovi (da Ernst Levy, ripreso da Jacob Collier), non una legge dell’armonia.',
-    formula: 'Do↔Sol · Re↔Fa · Mi↔Mi♭ · La↔Si♭ · Si↔La♭ · Do♯↔Fa♯',
-    points: ['Do maggiore (Do Mi Sol) → Do minore (Sol Mi♭ Do)', 'Fa maggiore → Sol minore · G7 → Fm6', 'CΔ → Cm♭6 (= A♭Δ/C)', 'Una cadenza maggiore diventa minore e sospesa'],
+    id: 'negmirror', chapter: 17, title: 'Asse e specchio', subtitle: 'Scegli la tonica e guarda le note specchiarsi',
+    def: 'Nell’armonia negativa ogni nota si specchia intorno a un asse, che passa a metà strada tra la terza minore e la terza maggiore della tonica. Scegli una tonica e osserva le sei coppie: la forma è sempre la stessa, cambiano solo i nomi.',
+    formula: '1 ↔ 5 · ♭2 ↔ ♯4 · 2 ↔ 4 · ♭3 ↔ 3 · ♭6 ↔ 7 · 6 ↔ ♭7',
+    points: ['Nessuna nota cade sull’asse: ogni nota ha il suo specchio', 'Tocca una coppia per evidenziarla e ascoltarla: le due note sono alla stessa distanza dall’asse', 'Per ogni tonica l’asse sta tra il suo ♭3 e il suo 3 (e dalla parte opposta, tra 6 e ♭7)'],
+    examples: [],
+  },
+  {
+    id: 'negdegrees', chapter: 17, title: 'Le corrispondenze nella scala', subtitle: 'Ogni grado di Do maggiore e il suo specchio',
+    def: 'Ecco cosa succede alle note e agli accordi di Do maggiore quando si specchiano intorno all’asse di Do. Le note si specchiano intorno all’asse, le fondamentali degli accordi intorno alla tonica.',
+    formula: 'Do Re Mi Fa Sol La Si → Sol Fa Mi♭ Re Do Si♭ La♭',
+    formulaTable: {
+      title: 'Le note di Do maggiore',
+      head: ['Grado', 'Nota', 'Si specchia in', 'Grado'],
+      rows: [['1', 'Do', 'Sol', '5'], ['2', 'Re', 'Fa', '4'], ['3', 'Mi', 'Mi♭', '♭3'], ['4', 'Fa', 'Re', '2'], ['5', 'Sol', 'Do', '1'], ['6', 'La', 'Si♭', '♭7'], ['7', 'Si', 'La♭', '♭6']],
+      foot: 'Le due note fuori scala si specchiano tra loro: Do♯ ↔ Fa♯',
+    },
+    moreTables: [
+      {
+        title: 'Gli accordi di Do maggiore a triadi',
+        head: ['Grado', 'Accordo', 'Negativo'],
+        rows: [['I', 'C', 'Cm'], ['ii', 'Dm', 'B♭'], ['iii', 'Em', 'A♭'], ['IV', 'F', 'Gm'], ['V', 'G', 'Fm'], ['vi', 'Am', 'E♭'], ['vii°', 'B°', 'D°']],
+      },
+      {
+        title: 'Gli accordi di Do maggiore a quattro voci',
+        head: ['Grado', 'Accordo', 'Negativo'],
+        rows: [['Imaj7', 'CΔ', 'Cm♭6'], ['iim7', 'Dm7', 'B♭6 (= Gm7)'], ['iiim7', 'Em7', 'A♭6 (= Fm7)'], ['IVmaj7', 'FΔ', 'Gm♭6'], ['V7', 'G7', 'Fm6'], ['vim7', 'Am7', 'E♭6 (= Cm7)'], ['viim7♭5', 'Bø7', 'B♭7']],
+        foot: 'Alcuni negativi hanno due nomi: Cm♭6 = A♭Δ/C · Gm♭6 = E♭Δ/G · Fm6 = Dø7',
+      },
+    ],
+    points: ['La scala maggiore specchiata è la minore naturale: Do Re Mi♭ Fa Sol La♭ Si♭', 'Tonica e quinta si scambiano: Do ↔ Sol', 'La terza maggiore diventa minore (Mi ↔ Mi♭) e la settima maggiore diventa sesta minore (Si ↔ La♭)'],
     examples: [
-      pr('C – F – G7 – C → Cm – Gm – Fm6 – Cm', [['Cm', 'Cm', Cm], ['Gm', 'Gm', [55, 58, 62]], ['Fm6', 'Fm6', [53, 56, 60, 62]], ['Cm', 'Cm', Cm]]),
-      pr('Dm7 – G7 – CΔ → Gm7 – Fm6 – Cm♭6', [['Gm7', 'Gm7', [55, 58, 62, 65]], ['Fm6', 'Fm6', [53, 56, 60, 62]], ['Cm♭6', 'Cm♭6', [60, 63, 67, 68]]]),
+      sc('Do maggiore', 60, '1 2 3 4 5 6 7'),
+      sc('Il suo specchio: Do minore naturale', 60, '1 2 ♭3 4 5 ♭6 ♭7'),
+      { label: 'Do maggiore specchiato nota per nota', base: 55, notes: [nt(67, 5, '5'), nt(65, 4, '4'), nt(63, 3, '♭3'), nt(62, 2, '2'), nt(60, 1, '1'), nt(58, 7, '♭7'), nt(56, 6, '♭6')], play: [67, 65, 63, 62, 60, 58, 56], chord: false, melody: true },
+    ],
+  },
+  {
+    id: 'negchords', chapter: 17, title: 'Le corrispondenze degli accordi', subtitle: 'Ogni tipo di accordo ha un solo negativo',
+    def: 'Sì: ogni tipo di accordo ha sempre un solo negativo, in qualsiasi tonalità. L’unica cosa che dipende dalla tonalità è la fondamentale del risultato, che si trova specchiando quella di partenza rispetto alla tonica.',
+    formula: 'M ↔ m · 7 ↔ m6 · Δ ↔ m♭6 · m7 ↔ 6',
+    formulaTable: {
+      title: 'Tipo di accordo → negativo',
+      head: ['Accordo', 'Negativo'],
+      rows: [
+        ['Maggiore · C', 'Minore · Cm'],
+        ['Minore · Cm', 'Maggiore · C'],
+        ['Settima di dominante · C7', 'Minore con sesta · Cm6'],
+        ['Minore con sesta · Cm6', 'Settima di dominante · C7'],
+        ['Maggiore settima · CΔ', 'Minore ♭6 · Cm♭6'],
+        ['Minore ♭6 · Cm♭6', 'Maggiore settima · CΔ'],
+        ['Minore settima · Cm7', 'Maggiore sesta · C6'],
+        ['Maggiore sesta · C6', 'Minore settima · Cm7'],
+        ['Semidiminuito · Cø7', 'Settima di dominante · A7'],
+        ['Diminuito · C°', 'Diminuito · C♯°'],
+        ['Diminuito settima · C°7', 'Diminuito settima · C♯°7'],
+        ['Eccedente · C+', 'Eccedente · E♭+'],
+        ['Minore-maggiore · CmΔ', 'Maggiore ♯5 · A♭Δ♯5'],
+        ['Sospeso · Csus4', 'Sospeso · Csus2'],
+      ],
+      foot: 'Esempi con la fondamentale su Do e asse di Do',
+    },
+    points: ['Fondamentali in Do: Do → Do · Re → Si♭ · Mi → La♭ · Fa → Sol · Sol → Fa · La → Mi♭ · Si → Re♭', 'Dentro l’accordo i gradi si scambiano così: 1 ↔ 5 · ♭3 ↔ 3 · ♭7 ↔ 6 · 7 ↔ ♭6 · 2 ↔ 4 · ♭2 ↔ ♯4', 'Lo stesso tipo di accordo su un’altra fondamentale ha un altro negativo, ma sempre dello stesso tipo', 'Alcuni risultati hanno due nomi: Cm6 = Aø7/C · Cm♭6 = A♭Δ/C · B♭6 = Gm7'],
+    examples: [
+      pr('Dm7 – G7 – CΔ → B♭6 – Fm6 – Cm♭6', [['Dm7', 'Dm7', [62, 65, 69, 72]], ['G7', 'G7', G7], ['CΔ', 'CΔ', CM7], ['B♭6', 'B♭6', [58, 62, 65, 67]], ['Fm6', 'Fm6', [53, 56, 60, 62]], ['Cm♭6', 'Cm♭6', [60, 63, 67, 68]]]),
     ],
   },
 
