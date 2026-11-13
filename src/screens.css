@@ -1919,3 +1919,26 @@ a.btn {
 .hbe-fn-line b {
   font-weight: 800;
 }
+
+/* Tastiera scorrevole (Costruisci / Applica) */
+.bi-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.bi-scroll::-webkit-scrollbar {
+  display: none;
+}
+.bi.bi-wide {
+  width: 187.5%;
+  max-width: none;
+}
+.bi-hint {
+  margin: 4px 0 0;
+  color: var(--lavender);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}

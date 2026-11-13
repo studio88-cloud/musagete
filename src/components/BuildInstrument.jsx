@@ -35,8 +35,9 @@ function Pick({ x, y, r = 8 }) {
   return <circle cx={x} cy={y} r={r} className="bi-pick" pointerEvents="none" />
 }
 
-// ——— Tastiera: una ottava, da Do4 a Do5
+// ——— Tastiera: due ottave, da Do4 a Do6 (si scorre con il dito: servono per i rivolti)
 const BASE = 60
+const OCT = 2
 const WHITE_PCS = [0, 2, 4, 5, 7, 9, 11]
 const KW = 44
 const KH = 190
@@ -46,7 +47,7 @@ const BH = 118
 function Keys({ selected, onTap, result, helpPc }) {
   const white = []
   const black = []
-  for (let m = BASE; m <= BASE + 12; m++) {
+  for (let m = BASE; m <= BASE + 12 * OCT; m++) {
     if (WHITE_PCS.includes(m % 12)) white.push({ midi: m, x: white.length * KW })
     else black.push({ midi: m, x: (white.length - 1) * KW + KW - BW / 2 })
   }
@@ -93,9 +94,12 @@ function Keys({ selected, onTap, result, helpPc }) {
   }
 
   return (
-    <svg className="bi" viewBox={`0 0 ${total} ${KH + 22}`} role="group" aria-label="Tastiera da Do4 a Do5">
-      <text x="2" y="12" className="bi-lbl">Do4</text>
-      <text x={total - 2} y="12" className="bi-lbl" textAnchor="end">Do5</text>
+    <>
+    <div className="bi-scroll">
+    <svg className="bi bi-wide" viewBox={`0 0 ${total} ${KH + 22}`} role="group" aria-label={`Tastiera da Do4 a Do${4 + OCT}, scorrevole`}>
+      {white.filter((k) => k.midi % 12 === 0).map((k) => (
+        <text key={`l${k.midi}`} x={k.x + 3} y="12" className="bi-lbl">{`Do${octaveOf(k.midi)}`}</text>
+      ))}
       <g transform="translate(0 20)">
         {white.map((k) => keyEl(k, false))}
         {black.map((k) => keyEl(k, true))}
@@ -107,6 +111,9 @@ function Keys({ selected, onTap, result, helpPc }) {
           ))}
       </g>
     </svg>
+    </div>
+    <p className="bi-hint" aria-hidden="true">← Scorri la tastiera per le altre note →</p>
+    </>
   )
 }
 
