@@ -28,7 +28,7 @@ export default {
       pages: [
         page('Sulla tastiera', 'Con la tastiera si usano le due mani: la sinistra suona la fondamentale, spesso raddoppiata all’ottava, la destra suona l’accordo. Si possono variare i ritmi: accordi tenuti, ripetuti o spezzati in arpeggio.', 'Sinistra: basso · Destra: accordo', { notes: [] }, 'Due mani, due ruoli!'),
         page('Sulla chitarra', 'La chitarra accompagna con il battere di plettro (strumming) o con arpeggi. Per lo strumming si mantiene un ritmo costante di giù e su e si accentuano i tempi forti. Con gli arpeggi si suonano le corde dell’accordo una alla volta.', 'Strumming o arpeggio.', { notes: [] }, 'Il ritmo è la tua mano destra!'),
-        page('Sul basso', 'Il basso suona soprattutto la fondamentale di ogni accordo e la quinta, sui tempi forti. Con più esperienza si passa al walking bass, una linea di note per gradi congiunti che collega le fondamentali, come nel jazz.', 'Fondamentale e quinta · poi walking bass.', { notes: [] }, 'Il basso tiene tutto insieme!'),
+        page('Sul basso', 'Il basso suona soprattutto la fondamentale di ogni accordo e la quinta, sui tempi forti. Con più esperienza si passa al walking bass, una linea di note per gradi congiunti che collega le fondamentali, come nel jazz.', 'Fondamentale e quinta, poi walking bass.', { notes: [] }, 'Il basso tiene tutto insieme!'),
       ],
     },
     3: {

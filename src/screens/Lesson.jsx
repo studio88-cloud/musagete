@@ -6,7 +6,8 @@ import ReadStaff from '../components/ReadStaff'
 import pollyImg from '../images/polly-sit.webp'
 import { IT_NAMES } from '../lib/music'
 import { lessonFor } from '../data/lessons'
-import { playNotes, stopPlaying } from '../lib/audio'
+import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
+import { splitLines } from '../lib/text'
 
 function BackArrow() {
   return (
@@ -42,7 +43,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
       return
     }
     setPlaying(true)
-    const shift = instrument === 'bass' ? -24 : 0 // il basso suona due ottave sotto (la sua gamma reale)
+    const shift = instrumentShift(instrument)
     const src = page.play || page.notes.map((n) => n.midi)
     if (page.progression) {
       playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
@@ -75,7 +76,9 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
 
         <div className="lesson-remember">
           <strong>Da ricordare</strong>
-          <span>{page.remember}</span>
+          {splitLines(page.remember).map((l) => (
+            <span key={l} className="lr-line">{l}</span>
+          ))}
         </div>
 
         {page.chords && (
@@ -100,7 +103,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
             {instrument === 'keyboard' ? (
               <LessonKeys notes={page.notes} base={page.base} />
             ) : (
-              <Fretboard instrument={instrument} highlights={highlights} mode="degrees" />
+              <Fretboard instrument={instrument} highlights={highlights} mode="degrees" firstPosition />
             )}
           </>
         )}

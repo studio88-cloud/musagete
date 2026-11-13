@@ -3,7 +3,8 @@ import Fretboard from '../components/Fretboard'
 import LessonKeys from '../components/LessonKeys'
 import CircleOfFifths from '../components/CircleOfFifths'
 import { IT_NAMES } from '../lib/music'
-import { playNotes, stopPlaying } from '../lib/audio'
+import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
+import { splitLines } from '../lib/text'
 import { CHAPTERS } from '../data/chapters'
 
 const WHITE = [0, 2, 4, 5, 7, 9, 11]
@@ -30,7 +31,7 @@ function Example({ ex, instrument }) {
       return
     }
     setPlaying(true)
-    const shift = instrument === 'bass' ? -24 : 0
+    const shift = instrumentShift(instrument)
     if (ex.progression) {
       playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     } else {
@@ -52,7 +53,7 @@ function Example({ ex, instrument }) {
           ))}
         </div>
       )}
-      {shown.length > 0 && (instrument === 'keyboard' ? <LessonKeys notes={shown} base={base} /> : <Fretboard instrument={instrument} highlights={hl} mode="degrees" />)}
+      {shown.length > 0 && (instrument === 'keyboard' ? <LessonKeys notes={shown} base={base} /> : <Fretboard instrument={instrument} highlights={hl} mode="degrees" firstPosition />)}
       <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
         {playing ? 'Ferma' : 'Ascolta'}
       </button>
@@ -101,7 +102,9 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
                 {entry.formulaTable.foot && <span className="hbe-table-foot">{entry.formulaTable.foot}</span>}
               </>
             ) : (
-              <span>{entry.formula}</span>
+              splitLines(entry.formula).map((l) => (
+                <span key={l} className="lr-line">{l}</span>
+              ))
             )}
           </div>
         )}

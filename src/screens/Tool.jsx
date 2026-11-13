@@ -170,8 +170,8 @@ export default function Tool({ instrument }) {
       setPlaying(false)
       return
     }
-    // il basso suona due ottave sotto la tastiera (la sua gamma reale)
-    const base = baseMidi(root) - (instrument === 'bass' ? 24 : 0)
+    // il basso suona due ottave sotto la tastiera, la chitarra una (la loro gamma reale)
+    const base = baseMidi(root) + instrumentShift(instrument)
     const midis = [...notes].sort((a, b) => a.semi - b.semi).map((n) => base + n.semi)
     const isScale = st.kind === 'scale'
     if (isScale) midis.push(base + 12)

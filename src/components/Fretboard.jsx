@@ -11,23 +11,25 @@ const THICKNESS = {
 }
 const LABELS = { guitar: 'chitarra', bass: 'basso' }
 
-const WIDTH = 390
 const X0 = 26 // capotasto
-const FRET_W = 28.8
-const FRETS = 12
+const FIRST_FRETS = 4 // prima posizione: corde a vuoto e primi 4 tasti
+const FIRST_FRET_W = 89
+const WIDTH = 390
 const TOP = 40
 const GAP = 27
 const R = 13 // raggio dei pallini
 const ROMAN = { 3: 'III', 5: 'V', 7: 'VII', 9: 'IX', 12: 'XII' }
-const INLAYS = [3, 5, 7, 9, 12]
 
-const fretX = (n) => X0 + n * FRET_W
 // corda a vuoto: a sinistra del capotasto; altrimenti il centro dello spazio tra due tasti
 const OPEN_X = 13.5
-const noteX = (n) => (n === 0 ? OPEN_X : fretX(n) - FRET_W / 2)
 
 // highlights: Map pitch class -> nota; mode: 'degrees' | 'notes'
-export default function Fretboard({ instrument, highlights, mode }) {
+export default function Fretboard({ instrument, highlights, mode, firstPosition = false }) {
+  const FRETS = firstPosition ? FIRST_FRETS : 12
+  const FRET_W = firstPosition ? FIRST_FRET_W : 28.8
+  const fretX = (n) => X0 + n * FRET_W
+  const noteX = (n) => (n === 0 ? OPEN_X : fretX(n) - FRET_W / 2)
+  const INLAYS = firstPosition ? [3] : [3, 5, 7, 9, 12]
   const tuning = STRINGS[instrument]
   const lastY = TOP + (tuning.length - 1) * GAP
   const height = lastY + 28

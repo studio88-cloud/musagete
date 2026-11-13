@@ -3,6 +3,7 @@
   "short_name": "Musagete",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#1B1428",
   "theme_color": "#1B1428",
   "icons": [

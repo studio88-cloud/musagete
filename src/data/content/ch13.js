@@ -39,7 +39,7 @@ export default {
     },
     4: {
       pages: [
-        page('Le dodici battute', 'Il blues ha una struttura di 12 battute con tre frasi di quattro battute. La forma base usa solo I7, IV7 e V7: | I7 | I7 | I7 | I7 | IV7 | IV7 | I7 | I7 | V7 | IV7 | I7 | I7 |. Gli accordi sono tutti di settima di dominante.', '12 battute · I7 IV7 V7', { notes: [] }, 'La forma più famosa della musica!'),
+        page('Le dodici battute', 'Il blues ha una struttura di 12 battute con tre frasi di quattro battute. La forma base usa solo I7, IV7 e V7: | I7 | I7 | I7 | I7 | IV7 | IV7 | I7 | I7 | V7 | IV7 | I7 | I7 |. Gli accordi sono tutti di settima di dominante.', '12 battute: I7 IV7 V7', { notes: [] }, 'La forma più famosa della musica!'),
         page('Il blues jazz', 'Nella versione jazz si aggiungono accordi di passaggio: un II–V verso il IV alla battuta 4, il VI7 alla battuta 8 e il II–V finale. Una forma in Fa: | F7 | B♭7 | F7 | Cm7 F7 | B♭7 | B♭7 | F7 | D7 | Gm7 | C7 | F7 D7 | Gm7 C7 |. Gli ultimi accordi formano il turnaround.', 'Blues jazz = blues + II–V e passaggi', { notes: [] }, 'Più colore, stessa forma!'),
       ],
     },

@@ -21,13 +21,41 @@ let ctx = null
 let current = null
 
 function getCtx() {
-  if (!ctx) {
+  if (!ctx || ctx.state === 'closed') {
     const AC = window.AudioContext || window.webkitAudioContext
     if (!AC) return null
     ctx = new AC()
   }
-  if (ctx.state === 'suspended') ctx.resume()
+  if (ctx.state !== 'running') ctx.resume().catch(() => {})
   return ctx
+}
+
+// Di quanti semitoni si abbassano gli esempi: il basso suona due ottave sotto la tastiera, la chitarra una (la loro gamma reale)
+export function instrumentShift(instrument) {
+  return instrument === 'bass' ? -24 : instrument === 'guitar' ? -12 : 0
+}
+
+// Quando l'app torna in primo piano il contesto audio può essere rimasto bloccato (Safari lo mette in "interrupted"):
+// lo si butta e se ne crea uno nuovo al prossimo tocco. I campioni già scaricati restano validi.
+let wasHidden = false
+function resetContext() {
+  const old = ctx
+  ctx = null
+  if (old) old.close().catch(() => {})
+}
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      wasHidden = true
+      stopPlaying()
+    } else if (wasHidden) {
+      wasHidden = false
+      resetContext()
+    }
+  })
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) resetContext()
+  })
 }
 
 // Scarica i campioni di uno strumento (se ne ha). Si può chiamare in anticipo, anche più volte.
@@ -160,6 +188,9 @@ export function stopPlaying() {
   playToken++
   if (!current) return
   clearTimeout(current.timer)
+  const end = current.onEnd
+  current.onEnd = null
+  if (end && wasHidden) setTimeout(end, 0)
   try {
     current.master.gain.cancelScheduledValues(0)
     current.master.gain.setValueAtTime(0, ctx.currentTime)
@@ -211,8 +242,8 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     midis.forEach((chord) => {
       if (arpeggio) {
         const sorted = [...chord].sort((a, b) => a - b)
-        sorted.forEach((midi, i) => events.push({ midi, at: total + i * 0.17, dur: 1.2, vol: 0.45 }))
-        total += 1.2
+        sorted.forEach((midi, i) => events.push({ midi, at: total + i * 0.34, dur: 1.4, vol: 0.45 }))
+        total += (sorted.length - 1) * 0.34 + 1.3
       } else {
         const vol = 0.3 / Math.sqrt(chord.length)
         chord.forEach((midi) => events.push({ midi, at: total, dur: 1.1, vol }))
@@ -226,9 +257,9 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     midis.forEach((midi, i) => events.push({ midi, at: i * step, dur, vol: 0.5 }))
     total = (midis.length - 1) * step + dur
   } else if (arpeggio) {
-    // accordo in arpeggio: su e poi di nuovo giù-su più lento
-    const step = 0.3
-    const noteDur = 1.1
+    // accordo in arpeggio: una nota dopo l'altra, con calma
+    const step = 0.5
+    const noteDur = 1.5
     midis.forEach((midi, i) => events.push({ midi, at: i * step, dur: noteDur, vol: 0.45 }))
     total = (midis.length - 1) * step + noteDur
   } else {
@@ -239,8 +270,8 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     }
     block(1.1) // 1) accordo insieme
     total += 0.2
-    const step = 0.32
-    const noteDur = 0.7
+    const step = 0.5
+    const noteDur = 0.9
     midis.forEach((midi, i) => events.push({ midi, at: total + i * step, dur: noteDur, vol: 0.45 }))
     total += (midis.length - 1) * step + noteDur + 0.15 // 2) arpeggio
     block(1.8) // 3) di nuovo insieme
@@ -258,5 +289,5 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     current = null
     onEnd?.()
   }, total * 1000 + 100)
-  current = { master, timer }
+  current = { master, timer, onEnd }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Welcome from './components/Welcome'
 import TopBar from './components/TopBar'
 import TabBar from './components/TabBar'
@@ -50,6 +50,19 @@ export default function App() {
   const [placeResult, setPlaceResult] = useState(null) // null | 'pass' | 'fail'
   const { stats, addAnswer, resetStats } = useStats(Boolean(openStep) || placing)
 
+  // il Prontuario torna alla posizione in cui era quando si è aperta una voce
+  const hbScroll = useRef(0)
+  const wasEntry = useRef(false)
+  const inEntry = tab === 'handbook' && Boolean(openItem)
+  useLayoutEffect(() => {
+    if (wasEntry.current && !inEntry && tab === 'handbook') window.scrollTo(0, hbScroll.current)
+    wasEntry.current = inEntry
+  }, [inEntry, tab])
+  const openHandbookItem = (entry) => {
+    hbScroll.current = window.scrollY
+    setOpenItem(entry)
+  }
+
   useEffect(() => {
     preloadSamples(instrument) // i campioni si scaricano in anticipo, così il primo ascolto è già quello vero
   }, [instrument])
@@ -71,6 +84,7 @@ export default function App() {
   }
 
   const changeTab = (id) => {
+    hbScroll.current = 0
     setOpenItem(null)
     setOpenStep(null)
     setTab(id)
@@ -194,7 +208,7 @@ export default function App() {
   } else if (tab === 'path') {
     content = <Path completed={completed} onOpen={setOpenItem} />
   } else if (tab === 'handbook') {
-    content = <Handbook completed={completed} onOpen={setOpenItem} />
+    content = <Handbook completed={completed} onOpen={openHandbookItem} />
   } else if (tab === 'tool') {
     content = <Tool instrument={instrument} />
   } else {
@@ -216,6 +230,10 @@ export default function App() {
 
   return (
     <div className="app">
+      <div className="rotate-lock" role="alert">
+        <span aria-hidden="true">⟳</span>
+        <p>Gira il telefono in verticale per usare Musagete</p>
+      </div>
       <TopBar instrument={instrument} onInstrumentChange={setInstrument} />
       <main className="screen">{content}</main>
       <TabBar active={tab} onChange={changeTab} />

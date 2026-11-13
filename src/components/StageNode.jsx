@@ -3,6 +3,7 @@ import completata from '../assets/icons/tappa_completata_anello.svg'
 import attuale from '../assets/icons/tappa_attuale_progress.svg'
 import zaino from '../assets/icons/tappa_speciale_zaino.svg'
 import pollyThink from '../images/polly-think.webp'
+import pollyThinkSx from '../images/polly-think-sx.webp' // versione per le tappe a sinistra (disegnata a specchio, con la chiave dritta)
 
 const RING_RADIUS = 53
 const RING_LENGTH = 2 * Math.PI * RING_RADIUS
@@ -45,7 +46,7 @@ export default function StageNode({ kind, number, title, status, progress = 0, l
             <span className="stage-num">{number}</span>
             <img
               className={`stage-polly${left < 50 ? ' is-right' : ''}`}
-              src={pollyThink}
+              src={left < 50 ? pollyThinkSx : pollyThink}
               alt=""
               width="200"
               height="171"

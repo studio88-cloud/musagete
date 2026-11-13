@@ -108,8 +108,6 @@
   /* tappa a sinistra: Polly sta a destra e guarda verso la tappa (immagine specchiata) */
   right: auto;
   left: 40px;
-  transform: scaleX(-1);
-  animation-name: polly-bob-flip;
 }
 @keyframes polly-bob {
   0%,
@@ -118,15 +116,6 @@
   }
   50% {
     transform: translateY(-5px);
-  }
-}
-@keyframes polly-bob-flip {
-  0%,
-  100% {
-    transform: scaleX(-1) translateY(0);
-  }
-  50% {
-    transform: scaleX(-1) translateY(-5px);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -821,6 +810,9 @@ a.btn {
   font-size: 17px;
   font-weight: 600;
   line-height: 1.4;
+}
+.lr-line {
+  display: block;
 }
 .lesson-remember strong {
   color: var(--warn);
@@ -1810,4 +1802,34 @@ a.btn {
 .hbe-table-foot {
   font-size: 15px;
   font-weight: 600;
+}
+
+/* Telefono in orizzontale: si chiede di rimettere in verticale (il manifest blocca già l'orientamento nell'app installata) */
+.rotate-lock {
+  display: none;
+}
+@media (orientation: landscape) and (max-height: 500px) and (pointer: coarse) {
+  .rotate-lock {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--bg);
+    color: var(--lavender);
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .rotate-lock span {
+    font-size: 48px;
+    color: var(--warn);
+  }
+  .rotate-lock p {
+    margin: 0;
+    max-width: 280px;
+  }
 }

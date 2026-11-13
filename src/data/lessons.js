@@ -22,7 +22,7 @@ const CH1 = {
       {
         heading: 'L\u2019ottava',
         body: 'Dal Do al Do successivo c\u2019\u00e8 un\u2019ottava: le due note hanno lo stesso nome e sembrano \u201cuguali\u201d, solo una \u00e8 pi\u00f9 acuta. Su una tastiera un\u2019ottava contiene 12 tasti, bianchi e neri.',
-        remember: 'Ottava = 12 semitoni \u00b7 stesso nome, altezza diversa.',
+        remember: 'Ottava = 12 semitoni: stesso nome, altezza diversa.',
         notes: [n(60, 1, 'Do'), n(72, 1, 'Do')],
         polly: 'Stesso nome, suono pi\u00f9 alto!',
       },
