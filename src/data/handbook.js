@@ -71,7 +71,7 @@ export const HANDBOOK = [
     def: 'È la scala di sette note da cui nasce tutta l’armonia tonale. Ha una struttura fissa di toni e semitoni, e ogni nota è un grado numerato da 1 a 7.',
     formula: '1 2 3 4 5 6 7 · T T S T T T S',
     points: ['I semitoni sono tra 3–4 e 7–8', 'I gradi si indicano con i numeri romani: I, II, III…', 'Il 1° grado è la tonica, il 5° la dominante'],
-    examples: [sc('Do maggiore', 60, '1 2 3 4 5 6 7'), sc('Sol maggiore (un diesis: Fa♯)', 55, '1 2 3 4 5 6 7')],
+    examples: [sc('Do maggiore', 60, '1 2 3 4 5 6 7'), sc('Sol maggiore (un diesis: Fa♯)', 55, '1 2 3 4 5 6 7'), sc('Fa maggiore (un bemolle: Si♭)', 53, '1 2 3 4 5 6 7')],
   },
   {
     id: 'circle', chapter: 1, title: 'Circolo delle Quinte', subtitle: 'Mappa interattiva delle tonalità',

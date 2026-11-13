@@ -38,7 +38,7 @@ const CH = {
     chord('Sol', '', 'G', '1 2 3 4 5 6 7', 'Sol maggiore', { why: 'Ha un solo diesis, il Fa♯.' }),
     chord('Fa', '', 'F', '1 2 3 4 5 6 7', 'Fa maggiore', { why: 'Ha un solo bemolle, il Si♭.' }),
     chord('Lam', '', 'A', '1 2 ♭3 4 5 ♭6 ♭7', 'La minore naturale', { why: 'Ha le stesse note di Do maggiore, ma parte dal La.' }),
-    chord('Do arm', '', 'C', '1 2 ♭3 4 5 ♭6 7', 'Do minore armonico', { why: 'È la minore naturale con il settimo grado alzato: tra il La♭ e il Si c’è un intervallo di tre semitoni.' }),
+    chord('Dom Arm', '', 'C', '1 2 ♭3 4 5 ♭6 7', 'Do minore armonico', { why: 'È la minore naturale con il settimo grado alzato: tra il La♭ e il Si c’è un intervallo di tre semitoni.' }),
   ], { scale: true })],
   2: [prog('Suona la progressione Do – La minore – Fa – Sol', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
