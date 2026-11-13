@@ -24,7 +24,7 @@ export function Example({ ex, instrument }) {
   const [playing, setPlaying] = useState(false)
   useEffect(() => () => stopPlaying(), [])
   const base = ex.base ?? 60
-  const shown = ex.notes && ex.notes.length ? fold(ex.notes, base) : []
+  const shown = ex.notes && ex.notes.length ? (ex.noFold ? ex.notes : fold(ex.notes, base)) : []
   // le scale si chiudono con la tonica in ottava (un pallino in più, non una nota nuova)
   const isScale = !ex.chord && !ex.progression && !ex.form && !ex.melody && shown.length >= 5 && shown.every((n) => n.midi >= base && n.midi < base + 12)
   const root = shown.find((n) => n.deg === 1)

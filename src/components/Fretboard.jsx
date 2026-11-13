@@ -52,7 +52,7 @@ function pickPosition(instrument, highlights) {
   entries.forEach(([key, note]) => {
     const pc = note.pc ?? key // l'ottava alta ha chiave pc + 100
     let target = rootMidi
-    const exact = note.rel !== undefined && note.rel >= 12 // 9, 11, 13: l'altezza giusta conta, non solo il nome
+    const exact = note.exact || (note.rel !== undefined && note.rel >= 12) // 9, 11, 13 e i voicing: l'altezza giusta conta, non solo il nome
     if (note.rel !== undefined) target = rootMidi + note.rel
     else while (((target % 12) + 12) % 12 !== pc) target++
     let best = null

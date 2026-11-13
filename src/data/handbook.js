@@ -19,6 +19,16 @@ export const sc = (label, root, formula, opts = {}) => {
   return { label, base: root, notes, play, chord: Boolean(opts.chord), note: opts.note }
 }
 export const ch = (label, root, formula, note) => sc(label, root, formula, { chord: true, note })
+// Voicing di un accordo su Do: altezze esatte, con il grado di ogni nota per i colori
+const VC = { 0: [1, '1'], 4: [3, '3'], 7: [5, '5'], 11: [7, '7'] }
+export const vc = (label, midis) => ({
+  label,
+  base: Math.min(...midis),
+  notes: [...midis].sort((a, b) => a - b).map((m) => ({ ...nt(m, VC[((m % 12) + 12) % 12][0], VC[((m % 12) + 12) % 12][1]), exact: true })),
+  play: midis,
+  chord: true,
+  noFold: true, // le note restano alla loro altezza: è il voicing
+})
 // Progressione: accordi con funzione, sigla e altezze
 export const pr = (label, list, note) => ({
   label,
@@ -589,10 +599,20 @@ export const HANDBOOK = [
   // ——— Capitolo 18 · Arrangiare e accompagnare
   {
     id: 'voicings', chapter: 18, title: 'Voicing', subtitle: 'Come disporre le note di un accordo',
-    def: 'Il voicing è il modo in cui le note di un accordo sono distribuite sullo strumento. Cambiare il voicing cambia il suono senza cambiare l’accordo.',
-    formula: 'Shell 1 3 7 · Drop 2: la 2ª nota dall’alto scende di un’ottava',
-    points: ['Shell: solo fondamentale, terza e settima', 'Drop 2: voicing aperto, comodo sulla chitarra', 'Collega gli accordi muovendo meno note possibile'],
-    examples: [ch('Cmaj7 shell', 60, '1 3 7'), ch('Cmaj7 completo', 60, '1 3 5 7')],
+    def: 'Il voicing è il modo in cui le note di un accordo sono distribuite sullo strumento. Cambiare il voicing cambia il suono senza cambiare l’accordo. I voicing “drop” partono dalla posizione stretta (le quattro note dentro un’ottava) e abbassano di un’ottava alcune voci.',
+    formula: 'Shell: 1 3 7 · Drop 2: la 2ª nota dall’alto scende di un’ottava · Drop 3: la 3ª nota dall’alto scende di un’ottava · Drop 2&4: la 2ª e la 4ª nota dall’alto scendono di un’ottava',
+    points: ['Shell: solo fondamentale, terza e settima', 'Drop 2: voicing aperto, comodo sulla chitarra (quattro corde vicine)', 'Drop 3: la nota più grave sta una corda più in basso, con un “buco” in mezzo: suono più ampio', 'Drop 2&4: ancora più aperto, con fondamentale e quinta in basso e terza e settima in alto', 'Partendo da un’altra posizione stretta si ottengono altre versioni: con la fondamentale al basso, Drop 2 diventa 1 5 7 3 e Drop 3 diventa 1 7 3 5',
+'In ogni voicing le note sono sempre le stesse: cambia solo come sono distribuite', 'Collega gli accordi muovendo meno note possibile'],
+    examples: [
+      ch('Cmaj7 shell', 60, '1 3 7'),
+      vc('CΔ in posizione stretta', [60, 64, 67, 71]),
+      vc('CΔ Drop 2 (dal basso: 5 1 3 7)', [55, 60, 64, 71]),
+      vc('CΔ Drop 3 (dal basso: 3 1 5 7)', [52, 60, 67, 71]),
+      vc('CΔ Drop 2&4 (dal basso: 1 5 3 7)', [48, 55, 64, 71]),
+      vc('CΔ Drop 2 con la fondamentale al basso (1 5 7 3)', [48, 55, 59, 64]),
+      vc('CΔ Drop 3 con la fondamentale al basso (1 7 3 5)', [48, 59, 64, 67]),
+      pr('Dm7 – G7 – CΔ in Drop 2', [['iim7', 'Dm7', [57, 62, 65, 72]], ['V7', 'G7', [55, 62, 65, 71]], ['Imaj7', 'CΔ', [55, 60, 64, 71]]]),
+    ],
   },
 
   // ——— Capitolo 19 · Comporre e improvvisare

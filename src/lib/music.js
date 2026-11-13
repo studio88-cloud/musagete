@@ -76,7 +76,7 @@ export function highlightMap(notes, nameOf, { octave = false } = {}) {
       if (octave && n.deg === 1 && n.midi - rootNote.midi >= 12) m.set(pc + 100, { deg: n.deg, label: n.label, name: nameOf(pc), rel: n.midi - rootNote.midi, pc })
       return
     }
-    m.set(pc, { deg: n.deg, label: n.label, name: nameOf(pc), rel: n.midi - rootNote.midi })
+    m.set(pc, { deg: n.deg, label: n.label, name: nameOf(pc), rel: n.midi - rootNote.midi, exact: n.exact })
   })
   return m
 }
