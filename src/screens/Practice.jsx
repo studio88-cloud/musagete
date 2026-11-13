@@ -59,7 +59,7 @@ export default function Practice({ chapter, instrument = 'keyboard', onExit }) {
 
         <h3 className="prac-h">{data.phrase.title}</h3>
         <p className="lesson-body">{data.phrase.text}</p>
-        <Example ex={data.phrase.example} instrument={instrument} />
+        {data.phrase.example && <Example ex={data.phrase.example} instrument={instrument} />}
 
         <h3 className="prac-h">Come esercitarsi</h3>
         <ol className="prac-list">
