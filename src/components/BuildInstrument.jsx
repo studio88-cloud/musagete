@@ -28,8 +28,8 @@ function Mark({ x, y, r = 13, dark = false }) {
     </g>
   )
 }
-function Ghost({ x, y, r = 13 }) {
-  return <circle cx={x} cy={y} r={r} className="bi-ghost" pointerEvents="none" />
+function Ghost({ x, y, r = 13, help = false }) {
+  return <circle cx={x} cy={y} r={r} className={help ? 'bi-ghost is-help' : 'bi-ghost'} pointerEvents="none" />
 }
 function Pick({ x, y, r = 8 }) {
   return <circle cx={x} cy={y} r={r} className="bi-pick" pointerEvents="none" />
@@ -87,7 +87,7 @@ function Keys({ selected, onTap, result, helpPc }) {
         <rect x={x} y="0" width={w} height={h} rx="4" className={cls} />
         {st === 'ok' && <Dot x={cx} y={cy} expected={exp.get(k.midi % 12)} />}
         {st === 'bad' && <Mark x={cx} y={cy} dark />}
-        {helpMidi === k.midi && st === 'none' && <Ghost x={cx} y={cy} />}
+        {helpMidi === k.midi && st === 'none' && <Ghost x={cx} y={cy} help />}
       </g>
     )
   }
@@ -165,9 +165,13 @@ function Frets({ instrument, selected, onTap, result, helpPc }) {
       if (best) ghostIds.add(`${best.s}-${best.f}`)
     })
   }
+  let helpId = null
   if (helpPc != null && !result) {
     const best = spot(helpPc, sel)
-    if (best) ghostIds.add(`${best.s}-${best.f}`)
+    if (best) {
+      helpId = `${best.s}-${best.f}`
+      ghostIds.add(helpId)
+    }
   }
 
   // punti di riferimento del manico: non si disegnano sotto una nota o il tratteggio
@@ -198,7 +202,7 @@ function Frets({ instrument, selected, onTap, result, helpPc }) {
           {f === 0 && !picked && !ghostIds.has(id) && <circle cx={x} cy={y} r={DR - 3} fill="none" stroke="#c4b5fd" strokeWidth="1.5" opacity="0.55" pointerEvents="none" />}
           {picked && !result && <Pick x={x} y={y} r={DR - 2} />}
           {picked && result && (result.wrong.has(id) ? <Mark x={x} y={y} r={DR} /> : <Dot x={x} y={y} expected={exp.get(midi % 12)} r={DR} />)}
-          {!picked && ghostIds.has(id) && <Ghost x={x} y={y} r={DR} />}
+          {!picked && ghostIds.has(id) && <Ghost x={x} y={y} r={DR} help={id === helpId} />}
         </g>,
       )
     }),

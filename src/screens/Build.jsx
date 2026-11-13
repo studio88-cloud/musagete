@@ -163,6 +163,8 @@ export default function Build({ chapter, step, instrument = 'keyboard', onAnswer
           </button>
         </div>
 
+        {help && !result && <p className="bld-help" role="status">{`Aiuto: parti da ${q.expected[0].name}${q.expected[0].role ? `, la ${q.expected[0].role}` : ''}.`}</p>}
+
         {result && (
           <div ref={fbRef} className={`bld-fb ${result.ok ? 'is-ok' : 'is-bad'}`} role="status" aria-live="polite">
             {feedback}

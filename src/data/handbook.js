@@ -111,11 +111,11 @@ export const HANDBOOK = [
     examples: [ch('Do diminuito', 60, '1 ♭3 ♭5'), ch('Do eccedente', 60, '1 3 ♯5')],
   },
   {
-    id: 'sevenths', chapter: 2, title: 'Accordi di settima', subtitle: 'Quattro note, cinque qualità',
-    def: 'Aggiungendo la settima alla triade si ottiene un accordo di quattro note, più ricco e più “di movimento”. Le qualità principali sono cinque.',
-    formula: 'maj7 1 3 5 7 · 7 1 3 5 ♭7 · m7 1 ♭3 5 ♭7 · m7♭5 1 ♭3 ♭5 ♭7 · dim7 1 ♭3 ♭5 ♭♭7',
-    points: ['Cmaj7 (CΔ): settima maggiore', 'C7: dominante, ha la ♭7 e la 3 maggiore', 'Cm7♭5 si scrive anche Cø'],
-    examples: [ch('Do maggiore settima', 60, '1 3 5 7'), ch('Do settima di dominante', 60, '1 3 5 ♭7'), ch('Do minore settima', 60, '1 ♭3 5 ♭7'), ch('Do semidiminuito', 60, '1 ♭3 ♭5 ♭7')],
+    id: 'sevenths', chapter: 2, title: 'Accordi di settima', subtitle: 'Quattro note, sette qualità',
+    def: 'Aggiungendo la settima alla triade si ottiene un accordo di quattro note, più ricco e più “di movimento”. Le qualità principali sono sette.',
+    formula: 'maj7 1 3 5 7 · 7 1 3 5 ♭7 · m7 1 ♭3 5 ♭7 · m7♭5 1 ♭3 ♭5 ♭7 · dim7 1 ♭3 ♭5 ♭♭7 · mΔ 1 ♭3 5 7 · Δ♯5 1 3 ♯5 7',
+    points: ['Cmaj7 (CΔ): settima maggiore', 'C7: dominante, ha la ♭7 e la 3 maggiore', 'Cm7♭5 si scrive anche Cø', 'CmΔ: triade minore con settima maggiore', 'CΔ♯5: settima maggiore con quinta eccedente'],
+    examples: [ch('Do maggiore settima', 60, '1 3 5 7'), ch('Do settima di dominante', 60, '1 3 5 ♭7'), ch('Do minore settima', 60, '1 ♭3 5 ♭7'), ch('Do semidiminuito', 60, '1 ♭3 ♭5 ♭7'), ch('Do minore maggiore settima', 60, '1 ♭3 5 7'), ch('Do settima maggiore eccedente', 60, '1 3 ♯5 7')],
   },
   {
     id: 'symbols', chapter: 2, title: 'Sigle degli accordi', subtitle: 'Come si legge un cifrato',

@@ -1611,6 +1611,35 @@ a.btn {
   stroke-width: 3;
   stroke-dasharray: 5 4;
 }
+/* Aiuto: cerchio ambra pieno e pulsante, ben visibile anche sui tasti bianchi */
+.bi-ghost.is-help {
+  fill: rgba(226, 182, 89, 0.45);
+  stroke: #e2b659;
+  stroke-width: 3.5;
+  stroke-dasharray: none;
+  animation: bi-help 1.1s ease-in-out infinite;
+}
+@keyframes bi-help {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bi-ghost.is-help {
+    animation: none;
+  }
+}
+.bld-help {
+  margin: 0 0 12px;
+  color: var(--warn);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
 
 /* Commento dentro la scheda (Costruisci) */
 .bld-fb {
