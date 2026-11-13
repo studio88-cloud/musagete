@@ -292,11 +292,11 @@ export const HANDBOOK = [
     examples: [sc('Do blues', 60, '1 ♭3 4 ♭5 5 ♭7')],
   },
   {
-    id: 'symmetric', chapter: 9, title: 'Scale simmetriche', subtitle: 'Toni interi e diminuita',
-    def: 'Sono scale che ripetono lo stesso schema: la scala per toni interi, fatta di soli toni, e la scala diminuita, che alterna tono e semitono.',
-    formula: 'Toni interi 1 2 3 ♯4 ♯5 ♭7 · Diminuita 1 2 ♭3 4 ♭5 ♭6 ♭♭7 7',
-    points: ['Toni interi: suono sospeso, senza tonica netta', 'Diminuita: si usa sugli accordi di settima diminuita e sulle dominanti alterate', 'Entrambe si ripetono identiche al salto di certi intervalli'],
-    examples: [sc('Do per toni interi', 60, '1 2 3 ♯4 ♯5 ♭7'), sc('Do diminuita (tono – semitono)', 60, '1 2 ♭3 4 ♭5 ♭6 ♭♭7 7')],
+    id: 'symmetric', chapter: 9, title: 'Scale simmetriche', subtitle: 'Toni interi e scale diminuite',
+    def: 'Sono scale che ripetono lo stesso schema: la scala per toni interi, fatta di soli toni, e le due scale diminuite, che alternano tono e semitono (o semitono e tono).',
+    formula: 'Toni interi 1 2 3 ♯4 ♯5 ♭7 · Diminuita T–S 1 2 ♭3 4 ♭5 ♭6 ♭♭7 7 · Diminuita S–T 1 ♭2 ♭3 3 ♯4 5 6 ♭7',
+    points: ['Toni interi: suono sospeso, senza tonica netta', 'Diminuita tono – semitono: sugli accordi di settima diminuita. Semitono – tono: sulla settima di dominante', 'Entrambe si ripetono identiche al salto di certi intervalli'],
+    examples: [sc('Do per toni interi', 60, '1 2 3 ♯4 ♯5 ♭7'), sc('Do diminuita (tono – semitono)', 60, '1 2 ♭3 4 ♭5 ♭6 ♭♭7 7'), sc('Do diminuita (semitono – tono)', 60, '1 ♭2 ♭3 3 ♯4 5 6 ♭7')],
   },
 
   // ——— Capitolo 10 · Armonia cromatica

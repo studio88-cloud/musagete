@@ -84,7 +84,7 @@ const CH = {
     chord('Fm', '♭IV', 'F', '1 ♭3 5', 'Fa minore', { why: 'Preso in prestito da Do minore.' }),
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
   ])],
-  9: [prog('Suona gli accordi su cui improvvisi con la pentatonica di La', [
+  9: [prog('Suona gli accordi su cui improvvisi con la pentatonica di La minore', [
     chord('Am7', 'im7', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     chord('Dm7', 'ivm7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),
     chord('E7', 'V', 'E', '1 3 5 ♭7', 'Mi settima'),
