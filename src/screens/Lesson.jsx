@@ -51,7 +51,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
       return
     }
     if (page.progression) {
-      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
+      playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard' && !page.form, weights: page.weights, instrument, onEnd: () => setPlaying(false) })
     } else {
       const midis = src.map((m) => m + shift).sort((a, b) => a - b)
       playNotes(midis, { kind: page.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
@@ -82,7 +82,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
         <div className="lesson-remember">
           <strong>Da ricordare</strong>
           {splitLines(page.remember).map((l) => (
-            <span key={l} className="lr-line">{l}</span>
+            <span key={l} className={`lr-line${l.includes("|") ? " is-bars" : ""}`}>{l}</span>
           ))}
         </div>
 

@@ -35,7 +35,7 @@ function Example({ ex, instrument }) {
     setPlaying(true)
     const shift = instrumentShift(instrument)
     if (ex.progression) {
-      playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
+      playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard' && !ex.form, weights: ex.weights, instrument, onEnd: () => setPlaying(false) })
     } else {
       const midis = ex.play.map((m) => m + shift).sort((a, b) => a - b)
       playNotes(midis, { kind: ex.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
@@ -45,7 +45,14 @@ function Example({ ex, instrument }) {
   return (
     <div className="hbe-ex">
       <h3 className="lesson-sub">{ex.label}</h3>
-      {ex.chords && (
+      {ex.rows && (
+        <div className="hbe-form" role="list" aria-label="Struttura">
+          {ex.rows.map((r, k) => (
+            <div key={k} className="hbe-form-row" role="listitem">{r}</div>
+          ))}
+        </div>
+      )}
+      {ex.chords && ex.chords.length > 0 && (
         <div className="lchords" role="list" aria-label="Accordi">
           {ex.chords.map((c, k) => (
             <span key={k} className="lchord" role="listitem">
@@ -126,7 +133,7 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
               </>
             ) : (
               splitLines(entry.formula).map((l) => (
-                <span key={l} className="lr-line">{l}</span>
+                <span key={l} className={`lr-line${l.includes("|") ? " is-bars" : ""}`}>{l}</span>
               ))
             )}
           </div>

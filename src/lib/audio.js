@@ -221,7 +221,7 @@ export function playNotes(midis, opts = {}) {
   playNow(midis, opts)
 }
 
-function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboard', onEnd } = {}) {
+function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboard', weights, onEnd } = {}) {
   stopPlaying()
   const c = getCtx()
   if (!c || midis.length === 0) {
@@ -249,15 +249,18 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     total = 1.2
   } else if (kind === 'progression') {
     // midis = elenco di accordi: ogni accordo suona insieme, uno dopo l'altro
-    midis.forEach((chord) => {
+    midis.forEach((chord, idx) => {
       if (arpeggio) {
         const sorted = [...chord].sort((a, b) => a - b)
         sorted.forEach((midi, i) => events.push({ midi, at: total + i * 0.34, dur: 1.4, vol: 0.45 }))
         total += (sorted.length - 1) * 0.34 + 1.3
       } else {
+        // weights: durata di ogni accordo in battute (forme intere: due accordi in una battuta durano metà ciascuno)
+        const w = weights ? weights[idx] ?? 1 : 1
+        const step = weights ? 1.3 * w : 1.0
         const vol = 0.3 / Math.sqrt(chord.length)
-        chord.forEach((midi) => events.push({ midi, at: total, dur: 1.1, vol }))
-        total += 1.0
+        chord.forEach((midi) => events.push({ midi, at: total, dur: step + 0.1, vol }))
+        total += step
       }
     })
     total += 0.4

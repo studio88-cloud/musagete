@@ -3,6 +3,11 @@
 // Una voce ha: def (definizione), formula, points (elenco), examples (esempi da vedere e ascoltare).
 // Speciali: 'interchange' ha una sua tabella, 'circle' ha la mappa interattiva.
 import { parseFormula } from '../lib/music'
+import { cs, formEx } from './content/helpers'
+
+// Forme intere (capitolo 14): battute con uno o due accordi
+const SEZ_A = ['B♭ G7', 'Cm7 F7', 'Dm7 G7', 'Cm7 F7', 'Fm7 B♭7', 'E♭ E°7', 'B♭/F G7', 'Cm7 F7']
+const PONTE = ['D7', 'D7', 'G7', 'G7', 'C7', 'C7', 'F7', 'F7']
 
 const nt = (midi, deg, label) => ({ midi, deg, label })
 
@@ -381,14 +386,14 @@ export const HANDBOOK = [
     def: 'Il blues base ha dodici battute divise in tre frasi di quattro, e usa solo tre accordi di settima di dominante: I7, IV7 e V7.',
     formula: 'I7 | I7 | I7 | I7 | · IV7 | IV7 | I7 | I7 | · V7 | IV7 | I7 | I7 |',
     points: ['In Do: C7, F7 e G7', 'Prima frase sul I7, seconda sul IV7 che torna al I7, terza con la cadenza V7 – IV7 – I7', 'Gli accordi sono tutti di settima di dominante, anche il I'],
-    examples: [pr('I tre accordi: C7 – F7 – G7 – C7', [['I7', 'C7', [55, 58, 60, 64]], ['IV7', 'F7', [53, 57, 60, 63]], ['V7', 'G7', [55, 59, 62, 65]], ['I7', 'C7', [55, 58, 60, 64]]]), pr('Ultime quattro battute: G7 – F7 – C7', [['V7', 'G7', [55, 59, 62, 65]], ['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]]])],
+    examples: [formEx('Il blues completo: dodici battute', ['C7', 'C7', 'C7', 'C7', 'F7', 'F7', 'C7', 'C7', 'G7', 'F7', 'C7', 'C7']), pr('I tre accordi: C7 – F7 – G7 – C7', [['I7', 'C7', [55, 58, 60, 64]], ['IV7', 'F7', [53, 57, 60, 63]], ['V7', 'G7', [55, 59, 62, 65]], ['I7', 'C7', [55, 58, 60, 64]]]), pr('Ultime quattro battute: G7 – F7 – C7', [['V7', 'G7', [55, 59, 62, 65]], ['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]]])],
   },
   {
     id: 'jazzblues', chapter: 13, title: 'Blues jazz', subtitle: 'Dodici battute con le sostituzioni',
     def: 'Il blues jazz mantiene le dodici battute ma ricolora il giro con II–V, un diminuito di passaggio e il VI7 ai suoi punti chiave.',
     formula: 'C7 | F7 | C7 | Gm7 C7 | · F7 | F♯°7 | C7 | A7 | · Dm7 | G7 | C7 A7 | Dm7 G7 |',
     points: ['Forma in Do, quattro battute per riga', 'A7 è una dominante secondaria che porta a Dm7', 'Alla battuta 6 il F♯°7 è un diminuito di passaggio tra F7 e C7', 'Il ii–V finale porta alla ripetizione'],
-    examples: [pr('Ultime otto battute', [['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]], ['V7/ii', 'A7', [55, 57, 61, 64]], ['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['I7', 'C7', [55, 58, 60, 64]]])],
+    examples: [formEx('Il blues jazz completo: dodici battute', ['C7', 'F7', 'C7', 'Gm7 C7', 'F7', 'F♯°7', 'C7', 'A7', 'Dm7', 'G7', 'C7 A7', 'Dm7 G7']), pr('Ultime otto battute', [['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]], ['V7/ii', 'A7', [55, 57, 61, 64]], ['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['I7', 'C7', [55, 58, 60, 64]]])],
   },
   {
     id: 'backdoor', chapter: 13, title: 'Backdoor', subtitle: 'Arrivare alla tonica dalla “porta di servizio”',
@@ -398,36 +403,70 @@ export const HANDBOOK = [
     examples: [pr('Fm7 – B♭7 – Cmaj7', [['ivm7', 'Fm7', [53, 56, 60, 63]], ['♭VII7', 'B♭7', [53, 56, 58, 62]], ['Imaj7', 'Cmaj7', CM7]])],
   },
 
-  // ——— Capitolo 14 · Dopo la pratica comune
+  // ——— Capitolo 14 · Le forme del jazz
   {
-    id: 'quartal', chapter: 14, title: 'Accordi per quarte', subtitle: 'Impilare quarte invece di terze',
+    id: 'forms', chapter: 14, title: 'Forme standard', subtitle: 'Blues, AABA e le altre',
+    def: 'Una forma è un giro di accordi di lunghezza fissa che si ripete a ogni chorus. Le più usate nel jazz sono il blues di dodici battute e le forme di trentadue battute, divise in quattro sezioni da otto.',
+    formula: 'Blues = 12 battute · AABA = 32 battute · ABAC = 32 battute',
+    points: ['AABA: due sezioni uguali, un ponte diverso e il ritorno di A', 'ABAC: due sezioni simili con finali diversi', 'Ogni lettera vale di solito otto battute'],
+    examples: [],
+  },
+  {
+    id: 'anatole', chapter: 14, title: 'Anatole', subtitle: 'La forma AABA di “I Got Rhythm”',
+    def: 'L’Anatole (rhythm changes) è la forma AABA di trentadue battute più usata nel jazz dopo il blues. Si suona di solito in Si♭. Le sezioni A sono turnaround, il ponte è una catena di dominanti.',
+    formula: 'A A · B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7 | · Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7 | · B (ponte) · D7 | D7 | G7 | G7 | · C7 | C7 | F7 | F7 | · A come prima',
+    points: ['Sezione A: I – VI7 – iim7 – V7 e poi iiim7 – VI7 – iim7 – V7', 'Battute 5–8: iim7 – V7 verso il IV, diminuito di passaggio e ritorno', 'Ponte: III7 – VI7 – II7 – V7, dominanti che scendono per quinte', 'Nell’ultima A il giro si chiude sul I'],
+    examples: [
+      formEx('L’Anatole completo: trentadue battute', [...SEZ_A, ...SEZ_A, ...PONTE, ...SEZ_A.slice(0, 7), 'B♭']),
+      formEx('Una sezione A: otto battute', SEZ_A),
+      formEx('Il ponte: otto battute', PONTE),
+    ],
+  },
+  {
+    id: 'minorblues', chapter: 14, title: 'Blues minore', subtitle: 'Le dodici battute in minore',
+    def: 'Il blues minore ha la stessa struttura del blues di dodici battute, ma con accordi minori sul I e sul IV. Nell’ultima frase ♭VI7 e V7 portano di nuovo all’inizio.',
+    formula: 'im7 | im7 | im7 | im7 | · ivm7 | ivm7 | im7 | im7 | · ♭VI7 | V7 | im7 | V7 |',
+    points: ['In Do minore: Cm7, Fm7, A♭7 e G7', 'Il V7 della battuta 12 riporta all’inizio del chorus', 'È una forma molto usata anche nel soul e nel rock'],
+    examples: [formEx('Il blues minore completo: dodici battute', ['Cm7', 'Cm7', 'Cm7', 'Cm7', 'Fm7', 'Fm7', 'Cm7', 'Cm7', 'A♭7', 'G7', 'Cm7', 'G7'])],
+  },
+  {
+    id: 'fifthsform', chapter: 14, title: 'Giro delle quinte', subtitle: 'Una catena di II–V maggiore e minore',
+    def: 'Molti standard si basano su una catena di II–V che scende per quinte, alternando la tonalità maggiore e il suo relativo minore. Si ripete e poi si prosegue con una sezione diversa.',
+    formula: 'Cm7 | F7 | B♭Δ | E♭Δ | · Aø7 | D7 | Gm | Gm |',
+    points: ['Gradi in Si♭: iim7 – V7 – Imaj7 – IVmaj7', 'Poi viiø7 – III7 – vim: il II–V–I del relativo minore', 'Spesso è la sezione A di una forma AABC di trentadue battute'],
+    examples: [formEx('Il giro delle quinte: otto battute', ['Cm7', 'F7', 'B♭Δ', 'E♭Δ', 'Aø7', 'D7', 'Gm', 'Gm'])],
+  },
+
+  // ——— Capitolo 15 · Dopo la pratica comune
+  {
+    id: 'quartal', chapter: 15, title: 'Accordi per quarte', subtitle: 'Impilare quarte invece di terze',
     def: 'Gli accordi quartali sono costruiti sovrapponendo quarte giuste. Non hanno un vero colore maggiore o minore e danno un suono aperto e moderno.',
     formula: 'Quarta + quarta: 1 4 ♭7',
     points: ['Re–Sol–Do è l’esempio più comune', 'Si trovano nel jazz modale e nella musica del Novecento', 'Si spostano per gradi senza cambiare struttura'],
     examples: [ch('Re – Sol – Do', 62, '1 4 ♭7')],
   },
 
-  // ——— Capitolo 15 · Armonia negativa
+  // ——— Capitolo 16 · Armonia negativa
   {
-    id: 'negative', chapter: 15, title: 'Armonia negativa', subtitle: 'Riflettere le note come in uno specchio',
+    id: 'negative', chapter: 16, title: 'Armonia negativa', subtitle: 'Riflettere le note come in uno specchio',
     def: 'Ogni nota viene specchiata rispetto a un asse. Con l’asse di Do (tra Mi♭ e Mi) le note si scambiano a coppie.',
     formula: 'Do↔Sol · Re↔Fa · Mi↔Mi♭ · La↔Si♭ · Si↔La♭ · Do♯↔Fa♯',
     points: ['Do maggiore (Do Mi Sol) → Do minore (Sol Mi♭ Do)', 'G7 → Fm6', 'Una cadenza maggiore diventa minore e sospesa'],
     examples: [pr('C – F – G7 – C → Cm – Gm – Fm6 – Cm', [['i', 'Cm', Cm], ['v', 'Gm', [55, 58, 62]], ['iv6', 'Fm6', [53, 56, 60, 62]], ['i', 'Cm', Cm]])],
   },
 
-  // ——— Capitolo 16 · Arrangiare e accompagnare
+  // ——— Capitolo 17 · Arrangiare e accompagnare
   {
-    id: 'voicings', chapter: 16, title: 'Voicing', subtitle: 'Come disporre le note di un accordo',
+    id: 'voicings', chapter: 17, title: 'Voicing', subtitle: 'Come disporre le note di un accordo',
     def: 'Il voicing è il modo in cui le note di un accordo sono distribuite sullo strumento. Cambiare il voicing cambia il suono senza cambiare l’accordo.',
     formula: 'Shell 1 3 7 · Drop 2: la 2ª nota dall’alto scende di un’ottava',
     points: ['Shell: solo fondamentale, terza e settima', 'Drop 2: voicing aperto, comodo sulla chitarra', 'Collega gli accordi muovendo meno note possibile'],
     examples: [ch('Cmaj7 shell', 60, '1 3 7'), ch('Cmaj7 completo', 60, '1 3 5 7')],
   },
 
-  // ——— Capitolo 17 · Comporre e improvvisare
+  // ——— Capitolo 18 · Comporre e improvvisare
   {
-    id: 'guide', chapter: 17, title: 'Note guida', subtitle: 'Terza e settima raccontano l’armonia',
+    id: 'guide', chapter: 18, title: 'Note guida', subtitle: 'Terza e settima raccontano l’armonia',
     def: 'Le note guida sono la terza e la settima di ogni accordo: da sole definiscono la qualità dell’accordo. Seguirle da un accordo all’altro dà linee melodiche chiare.',
     formula: '3ª e 7ª dell’accordo',
     points: ['Su Dm7 – G7 – Cmaj7 la settima Do scende al Si, poi al Mi', 'Anche Fa (3ª di Dm7) si mantiene fino al Fa di G7', 'Su ogni accordo si improvvisa partendo dalle note guida'],

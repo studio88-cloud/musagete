@@ -113,24 +113,30 @@ const CH = {
     chord('F7', 'I7', 'F', '1 3 5 ♭7', 'Fa settima'),
     chord('C7', 'V7', 'C', '1 3 5 ♭7', 'Do settima'),
   ])],
-  14: [prog('Suona una frase con accordi per quarte che salgono', [
+  14: [prog('Suona il ponte dell’Anatole', [
+    chord('D7', 'III7', 'D', '1 3 5 ♭7', 'Re settima'),
+    chord('G7', 'VI7', 'G', '1 3 5 ♭7', 'Sol settima'),
+    chord('C7', 'II7', 'C', '1 3 5 ♭7', 'Do settima'),
+    chord('F7', 'V7', 'F', '1 3 5 ♭7', 'Fa settima'),
+  ])],
+  15: [prog('Suona una frase con accordi per quarte che salgono', [
     chord('D·G·C', '', 'D', '1 4 ♭7', 'Re – Sol – Do'),
     chord('E·A·D', '', 'E', '1 4 ♭7', 'Mi – La – Re'),
     chord('F·B♭·E♭', '', 'F', '1 4 ♭7', 'Fa – Si♭ – Mi♭'),
   ])],
-  15: [prog('Trasforma la progressione nel suo negativo', [
+  16: [prog('Trasforma la progressione nel suo negativo', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Cm', 'i', 'C', '1 ♭3 5', 'Do minore'),
     chord('F', 'IV', 'F', '1 3 5', 'Fa maggiore'),
     chord('Fm', 'iv', 'F', '1 ♭3 5', 'Fa minore'),
   ])],
-  16: [prog('Arrangia la canzone: suona gli accordi del giro', [
+  17: [prog('Arrangia la canzone: suona gli accordi del giro', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Am7', 'VI', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     chord('Dm7', 'iim7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),
     chord('G7', 'V', 'G', '1 3 5 ♭7', 'Sol settima'),
   ])],
-  17: [prog('Il tuo primo brano: suona gli accordi del giro', [
+  18: [prog('Il tuo primo brano: suona gli accordi del giro', [
     chord('Cmaj7', 'I', 'C', '1 3 5 7', 'Do maggiore settima'),
     chord('Am7', 'VI', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     chord('Dm7', 'iim7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),

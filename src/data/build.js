@@ -90,21 +90,26 @@ const CH = {
     ex('Costruisci Do minore', 'C', '1 ♭3 5', 'Do minore'),
   ],
   14: [
+    ex('Costruisci la prima dominante del ponte: Re settima', 'D', '1 3 5 ♭7', 'Re settima', { why: 'È il III7 dell’Anatole in Si♭: dominante di Sol.' }),
+    ex('Costruisci la seconda dominante del ponte: Sol settima', 'G', '1 3 5 ♭7', 'Sol settima', { why: 'È il VI7: dominante di Do.' }),
+    ex('Costruisci il diminuito di passaggio: Mi diminuito settima', 'E', '1 ♭3 ♭5 ♭♭7', 'Mi diminuito settima', { why: 'Collega E♭ a B♭/F con il basso che sale per semitoni.' }),
+  ],
+  15: [
     ex('Costruisci l’accordo per quarte Re – Sol – Do', 'D', '1 4 ♭7', 'Re – Sol – Do'),
     ex('Costruisci l’accordo per quarte La – Re – Sol', 'A', '1 4 ♭7', 'La – Re – Sol'),
     ex('Costruisci l’accordo per quarte Do – Fa – Si♭', 'C', '1 4 ♭7', 'Do – Fa – Si♭'),
   ],
-  15: [
+  16: [
     ex('Il negativo di Do maggiore: costruisci Do minore', 'C', '1 ♭3 5', 'Do minore'),
     ex('Il negativo di Sol settima: costruisci Fa minore sesta', 'F', '1 ♭3 5 6', 'Fa minore sesta'),
     ex('Il negativo di Fa maggiore: costruisci Sol minore', 'G', '1 ♭3 5', 'Sol minore'),
   ],
-  16: [
+  17: [
     ex('Costruisci La minore settima', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     ex('Costruisci Fa maggiore settima', 'F', '1 3 5 7', 'Fa maggiore settima'),
     ex('Costruisci Sol settima', 'G', '1 3 5 ♭7', 'Sol settima'),
   ],
-  17: [
+  18: [
     ex('Tocca la terza e la settima di Sol settima', 'G', '3 ♭7', 'Si e Fa'),
     ex('Tocca la terza e la settima di Re minore settima', 'D', '♭3 ♭7', 'Fa e Do'),
     ex('Tocca la terza e la settima di Do maggiore settima', 'C', '3 7', 'Mi e Si'),

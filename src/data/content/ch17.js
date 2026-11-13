@@ -1,40 +1,46 @@
-import { mk, md, page } from './helpers'
+import { md, page } from './helpers'
+
+const C = md(60, [0, 4, 7])
+const F_ = md(60, [5, 9, 12])
+const G = md(55, [0, 4, 7])
+const Am = md(57, [0, 3, 7])
+const Bb = md(58, [0, 4, 7])
 
 export default {
   steps: [
-    { id: 1, kind: 'lesson', title: 'La melodia sull’armonia', min: 4 },
-    { id: 2, kind: 'lesson', title: 'Il motivo e il suo sviluppo', min: 4 },
-    { id: 3, kind: 'lesson', title: 'Improvvisare passo dopo passo', min: 5 },
-    { id: 4, kind: 'lesson', title: 'Dal giro di accordi al brano', min: 4 },
-    { id: 5, kind: 'ear', title: 'Riconosci i materiali musicali', min: 5 },
-    { id: 6, kind: 'build', title: 'Improvvisa su un giro di accordi', min: 6 },
-    { id: 7, kind: 'apply', title: 'Componi il tuo primo brano', min: 10 },
+    { id: 1, kind: 'lesson', title: 'I ruoli in un arrangiamento', min: 4 },
+    { id: 2, kind: 'lesson', title: 'Accompagnare con il tuo strumento', min: 5 },
+    { id: 3, kind: 'lesson', title: 'Condurre le voci', min: 4 },
+    { id: 4, kind: 'lesson', title: 'La forma di un brano', min: 4 },
+    { id: 5, kind: 'ear', title: 'Riconosci i giri di accordi', min: 5 },
+    { id: 6, kind: 'build', title: 'Accompagna un giro di accordi', min: 6 },
+    { id: 7, kind: 'apply', title: 'Arrangia una canzone semplice', min: 8 },
     { id: 8, kind: 'quiz', title: 'Quiz finale', min: 5 },
   ],
   lessons: {
     1: {
       pages: [
-        page('Le note dell’accordo', 'Una melodia suona bene sopra un accordo se, nei momenti importanti, usa le sue note. Sui tempi forti si mettono le note dell’accordo; sui tempi deboli si possono usare le altre note della scala, come passaggio.', 'Tempi forti = note dell’accordo.', { notes: mk(60, [[0, 1, '1'], [4, 3, '3'], [7, 5, '5']]), play: md(60, [0, 4, 7, 12]) }, 'Ascolta l’arpeggio di Do!'),
-        page('Tensione e risoluzione', 'Una nota fuori dall’accordo crea tensione, e tende a muoversi verso la nota più vicina dell’accordo. Per esempio il Fa sopra Do maggiore chiede di scendere al Mi. La melodia bella è un equilibrio fra tensione e riposo.', 'Nota estranea → nota dell’accordo più vicina.', { notes: mk(60, [[4, 3, 'Mi'], [5, 4, 'Fa']]), play: [65, 64] }, 'Fa che scende al Mi!'),
+        page('Chi fa che cosa', 'In un arrangiamento ogni strumento ha un ruolo. La melodia canta, il basso dà il fondamento, gli accordi riempiono l’armonia e il ritmo tiene il tempo. Se tutti fanno la stessa cosa, il suono si confonde.', 'Melodia · basso · armonia · ritmo', { notes: [] }, 'Ognuno al suo posto!'),
+        page('Lasciare spazio', 'Il segreto di un buon arrangiamento è lasciare spazio. Gli accordi molto fitti nelle note gravi suonano confusi e coprono il basso. Meglio tenere gli accordi nel registro medio e lasciare le note più basse alla linea del basso.', 'Basso in basso, accordi nel mezzo.', { notes: [] }, 'Meno note, più chiarezza!'),
       ],
     },
     2: {
       pages: [
-        page('Il motivo', 'Un motivo è una breve idea melodica e ritmica, di due o tre note, facile da ricordare. Un brano nasce spesso da un unico motivo, poi ripetuto e trasformato.', 'Motivo = piccola idea riconoscibile.', { notes: mk(60, [[0, 1, '1'], [2, 2, '2'], [4, 3, '3']]), play: md(60, [0, 2, 4]) }, 'Tre note bastano!'),
-        page('Lo sviluppo', 'Per sviluppare un motivo si può ripeterlo, ripeterlo su altezze diverse (sequenza), invertire la direzione, cambiare il ritmo o allungarlo. Il motivo Do–Re–Mi seguito da Re–Mi–Fa è una sequenza ascendente.', 'Ripetizione · sequenza · inversione · variazione ritmica', { notes: [], play: md(60, [0, 2, 4, 2, 4, 5]) }, 'Lo stesso disegno, più in alto!'),
+        page('Sulla tastiera', 'Con la tastiera si usano le due mani: la sinistra suona la fondamentale, spesso raddoppiata all’ottava, la destra suona l’accordo. Si possono variare i ritmi: accordi tenuti, ripetuti o spezzati in arpeggio.', 'Sinistra: basso · Destra: accordo', { notes: [] }, 'Due mani, due ruoli!'),
+        page('Sulla chitarra', 'La chitarra accompagna con il battere di plettro (strumming) o con arpeggi. Per lo strumming si mantiene un ritmo costante di giù e su e si accentuano i tempi forti. Con gli arpeggi si suonano le corde dell’accordo una alla volta.', 'Strumming o arpeggio.', { notes: [] }, 'Il ritmo è la tua mano destra!'),
+        page('Sul basso', 'Il basso suona soprattutto la fondamentale di ogni accordo e la quinta, sui tempi forti. Con più esperienza si passa al walking bass, una linea di note per gradi congiunti che collega le fondamentali, come nel jazz.', 'Fondamentale e quinta, poi walking bass.', { notes: [] }, 'Il basso tiene tutto insieme!'),
       ],
     },
     3: {
       pages: [
-        page('Primo passo: la pentatonica', 'Per cominciare a improvvisare basta la pentatonica. Sopra un giro in Do maggiore si usano Do Re Mi Sol La, che sono sicure su tutti gli accordi della tonalità. Si parte con poche note e ritmi semplici.', 'Pentatonica = rete di sicurezza.', { notes: mk(60, [[0, 1, '1'], [2, 2, '2'], [4, 3, '3'], [7, 5, '5'], [9, 6, '6']]), play: md(60, [0, 2, 4, 7, 9, 12]) }, 'Cinque note, tante frasi!'),
-        page('Secondo passo: le note guida', 'Poi si inizia a seguire gli accordi: sulla terza e sulla settima di ogni accordo la melodia suona la nota guida. Sul G7 si usano il Si e il Fa, e al cambio di accordo la nota si sposta di un semitono: il Fa va al Mi del Do.', 'Terza e settima: segui le note guida.', { notes: mk(55, [[4, 3, '3'], [10, 7, '♭7']]), base: 55, play: [59, 65] }, 'Si e Fa: l’anima di G7!'),
-        page('Terzo passo: il respiro', 'Improvvisare non vuol dire suonare sempre. Le pause fanno parte della frase, come le virgole nel discorso. Una buona frase ha un’idea, un seguito e una conclusione. Dopo la frase, lascia spazio.', 'Una frase = idea, seguito, conclusione.', { notes: [] }, 'Le pause parlano!'),
+        page('Muoversi il meno possibile', 'Condurre le voci significa passare da un accordo all’altro muovendo ogni nota il meno possibile. Da Do (Do Mi Sol) a Fa (Do Fa La) il Do resta fermo, il Mi sale al Fa e il Sol sale al La: poco movimento, suono fluido.', 'Note comuni ferme, le altre per grado.', { notes: [], play: [C, md(60, [0, 5, 9])], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: 'IV', sym: 'F' }] }, 'Il Do non si muove!'),
+        page('Il basso come guida', 'Il basso può guidare il movimento: se scende o sale per gradi, l’armonia scorre in modo naturale. Si usano i rivolti proprio per questo: C – G/B – Am ha un basso Do – Si – La molto cantabile.', 'Basso per gradi, accordi di conseguenza.', { notes: [], play: [C, md(59, [0, 3, 8]), Am], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: 'V6', sym: 'G/B' }, { fn: 'vi', sym: 'Am' }] }, 'Senti come scorre?'),
       ],
     },
     4: {
       pages: [
-        page('Una forma classica', 'Una forma molto usata nel jazz e nelle canzoni è la forma AABA, di 32 battute: la sezione A (otto battute) si ripete due volte, poi c’è un ponte B diverso e infine di nuovo A. Il ritorno dell’A dà soddisfazione.', 'AABA = 8 + 8 + 8 + 8 battute.', { notes: [] }, 'Ripetere e contrastare!'),
-        page('Dal giro al brano', 'Per comporre si può partire da un giro di accordi, aggiungere una melodia e infine arrangiare. Prova: scegli un giro, inventa un motivo di due o tre note, sviluppalo e dai una forma al brano con strofa, ritornello e ponte.', 'Giro → motivo → sviluppo → forma.', { notes: [] }, 'Ora tocca a te!'),
+        page('Le sezioni', 'Un brano si divide in sezioni: l’introduzione, la strofa, il ritornello, il ponte e la conclusione. La strofa racconta, il ritornello è la parte più memorabile e si ripete uguale, il ponte offre un contrasto prima dell’ultimo ritornello.', 'Intro · strofa · ritornello · ponte · fine', { notes: [] }, 'Una storia in quattro tappe!'),
+        page('Costruire l’intensità', 'Un arrangiamento cresce in intensità: si parte con pochi strumenti e si aggiungono man mano più voci e più forza fino al ritornello. Togliere strumenti subito prima è un modo efficace per far risaltare il ritorno.', 'Cresci, poi togli, poi esplodi.', { notes: [] }, 'La dinamica racconta!'),
       ],
     },
   },
@@ -42,21 +48,21 @@ export default {
     5: {
       kind: 'ear',
       questions: [
-        { prompt: 'Ascolta: che cosa senti?', play: md(60, [0, 4, 7, 12]), options: ['Arpeggio maggiore', 'Scala maggiore', 'Pentatonica minore', 'Arpeggio minore'], answer: 0, explanation: 'Le note Do Mi Sol Do formano l’arpeggio di Do maggiore.' },
-        { prompt: 'Ascolta: che cosa senti?', play: md(60, [0, 3, 7, 12]), options: ['Arpeggio maggiore', 'Arpeggio minore', 'Scala blues', 'Scala maggiore'], answer: 1, explanation: 'La terza è minore: arpeggio di Do minore.' },
-        { prompt: 'Ascolta: che scala senti?', play: md(60, [0, 3, 5, 7, 10, 12]), options: ['Pentatonica maggiore', 'Esatonale', 'Pentatonica minore', 'Scala maggiore'], answer: 2, explanation: 'Cinque note con la terza minore: pentatonica minore.' },
-        { prompt: 'Ascolta: come si sviluppa questo motivo?', play: md(60, [0, 2, 4, 2, 4, 5]), options: ['Sequenza ascendente', 'Scala discendente', 'Arpeggio', 'Scala cromatica'], answer: 0, explanation: 'Il motivo Do–Re–Mi viene ripetuto un grado più in alto: sequenza.' },
+        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, F_, md(55, [0, 4, 7]), C], options: ['I – V – vi – IV', 'I – IV – V – I', 'I – vi – IV – V', 'I – ♭VII – IV – I'], answer: 1, explanation: 'Do – Fa – Sol – Do: I – IV – V – I.' },
+        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, Am, F_, G], options: ['I – IV – V – I', 'I – V – vi – IV', 'I – vi – IV – V', 'I – ♭VII – IV – I'], answer: 2, explanation: 'Do – La minore – Fa – Sol: I – vi – IV – V.' },
+        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, G, Am, F_], options: ['I – vi – IV – V', 'I – IV – V – I', 'I – ♭VII – IV – I', 'I – V – vi – IV'], answer: 3, explanation: 'Do – Sol – La minore – Fa: I – V – vi – IV.' },
+        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, Bb, F_, C], options: ['I – ♭VII – IV – I', 'I – V – vi – IV', 'I – IV – V – I', 'I – vi – IV – V'], answer: 0, explanation: 'Do – Si♭ – Fa – Do: I – ♭VII – IV – I.' },
       ],
     },
     8: {
       kind: 'quiz',
       passMark: 0.8,
       questions: [
-        { prompt: 'Quali note si usano di solito sui tempi forti?', options: ['Le note estranee', 'Le note dell’accordo', 'Solo la tonica', 'Le note cromatiche'], answer: 1, explanation: 'Sui tempi forti le note dell’accordo danno stabilità.' },
-        { prompt: 'Che cos’è una sequenza?', options: ['Un motivo ripetuto su altre altezze', 'Una scala di sette note', 'Una cadenza', 'Un tipo di ritmo'], answer: 0, explanation: 'Lo stesso disegno melodico trasposto.' },
-        { prompt: 'Quali sono le note guida di un accordo?', options: ['Fondamentale e quinta', 'Terza e settima', 'Nona e tredicesima', 'Seconda e quarta'], answer: 1, explanation: 'Terza e settima ne definiscono il carattere.' },
-        { prompt: 'Quale scala è un buon punto di partenza per improvvisare?', options: ['Esatonale', 'Pentatonica', 'Diminuita', 'Alterata'], answer: 1, explanation: 'La pentatonica suona bene sopra quasi tutti gli accordi della tonalità.' },
-        { prompt: 'Quante battute ha una forma AABA classica?', options: ['12', '16', '32', '64'], answer: 2, explanation: 'Quattro sezioni da otto battute: 32 in tutto.' },
+        { prompt: 'Qual è il ruolo principale del basso?', options: ['Cantare la melodia', 'Dare il fondamento armonico e ritmico', 'Suonare solo accordi', 'Riempire gli spazi vuoti'], answer: 1, explanation: 'Il basso suona le fondamentali e tiene insieme armonia e ritmo.' },
+        { prompt: 'Che cosa significa condurre le voci?', options: ['Cantare più forte', 'Muovere il meno possibile le note tra accordi', 'Cambiare tonalità spesso', 'Suonare sempre in rivolto'], answer: 1, explanation: 'Le note comuni restano ferme e le altre si muovono per grado.' },
+        { prompt: 'Passando da Do a Fa, quale nota resta ferma?', options: ['Mi', 'Sol', 'Do', 'Nessuna'], answer: 2, explanation: 'Il Do è in comune: Do Mi Sol e Do Fa La.' },
+        { prompt: 'Qual è la sezione più memorabile e ripetuta?', options: ['La strofa', 'Il ponte', 'Il ritornello', 'L’introduzione'], answer: 2, explanation: 'Il ritornello torna uguale ed è quello che resta in mente.' },
+        { prompt: 'Quali note suona di solito un bassista sui tempi forti?', options: ['Fondamentale e quinta', 'Terza e settima', 'Nona e tredicesima', 'Solo la quarta'], answer: 0, explanation: 'Fondamentale e quinta sono le note più stabili.' },
       ],
     },
   },

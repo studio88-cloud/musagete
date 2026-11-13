@@ -15,8 +15,9 @@ export const CHAPTERS = [
   { n: 11, title: 'Estensioni e alterazioni' },
   { n: 12, title: 'Sostituzioni' },
   { n: 13, title: 'Armonia jazz avanzata' },
-  { n: 14, title: 'Armonia dopo la pratica comune' },
-  { n: 15, title: 'Armonia negativa' },
-  { n: 16, title: 'Arrangiare e accompagnare' },
-  { n: 17, title: 'Comporre e improvvisare' },
+  { n: 14, title: 'Le forme del jazz' },
+  { n: 15, title: 'Armonia dopo la pratica comune' },
+  { n: 16, title: 'Armonia negativa' },
+  { n: 17, title: 'Arrangiare e accompagnare' },
+  { n: 18, title: 'Comporre e improvvisare' },
 ]

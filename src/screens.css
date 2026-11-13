@@ -1945,3 +1945,29 @@ a.btn {
   font-weight: 700;
   text-align: center;
 }
+
+/* Struttura completa di una forma (blues, Anatole…): una riga ogni quattro battute */
+.hbe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.14));
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.hbe-form-row {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--text, #f5f3ff);
+  overflow-wrap: anywhere;
+}
+
+/* Righe di battute (| … |) nei box gialli: un po' più strette, così quattro battute stanno su una riga */
+.lr-line.is-bars {
+  font-size: 13px;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
