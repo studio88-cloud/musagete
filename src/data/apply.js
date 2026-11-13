@@ -34,10 +34,11 @@ export const midiOfStep = (step) => {
 
 const CH = {
   // capitolo 1: tre scale da suonare sullo strumento (stesso modello della progressione, ma ogni voce è una scala)
-  1: [prog('Suona le scale: Sol maggiore – Fa maggiore – La minore naturale', [
+  1: [prog('Suona le scale: Sol maggiore – Fa maggiore – La minore naturale – Do minore armonico', [
     chord('Sol', '', 'G', '1 2 3 4 5 6 7', 'Sol maggiore', { why: 'Ha un solo diesis, il Fa♯.' }),
     chord('Fa', '', 'F', '1 2 3 4 5 6 7', 'Fa maggiore', { why: 'Ha un solo bemolle, il Si♭.' }),
     chord('Lam', '', 'A', '1 2 ♭3 4 5 ♭6 ♭7', 'La minore naturale', { why: 'Ha le stesse note di Do maggiore, ma parte dal La.' }),
+    chord('Do arm', '', 'C', '1 2 ♭3 4 5 ♭6 7', 'Do minore armonico', { why: 'È la minore naturale con il settimo grado alzato: tra il La♭ e il Si c’è un intervallo di tre semitoni.' }),
   ], { scale: true })],
   2: [prog('Suona la progressione Do – La minore – Fa – Sol', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
