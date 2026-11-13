@@ -29,9 +29,9 @@ export default {
     },
     2: {
       pages: [
-        page('Il percorso più usato nel jazz', 'Il II–V–I è la progressione più importante del jazz. In Do maggiore si suonano Dm7, G7 e CΔ. Il ii prepara, il V crea la tensione e il I la risolve.', 'ii7 – V7 – IΔ', { notes: [], play: [Dm7, G7, CM7], progression: true, chords: [{ fn: 'ii7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Impara a riconoscerlo ovunque!'),
+        page('Il percorso più usato nel jazz', 'Il II–V–I è la progressione più importante del jazz. In Do maggiore si suonano Dm7, G7 e CΔ. Il ii prepara, il V crea la tensione e il I la risolve.', 'iim7 – V7 – IΔ', { notes: [], play: [Dm7, G7, CM7], progression: true, chords: [{ fn: 'iim7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Impara a riconoscerlo ovunque!'),
         page('Le note guida', 'Terza e settima di ogni accordo sono le note che ne definiscono il carattere. Nel II–V–I scendono di semitono da un accordo al successivo: il Do di Dm7 passa al Si di G7, e il Fa di G7 al Mi di CΔ.', 'Le note guida scendono di semitono.', { notes: [] }, 'Piccoli passi, grande effetto!'),
-        page('Anche in minore', 'In minore il II–V–I usa il semidiminuito sul ii: in La minore Bø7, E7 e Am7. Il V di solito è maggiore (E7) grazie alla sensibile Sol♯.', 'iiø7 – V7 – i7', { notes: [], play: [md(59, [0, 3, 6, 10]), md(52, [0, 4, 7, 10]), md(57, [0, 3, 7, 10])], progression: true, chords: [{ fn: 'iiø7', sym: 'Bø7' }, { fn: 'V7', sym: 'E7' }, { fn: 'i7', sym: 'Am7' }] }, 'Più scuro, ma lo stesso schema!'),
+        page('Anche in minore', 'In minore il II–V–I usa il semidiminuito sul ii: in La minore Bø7, E7 e Am7. Il V di solito è maggiore (E7) grazie alla sensibile Sol♯.', 'iim7♭5 – V7 – im7', { notes: [], play: [md(59, [0, 3, 6, 10]), md(52, [0, 4, 7, 10]), md(57, [0, 3, 7, 10])], progression: true, chords: [{ fn: 'iim7♭5', sym: 'Bø7' }, { fn: 'V7', sym: 'E7' }, { fn: 'im7', sym: 'Am7' }] }, 'Più scuro, ma lo stesso schema!'),
       ],
     },
     3: {
@@ -43,7 +43,7 @@ export default {
     4: {
       pages: [
         page('Radici che scendono di quinta', 'Il movimento più naturale tra due accordi è la radice che scende di una quinta (o sale di una quarta), come da Sol a Do. Tutto il II–V–I e la cadenza V–I seguono questa regola.', 'Radice ↓ quinta = movimento forte.', { notes: [] }, 'Il basso fa la strada!'),
-        page('Il ciclo completo', 'Concatenando questi passi si ottiene il ciclo delle quinte: I – IV – vii – iii – vi – ii – V – I. In Do: CΔ, FΔ, Bø7, Em7, Am7, Dm7, G7, CΔ. Ogni accordo risolve in quello dopo e tutto resta dentro la scala.', 'I IV vii iii vi ii V I', { notes: [], play: [CM7, md(65, [0, 4, 7, 11]), md(59, [0, 3, 6, 10]), md(64, [0, 3, 7, 10]), md(57, [0, 3, 7, 10]), Dm7, G7, CM7], progression: true, chords: [{ fn: 'IΔ', sym: 'CΔ' }, { fn: 'IVΔ', sym: 'FΔ' }, { fn: 'viiø7', sym: 'Bø7' }, { fn: 'iii7', sym: 'Em7' }, { fn: 'vi7', sym: 'Am7' }, { fn: 'ii7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Un giro che non finisce mai!'),
+        page('Il ciclo completo', 'Concatenando questi passi si ottiene il ciclo delle quinte: I – IV – vii – iii – vi – ii – V – I. In Do: CΔ, FΔ, Bø7, Em7, Am7, Dm7, G7, CΔ. Ogni accordo risolve in quello dopo e tutto resta dentro la scala.', 'I IV vii iii vi ii V I', { notes: [], play: [CM7, md(65, [0, 4, 7, 11]), md(59, [0, 3, 6, 10]), md(64, [0, 3, 7, 10]), md(57, [0, 3, 7, 10]), Dm7, G7, CM7], progression: true, chords: [{ fn: 'IΔ', sym: 'CΔ' }, { fn: 'IVΔ', sym: 'FΔ' }, { fn: 'viim7♭5', sym: 'Bø7' }, { fn: 'iiim7', sym: 'Em7' }, { fn: 'vim7', sym: 'Am7' }, { fn: 'iim7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Un giro che non finisce mai!'),
       ],
     },
   },

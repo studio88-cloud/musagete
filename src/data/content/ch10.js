@@ -29,7 +29,7 @@ export default {
     },
     3: {
       pages: [
-        page('Un ponte cromatico', 'Un diminuito di passaggio è un accordo °7 inserito tra due accordi diatonici per collegarli con un movimento cromatico. In C – C♯°7 – Dm7, il basso sale per semitoni: Do, Do♯, Re.', 'C – C♯°7 – Dm7', { notes: [], play: [C, md(61, [0, 3, 6, 9]), md(62, [0, 3, 7, 10])], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: '♯i°7', sym: 'C♯°7' }, { fn: 'ii7', sym: 'Dm7' }] }, 'Cromatismo in salita!'),
+        page('Un ponte cromatico', 'Un diminuito di passaggio è un accordo °7 inserito tra due accordi diatonici per collegarli con un movimento cromatico. In C – C♯°7 – Dm7, il basso sale per semitoni: Do, Do♯, Re.', 'C – C♯°7 – Dm7', { notes: [], play: [C, md(61, [0, 3, 6, 9]), md(62, [0, 3, 7, 10])], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: '♯i°7', sym: 'C♯°7' }, { fn: 'iim7', sym: 'Dm7' }] }, 'Cromatismo in salita!'),
         page('Altri usi del °7', 'Il °7 può sostituire un V7♭9 senza la fondamentale: B°7 al posto di G7♭9 porta al Do. Ha quattro note a distanza di terza minore, quindi ogni nota può fare da fondamentale e si può risolvere in quattro direzioni.', 'Il °7 è simmetrico: ogni nota può fare da radice.', { base: 59, notes: mk(59, [[0, 7, '1'], [3, 2, '♭3'], [6, 4, '♭5'], [9, 6, '♭♭7']]), play: md(59, [0, 3, 6, 9]), chord: true }, 'Un accordo di quattro volti!'),
       ],
     },

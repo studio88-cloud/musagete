@@ -81,6 +81,26 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
             <strong>{entry.formulaTable ? entry.formulaTable.title : 'Formula'}</strong>
             {entry.formulaTable ? (
               <>
+                {entry.formulaTable.tones ? (
+                  <div className="hbe-fns">
+                    {entry.formulaTable.rows.map((r, ri) => (
+                      <div key={r[0]} className={`hbe-fn is-${entry.formulaTable.tones[ri]}`}>
+                        <div className="hbe-fn-head">
+                          <b>{r[0]}</b>
+                          <i>{r[3]}</i>
+                        </div>
+                        <div className="hbe-fn-line">
+                          <span>{entry.formulaTable.head[1]}</span>
+                          <b>{r[1]}</b>
+                        </div>
+                        <div className="hbe-fn-line">
+                          <span>{entry.formulaTable.head[2]}</span>
+                          <b>{r[2]}</b>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
                 <table className="hbe-table">
                   <thead>
                     <tr>
@@ -90,8 +110,8 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
                     </tr>
                   </thead>
                   <tbody>
-                    {entry.formulaTable.rows.map((r) => (
-                      <tr key={r[0]}>
+                    {entry.formulaTable.rows.map((r, ri) => (
+                      <tr key={r[0]} className={entry.formulaTable.tones ? `hbe-tone is-${entry.formulaTable.tones[ri]}` : undefined}>
                         {r.map((c, k) => (
                           <td key={k}>{c || '–'}</td>
                         ))}
@@ -99,6 +119,7 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
                     ))}
                   </tbody>
                 </table>
+                )}
                 {entry.formulaTable.foot && <span className="hbe-table-foot">{entry.formulaTable.foot}</span>}
               </>
             ) : (

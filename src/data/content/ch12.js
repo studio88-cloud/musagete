@@ -27,7 +27,7 @@ export default {
     2: {
       pages: [
         page('Accordi imparentati', 'Alcuni accordi hanno note in comune e possono sostituirsi. CΔ (Do Mi Sol Si) e Am7 (La Do Mi Sol) condividono quasi tutte le note, e lo stesso vale per Em7 (Mi Sol Si Re). Sono i tre accordi di tonica.', 'I ↔ vi ↔ iii', { base: 57, notes: mk(57, [[0, 6, '1'], [3, 1, '♭3'], [7, 3, '5'], [10, 5, '♭7']]), play: Am7, chord: true }, 'Am7 è un CΔ col La al basso!'),
-        page('Vii e V', 'Anche il V7 ha un parente: Bø7 (Si Re Fa La) contiene le note guida di G7 e ne ha la stessa funzione. Si può quindi usare Bø7 al posto di G7, anche se il basso diventa più leggero.', 'V7 ↔ viiø7', { base: 59, notes: mk(59, [[0, 7, '3'], [3, 2, '5'], [6, 4, '♭7'], [10, 6, '9']]), play: md(59, [0, 3, 6, 10]), chord: true }, 'Senti lo stesso colore?'),
+        page('Vii e V', 'Anche il V7 ha un parente: Bø7 (Si Re Fa La) contiene le note guida di G7 e ne ha la stessa funzione. Si può quindi usare Bø7 al posto di G7, anche se il basso diventa più leggero.', 'V7 ↔ viim7♭5', { base: 59, notes: mk(59, [[0, 7, '3'], [3, 2, '5'], [6, 4, '♭7'], [10, 6, '9']]), play: md(59, [0, 3, 6, 10]), chord: true }, 'Senti lo stesso colore?'),
       ],
     },
     3: {
@@ -38,7 +38,7 @@ export default {
     },
     4: {
       pages: [
-        page('Il II–V–I con sostituzione', 'Il giro Dm7 – G7 – CΔ diventa Dm7 – D♭7 – CΔ. La linea del basso scende per semitoni: Re, Re♭, Do. Il suono è più morbido e più “jazz”.', 'Dm7 – D♭7 – CΔ', { notes: [], play: [Dm7, Db7, CM7], progression: true, chords: [{ fn: 'ii7', sym: 'Dm7' }, { fn: '♭II7', sym: 'D♭7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Il basso scende dolcemente!'),
+        page('Il II–V–I con sostituzione', 'Il giro Dm7 – G7 – CΔ diventa Dm7 – D♭7 – CΔ. La linea del basso scende per semitoni: Re, Re♭, Do. Il suono è più morbido e più “jazz”.', 'Dm7 – D♭7 – CΔ', { notes: [], play: [Dm7, Db7, CM7], progression: true, chords: [{ fn: 'iim7', sym: 'Dm7' }, { fn: '♭II7', sym: 'D♭7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Il basso scende dolcemente!'),
         page('La regola d’oro', 'Una sostituzione funziona se mantiene la funzione e non va in conflitto con la melodia. Prima di sostituire un accordo controlla la nota che la melodia suona su di esso: deve far parte dell’accordo nuovo oppure essere un’estensione.', 'Mantieni funzione e melodia.', { notes: [] }, 'Ascolta sempre il risultato!'),
       ],
     },

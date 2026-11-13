@@ -128,16 +128,41 @@ export const HANDBOOK = [
   },
   {
     id: 'harm7', chapter: 3, title: 'Armonizzazione a quattro voci', subtitle: 'Gli accordi di settima della scala',
-    def: 'Aggiungendo una terza sopra ogni triade si ottengono gli accordi di settima della tonalità.',
-    formula: 'Imaj7 ii7 iii7 IVmaj7 V7 vi7 viiø',
-    points: ['In Do: Cmaj7 Dm7 Em7 Fmaj7 G7 Am7 Bm7♭5', 'Solo il V grado è una settima di dominante', 'Il viiø è il semidiminuito'],
-    examples: [pr('Settime di Do maggiore', [['Imaj7', 'Cmaj7', CM7], ['ii7', 'Dm7', Dm7], ['iii7', 'Em7', [64, 67, 71, 74]], ['IVmaj7', 'Fmaj7', [65, 69, 72, 76]], ['V7', 'G7', [67, 71, 74, 77]], ['vi7', 'Am7', [57, 60, 64, 67]]])],
+    def: 'Aggiungendo una terza sopra ogni triade si ottengono gli accordi di settima della tonalità: sette accordi, uno per grado.',
+    formula: 'Imaj7 iim7 iiim7 IVmaj7 V7 vim7 viim7♭5',
+    formulaTable: {
+      title: 'Le settime sui sette gradi',
+      head: ['Grado', 'Tipo', 'In Do'],
+      rows: [
+        ['Imaj7', 'settima maggiore', 'Cmaj7'],
+        ['iim7', 'minore settima', 'Dm7'],
+        ['iiim7', 'minore settima', 'Em7'],
+        ['IVmaj7', 'settima maggiore', 'Fmaj7'],
+        ['V7', 'dominante', 'G7'],
+        ['vim7', 'minore settima', 'Am7'],
+        ['viim7♭5', 'semidiminuito', 'Bm7♭5'],
+      ],
+      foot: 'Il numero romano dice il grado, la sigla dopo dice il tipo di settima: maj7, m7, 7 o m7♭5.',
+    },
+    points: ['Maj7 sul I e sul IV, m7 sul ii, iii e vi', 'Solo il V grado è una settima di dominante (7)', 'Il viim7♭5 è il semidiminuito (ø)'],
+    examples: [pr('Settime di Do maggiore', [['Imaj7', 'Cmaj7', CM7], ['iim7', 'Dm7', Dm7], ['iiim7', 'Em7', [64, 67, 71, 74]], ['IVmaj7', 'Fmaj7', [65, 69, 72, 76]], ['V7', 'G7', [67, 71, 74, 77]], ['vim7', 'Am7', [57, 60, 64, 67]], ['viim7♭5', 'Bm7♭5', [59, 62, 65, 69]]])],
   },
   {
     id: 'functions', chapter: 3, title: 'Funzioni armoniche', subtitle: 'Tonica, sottodominante, dominante',
     def: 'Gli accordi si raggruppano in tre funzioni. La tonica dà riposo, la sottodominante si allontana, la dominante crea tensione e chiede di tornare alla tonica.',
     formula: 'T: I, iii, vi · S: ii, IV · D: V, vii°',
-    points: ['Il percorso tipico è T → S → D → T', 'Gli accordi della stessa funzione si possono scambiare', 'In Do: T = C Em Am · S = Dm F · D = G B°'],
+    formulaTable: {
+      title: 'Le tre funzioni',
+      head: ['Funzione', 'Gradi', 'In Do', 'Effetto'],
+      tones: ['t', 's', 'd'],
+      rows: [
+        ['T · Tonica', 'I iii vi', 'C Em Am', 'riposo'],
+        ['S · Sottodominante', 'ii IV', 'Dm F', 'movimento'],
+        ['D · Dominante', 'V vii°', 'G B°', 'tensione'],
+      ],
+      foot: 'Percorso tipico: T → S → D → T',
+    },
+    points: ['Gli accordi della stessa funzione si possono scambiare', 'Il I è l’accordo principale della tonica, il V quello della dominante'],
     examples: [pr('T → S → D → T', [['T', 'C', C], ['S', 'F', F], ['D', 'G', G], ['T', 'C', C]])],
   },
 
@@ -157,9 +182,9 @@ export const HANDBOOK = [
   {
     id: 'iiVI', chapter: 4, title: 'Il II–V–I', subtitle: 'La cadenza più usata nel jazz',
     def: 'È una sequenza di tre accordi in cui ogni radice scende di quinta: ii, V, I. È la progressione di base della musica jazz e di tanta musica pop.',
-    formula: 'Maggiore: ii7 – V7 – Imaj7 · Minore: iiø – V7 – im',
+    formula: 'Maggiore: iim7 – V7 – Imaj7 · Minore: iim7♭5 – V7 – im',
     points: ['In Do: Dm7 – G7 – Cmaj7', 'In La minore: Bm7♭5 – E7 – Am', 'Le radici scendono di quinta'],
-    examples: [pr('Dm7 – G7 – Cmaj7', [['ii7', 'Dm7', Dm7], ['V7', 'G7', G7], ['Imaj7', 'Cmaj7', CM7]])],
+    examples: [pr('Dm7 – G7 – Cmaj7', [['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['Imaj7', 'Cmaj7', CM7]])],
   },
   {
     id: 'progs', chapter: 4, title: 'Progressioni frequenti', subtitle: 'Giri armonici che si trovano ovunque',
@@ -302,7 +327,7 @@ export const HANDBOOK = [
     def: 'Due settime di dominante a distanza di tritono condividono la terza e la settima (con ruoli scambiati). Per questo la dominante si può sostituire con la settima sul ♭II.',
     formula: 'V7 ↔ ♭II7 (G7 ↔ D♭7)',
     points: ['Le note guida B e F restano uguali', 'Il basso scende per semitoni: ii – ♭II – I', 'In Do: Dm7 – D♭7 – Cmaj7'],
-    examples: [pr('Dm7 – D♭7 – Cmaj7', [['ii7', 'Dm7', [53, 57, 60, 62]], ['♭II7', 'D♭7', [53, 56, 59, 61]], ['Imaj7', 'Cmaj7', [55, 59, 60, 64]]])],
+    examples: [pr('Dm7 – D♭7 – Cmaj7', [['iim7', 'Dm7', [53, 57, 60, 62]], ['♭II7', 'D♭7', [53, 56, 59, 61]], ['Imaj7', 'Cmaj7', [55, 59, 60, 64]]])],
   },
   {
     id: 'relsub', chapter: 12, title: 'Sostituzioni diatoniche', subtitle: 'Accordi che hanno due note in comune',
@@ -316,16 +341,16 @@ export const HANDBOOK = [
   {
     id: 'jazzblues', chapter: 13, title: 'Blues jazz', subtitle: 'Dodici battute con le sostituzioni',
     def: 'Il blues jazz mantiene le dodici battute ma ricolora il giro con settime e con ii–V ai suoi punti chiave.',
-    formula: 'I7 | IV7 | I7 | I7 | IV7 | IV7 | I7 | VI7 | ii7 | V7 | I7 | V7',
+    formula: 'I7 | IV7 | I7 | I7 | IV7 | IV7 | I7 | VI7 | iim7 | V7 | I7 | V7',
     points: ['In Do: C7 F7 C7 C7 · F7 F7 C7 A7 · Dm7 G7 C7 G7', 'A7 è una dominante secondaria che porta a Dm7', 'Il ii–V finale porta alla ripetizione'],
-    examples: [pr('Ultime otto battute', [['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]], ['V7/ii', 'A7', [55, 57, 61, 64]], ['ii7', 'Dm7', Dm7], ['V7', 'G7', G7], ['I7', 'C7', [55, 58, 60, 64]]])],
+    examples: [pr('Ultime otto battute', [['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]], ['V7/ii', 'A7', [55, 57, 61, 64]], ['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['I7', 'C7', [55, 58, 60, 64]]])],
   },
   {
     id: 'backdoor', chapter: 13, title: 'Backdoor', subtitle: 'Arrivare alla tonica dalla “porta di servizio”',
     def: 'La dominante backdoor è il settimo grado abbassato con settima di dominante (♭VII7), che risolve sulla tonica scendendo di tono. Spesso è preceduta dal iv minore.',
-    formula: 'iv7 – ♭VII7 – Imaj7',
+    formula: 'ivm7 – ♭VII7 – Imaj7',
     points: ['In Do: Fm7 – B♭7 – Cmaj7', 'Le note guida di B♭7 sono D e A♭', 'La♭ scende su Sol e Re scende su Do'],
-    examples: [pr('Fm7 – B♭7 – Cmaj7', [['iv7', 'Fm7', [53, 56, 60, 63]], ['♭VII7', 'B♭7', [53, 56, 58, 62]], ['Imaj7', 'Cmaj7', CM7]])],
+    examples: [pr('Fm7 – B♭7 – Cmaj7', [['ivm7', 'Fm7', [53, 56, 60, 63]], ['♭VII7', 'B♭7', [53, 56, 58, 62]], ['Imaj7', 'Cmaj7', CM7]])],
   },
 
   // ——— Capitolo 14 · Dopo la pratica comune
@@ -361,6 +386,6 @@ export const HANDBOOK = [
     def: 'Le note guida sono la terza e la settima di ogni accordo: da sole definiscono la qualità dell’accordo. Seguirle da un accordo all’altro dà linee melodiche chiare.',
     formula: '3ª e 7ª dell’accordo',
     points: ['Su Dm7 – G7 – Cmaj7 la settima Do scende al Si, poi al Mi', 'Anche Fa (3ª di Dm7) si mantiene fino al Fa di G7', 'Su ogni accordo si improvvisa partendo dalle note guida'],
-    examples: [pr('Dm7 – G7 – Cmaj7', [['ii7', 'Dm7', Dm7], ['V7', 'G7', G7], ['Imaj7', 'Cmaj7', CM7]])],
+    examples: [pr('Dm7 – G7 – Cmaj7', [['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['Imaj7', 'Cmaj7', CM7]])],
   },
 ]

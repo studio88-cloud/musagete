@@ -20,15 +20,15 @@ export default {
   lessons: {
     1: {
       pages: [
-        page('Gli accordi in minore', 'In minore il II–V–I usa un semidiminuito sul ii. In Do minore: Dø7, G7 e Cm7. Il ii è semidiminuito perché la scala minore naturale ha il ♭5 sul secondo grado.', 'iiø7 – V7 – i7', { base: 62, notes: mk(62, [[0, 1, '1'], [3, 3, '♭3'], [6, 5, '♭5'], [10, 7, '♭7']]), play: md(62, [0, 3, 6, 10]), chord: true }, 'Il Dø7 apre il giro!'),
+        page('Gli accordi in minore', 'In minore il II–V–I usa un semidiminuito sul ii. In Do minore: Dø7, G7 e Cm7. Il ii è semidiminuito perché la scala minore naturale ha il ♭5 sul secondo grado.', 'iim7♭5 – V7 – im7', { base: 62, notes: mk(62, [[0, 1, '1'], [3, 3, '♭3'], [6, 5, '♭5'], [10, 7, '♭7']]), play: md(62, [0, 3, 6, 10]), chord: true }, 'Il Dø7 apre il giro!'),
         page('Il V7 con ♭9', 'Nel minore la dominante ha di solito la nona abbassata, G7♭9, per avvicinarsi al colore del Do minore. Il suono è più scuro e teso del V7 maggiore. Spesso si usa anche la scala alterata sul V.', 'V7♭9', { base: 55, notes: mk(55, [[0, 1, '1'], [4, 3, '3'], [7, 5, '5'], [10, 7, '♭7'], [12, 2, '♭9']]), play: md(55, [0, 4, 7, 10, 13]), chord: true }, 'La ♭9 è il La♭!'),
-        page('Il giro completo', 'Ascolta il giro completo: Dø7 – G7♭9 – Cm7. Il colore è drammatico e viene usato in moltissimi standard jazz, come “Autumn Leaves”.', 'Dø7 – G7♭9 – Cm7', { notes: [], play: [md(62, [0, 3, 6, 10]), md(55, [0, 4, 7, 10, 13]), Cm7], progression: true, chords: [{ fn: 'iiø7', sym: 'Dø7' }, { fn: 'V7♭9', sym: 'G7♭9' }, { fn: 'i7', sym: 'Cm7' }] }, 'Un classico!'),
+        page('Il giro completo', 'Ascolta il giro completo: Dø7 – G7♭9 – Cm7. Il colore è drammatico e viene usato in moltissimi standard jazz, come “Autumn Leaves”.', 'Dø7 – G7♭9 – Cm7', { notes: [], play: [md(62, [0, 3, 6, 10]), md(55, [0, 4, 7, 10, 13]), Cm7], progression: true, chords: [{ fn: 'iim7♭5', sym: 'Dø7' }, { fn: 'V7♭9', sym: 'G7♭9' }, { fn: 'im7', sym: 'Cm7' }] }, 'Un classico!'),
       ],
     },
     2: {
       pages: [
-        page('Tornare all’inizio', 'Il turnaround è una breve progressione alla fine di una sezione che riporta al I. Il più comune è I – vi – ii – V: CΔ, Am7, Dm7, G7. Due battute bastano a ripartire dall’inizio.', 'I – vi – ii – V', { notes: [], play: [CM7, Am7, Dm7, G7], progression: true, chords: [{ fn: 'IΔ', sym: 'CΔ' }, { fn: 'vi7', sym: 'Am7' }, { fn: 'ii7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }] }, 'Si ricomincia!'),
-        page('Varianti', 'Si può trasformare il vi in una dominante secondaria, A7, e ottenere I – VI7 – ii – V (CΔ, A7, Dm7, G7). Si può anche partire dal iii: iii – VI7 – ii – V (Em7, A7, Dm7, G7).', 'iii – VI7 – ii – V', { notes: [], play: [md(64, [0, 3, 7, 10]), md(57, [0, 4, 7, 10]), Dm7, G7], progression: true, chords: [{ fn: 'iii7', sym: 'Em7' }, { fn: 'VI7', sym: 'A7' }, { fn: 'ii7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }] }, 'Una catena di quinte!'),
+        page('Tornare all’inizio', 'Il turnaround è una breve progressione alla fine di una sezione che riporta al I. Il più comune è I – vi – ii – V: CΔ, Am7, Dm7, G7. Due battute bastano a ripartire dall’inizio.', 'I – vi – ii – V', { notes: [], play: [CM7, Am7, Dm7, G7], progression: true, chords: [{ fn: 'IΔ', sym: 'CΔ' }, { fn: 'vim7', sym: 'Am7' }, { fn: 'iim7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }] }, 'Si ricomincia!'),
+        page('Varianti', 'Si può trasformare il vi in una dominante secondaria, A7, e ottenere I – VI7 – ii – V (CΔ, A7, Dm7, G7). Si può anche partire dal iii: iii – VI7 – ii – V (Em7, A7, Dm7, G7).', 'iii – VI7 – ii – V', { notes: [], play: [md(64, [0, 3, 7, 10]), md(57, [0, 4, 7, 10]), Dm7, G7], progression: true, chords: [{ fn: 'iiim7', sym: 'Em7' }, { fn: 'VI7', sym: 'A7' }, { fn: 'iim7', sym: 'Dm7' }, { fn: 'V7', sym: 'G7' }] }, 'Una catena di quinte!'),
       ],
     },
     3: {
@@ -58,7 +58,7 @@ export default {
       kind: 'quiz',
       passMark: 0.8,
       questions: [
-        { prompt: 'Come è fatto un II–V–I minore?', options: ['iiø7 – V7 – i7', 'ii7 – V7 – IΔ', 'iv – V – i', 'i – IV – V'], answer: 0, explanation: 'Semidiminuito, dominante e minore settima.' },
+        { prompt: 'Come è fatto un II–V–I minore?', options: ['iim7♭5 – V7 – im7', 'iim7 – V7 – IΔ', 'iv – V – i', 'i – IV – V'], answer: 0, explanation: 'Semidiminuito, dominante e minore settima.' },
         { prompt: 'Quale estensione è tipica del V7 in minore?', options: ['La 9 naturale', 'La ♭9', 'L’11', 'La 13 naturale'], answer: 1, explanation: 'La ♭9 dà il colore scuro che richiede il minore.' },
         { prompt: 'Qual è il turnaround più comune?', options: ['I – vi – ii – V', 'I – IV – V', 'ii – V – I', 'I – iii – V'], answer: 0, explanation: 'I – vi – ii – V.' },
         { prompt: 'Quante battute ha il blues?', options: ['8', '12', '16', '32'], answer: 1, explanation: 'La forma è di dodici battute.' },

@@ -1862,3 +1862,60 @@ a.btn {
     max-width: 280px;
   }
 }
+
+/* Funzioni armoniche: tre blocchi colorati, uno per funzione */
+.hbe-fns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0 10px;
+}
+.hbe-fn {
+  --tone: #e3b34b;
+  padding: 10px 12px;
+  border: 2px solid var(--tone);
+  border-left-width: 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.hbe-fn.is-s {
+  --tone: #c28ae3;
+}
+.hbe-fn.is-d {
+  --tone: #e8955e;
+}
+.hbe-fn-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.hbe-fn-head b {
+  color: var(--tone);
+  font-size: 18px;
+  font-weight: 800;
+}
+.hbe-fn-head i {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--tone);
+  color: #1b1428;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+}
+.hbe-fn-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.hbe-fn-line span {
+  color: var(--lavender);
+  font-weight: 600;
+}
+.hbe-fn-line b {
+  font-weight: 800;
+}

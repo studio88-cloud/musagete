@@ -21,9 +21,9 @@ export default {
     },
     2: {
       pages: [
-        page('Le quadriadi sui gradi', 'Aggiungendo un’altra terza a ogni accordo si ottengono le quadriadi. In Do maggiore: CΔ, Dm7, Em7, FΔ, G7, Am7, Bø7. La settima fa parte della scala, quindi non serve alterare nessuna nota.', 'IΔ · ii7 · iii7 · IVΔ · V7 · vi7 · viiø7', { notes: mk(60, F.maj7), play: md(60, [0, 4, 7, 11]), chord: true }, 'Le stesse note, un suono più ricco!'),
+        page('Le quadriadi sui gradi', 'Aggiungendo un’altra terza a ogni accordo si ottengono le quadriadi. In Do maggiore: CΔ, Dm7, Em7, FΔ, G7, Am7, Bø7. La settima fa parte della scala, quindi non serve alterare nessuna nota.', 'IΔ · iim7 · iiim7 · IVΔ · V7 · vim7 · viim7♭5', { notes: mk(60, F.maj7), play: md(60, [0, 4, 7, 11]), chord: true }, 'Le stesse note, un suono più ricco!'),
         page('Il V7: la dominante', 'L’unica settima di dominante della scala (G7) nasce sul quinto grado. Contiene il tritono tra Si e Fa, un intervallo molto instabile che “chiede” di risolvere sul I. Per questo il V7 è l’accordo più importante della tonalità.', 'V7 = 1 3 5 ♭7 sul quinto grado', { base: 55, notes: mk(55, F.dom7), play: md(55, [0, 4, 7, 10]), chord: true }, 'Senti la tensione di G7?'),
-        page('Il settimo grado', 'Sul settimo grado la quadriade è Bø7 (Si Re Fa La), un semidiminuito. Ha la stessa tensione del V7 e infatti spesso lo sostituisce. Ricorda: in maggiore il vii è sempre ø7, non diminuito intero.', 'viiø7 = 1 ♭3 ♭5 ♭7', { base: 59, notes: mk(59, F.hdim7), play: md(59, [0, 3, 6, 10]), chord: true }, 'Il semidiminuito della scala!'),
+        page('Il settimo grado', 'Sul settimo grado la quadriade è Bø7 (Si Re Fa La), un semidiminuito. Ha la stessa tensione del V7 e infatti spesso lo sostituisce. Ricorda: in maggiore il vii è sempre ø7, non diminuito intero.', 'viim7♭5 = 1 ♭3 ♭5 ♭7', { base: 59, notes: mk(59, F.hdim7), play: md(59, [0, 3, 6, 10]), chord: true }, 'Il semidiminuito della scala!'),
       ],
     },
     3: {
