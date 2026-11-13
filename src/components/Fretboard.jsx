@@ -48,7 +48,8 @@ function pickPosition(instrument, highlights) {
   const inWin = (fr) => (nut ? fr >= 0 && fr <= POS_COLS : fr >= base && fr < base + POS_COLS)
   const dots = []
   let maxFret = base + POS_COLS - 1
-  entries.forEach(([pc, note]) => {
+  entries.forEach(([key, note]) => {
+    const pc = note.pc ?? key // l'ottava alta ha chiave pc + 100
     let target = rootMidi
     const exact = note.rel !== undefined && note.rel >= 12 // 9, 11, 13: l'altezza giusta conta, non solo il nome
     if (note.rel !== undefined) target = rootMidi + note.rel

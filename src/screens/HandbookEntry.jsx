@@ -24,7 +24,7 @@ export function Example({ ex, instrument }) {
   useEffect(() => () => stopPlaying(), [])
   const base = ex.base ?? 60
   const shown = ex.notes && ex.notes.length ? fold(ex.notes, base) : []
-  const hl = highlightMap(shown, (pc) => IT_NAMES[WHITE.indexOf(pc)] ?? '')
+  const hl = highlightMap(shown, (pc) => IT_NAMES[WHITE.indexOf(pc)] ?? '', { octave: ex.octaveNote })
 
   const listen = () => {
     if (playing) {

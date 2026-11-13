@@ -66,12 +66,16 @@ export function baseMidi(root) {
 
 // Evidenziazioni per il manico: pitch class -> nota, con `rel` = semitoni sopra la tonica
 // (così 9, 11 e 13 restano un'ottava sopra e non vengono ripiegate)
-export function highlightMap(notes, nameOf) {
+export function highlightMap(notes, nameOf, { octave = false } = {}) {
   const rootNote = notes.find((n) => n.deg === 1) || notes[0]
   const m = new Map()
   notes.forEach((n) => {
     const pc = n.midi % 12
-    if (m.has(pc)) return
+    if (m.has(pc)) {
+      // la tonica all'ottava alta ha un suo punto: chiude la scala (chiave pc + 100)
+      if (octave && n.deg === 1 && n.midi - rootNote.midi >= 12) m.set(pc + 100, { deg: n.deg, label: n.label, name: nameOf(pc), rel: n.midi - rootNote.midi, pc })
+      return
+    }
     m.set(pc, { deg: n.deg, label: n.label, name: nameOf(pc), rel: n.midi - rootNote.midi })
   })
   return m

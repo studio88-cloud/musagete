@@ -37,7 +37,7 @@ export default function Practice({ chapter, instrument = 'keyboard', onExit }) {
   const tip = (t) => (t ? t[instrument] ?? t.all : null)
 
   return (
-    <section className="prac">
+    <section className="hbe prac">
       <button type="button" className="ic-back" onClick={onExit}>
         ‹ Capitolo {chapter}
       </button>

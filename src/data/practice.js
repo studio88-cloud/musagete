@@ -21,6 +21,12 @@ const melody = (label, base, midis) => {
   return { label, base, notes, play: midis, chord: false, melody: true }
 }
 
+// Scala con la tonica all'ottava alta: l'ultima nota chiude la scala, anche sullo strumento
+const scale = (label, root, formula) => {
+  const e = sc(label, root, formula)
+  return { ...e, notes: [...e.notes, nt(root + 12, 1, '1')], octaveNote: true }
+}
+
 export const PRACTICE = {
   1: {
     intro: 'Hai capito come è fatta una scala. Ora falla suonare: cinque minuti al giorno, piano, valgono più di mezz’ora una volta sola.',
@@ -33,18 +39,18 @@ export const PRACTICE = {
           guitar: 'Parti dal Do sulla quinta corda, terzo tasto, e sali in prima posizione: è la posizione che vedi sullo strumento qui sotto.',
           bass: 'Parti dal Do sulla terza corda, terzo tasto, e sali in prima posizione: è quella che vedi qui sotto.',
         },
-        example: sc('Do maggiore', 60, '1 2 3 4 5 6 7'),
+        example: scale('Do maggiore', 60, '1 2 3 4 5 6 7'),
       },
       {
         title: 'Un’altra tonalità: Sol maggiore',
         text: 'Ripeti la stessa cosa partendo da Sol. Cambia una sola nota: il Fa diventa Fa♯. Se la scala non “suona” come la prima, controlla proprio quella nota.',
         tips: { all: 'Ti serve lo schema tono – tono – semitono – tono – tono – tono – semitono: è lo stesso per ogni tonalità.' },
-        example: sc('Sol maggiore', 67, '1 2 3 4 5 6 7'),
+        example: scale('Sol maggiore', 67, '1 2 3 4 5 6 7'),
       },
       {
         title: 'Maggiore e minore a confronto',
         text: 'Suona Do maggiore e subito dopo La minore naturale: sono le stesse note, ma cambia il punto di partenza. Senti come la seconda suona più scura.',
-        example: sc('La minore naturale', 57, '1 2 ♭3 4 5 ♭6 ♭7'),
+        example: scale('La minore naturale', 57, '1 2 ♭3 4 5 ♭6 ♭7'),
       },
     ],
     phrase: {
