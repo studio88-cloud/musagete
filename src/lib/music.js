@@ -26,6 +26,9 @@ const MAJOR_SEMI = { 1: 0, 2: 2, 3: 4, 4: 5, 5: 7, 6: 9, 7: 11, 9: 14, 11: 17, 1
 const ACC = { '-2': '♭♭', '-1': '♭', 0: '', 1: '♯', 2: '♯♯' }
 export const accidental = (n) => ACC[n] ?? ''
 
+// Nome di una tonica: per gli accordi con le lettere (C, D♭, F♯: sigle), per scale e note singole in solfeggio (Do, Re♭, Fa♯)
+export const tonicName = (t, kind) => (kind === 'scale' ? IT_NAMES[t.letter] + accidental(t.acc) : t.id)
+
 // "1 ♭3 5 ♭♭7" -> [{label, semi, deg}]
 export function parseFormula(text) {
   return text.trim().split(/\s+/).map((label) => {

@@ -7,7 +7,7 @@ import ReportButton from '../components/ReportButton'
 import MiniMap from '../components/MiniMap'
 import { CHORD_GROUPS, findChord } from '../data/chords'
 import { SCALE_GROUPS, findScale } from '../data/scales'
-import { baseMidi, DEGREE_COLORS, spellNotes, TONICS } from '../lib/music'
+import { baseMidi, DEGREE_COLORS, spellNotes, TONICS, tonicName } from '../lib/music'
 import { scrollXFor } from '../lib/keys'
 import { playNotes, stopPlaying } from '../lib/audio'
 
@@ -55,12 +55,12 @@ function Row({ selected, onClick, children }) {
   )
 }
 
-function TonicPanel({ value, onPick }) {
+function TonicPanel({ value, kind, onPick }) {
   return (
     <div className="panel panel-tonic" role="listbox" aria-label="Tonica">
       {TONICS.map((t) => (
         <Row key={t.id} selected={t.id === value} onClick={() => onPick(t.id)}>
-          {t.id}
+          {tonicName(t, kind)}
         </Row>
       ))}
     </div>
@@ -183,7 +183,7 @@ export default function Tool({ instrument }) {
     <section className="tool">
       <div className="tool-controls">
         <button type="button" className="pill pill-tonic" onClick={() => toggleMenu('tonic')} aria-haspopup="listbox" aria-expanded={menu === 'tonic'}>
-          <span>{root.id}</span>
+          <span>{tonicName(root, st.kind)}</span>
           <span className="pill-arrow">{menu === 'tonic' ? '▴' : '▾'}</span>
         </button>
         <button type="button" className="pill pill-type" onClick={() => toggleMenu('type')} aria-haspopup="listbox" aria-expanded={menu === 'type'}>
@@ -251,7 +251,7 @@ export default function Tool({ instrument }) {
       <div className="report-wrap">
         <ReportButton
           variant="link"
-          context={`Strumento: ${root.id} ${def.name}, ${INSTRUMENT_LABELS[instrument]}`}
+          context={`Strumento: ${tonicName(root, st.kind)} ${def.name}, ${INSTRUMENT_LABELS[instrument]}`}
         />
       </div>
 
@@ -259,7 +259,7 @@ export default function Tool({ instrument }) {
         <>
           <div className="scrim" onClick={() => setMenu(null)} />
           {menu === 'tonic' ? (
-            <TonicPanel value={st.tonic} onPick={(id) => { update({ tonic: id }); setMenu(null) }} />
+            <TonicPanel value={st.tonic} kind={st.kind} onPick={(id) => { update({ tonic: id }); setMenu(null) }} />
           ) : (
             <TypePanel
               kind={st.kind}

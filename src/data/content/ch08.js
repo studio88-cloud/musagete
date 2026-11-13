@@ -19,13 +19,13 @@ export default {
     1: {
       pages: [
         page('Stesse note, centro diverso', 'Un modo si ottiene suonando le note di una scala maggiore ma partendo da un altro grado. Le note di Do maggiore, partendo dal Re, danno Re Mi Fa Sol La Si Do: è il modo dorico. Il centro è cambiato e quindi il suono.', 'Modo = scala maggiore da un altro grado.', { base: 62, notes: mk(62, [[0, 1, '1'], [2, 2, '2'], [3, 3, '♭3'], [5, 4, '4'], [7, 5, '5'], [9, 6, '6'], [10, 7, '♭7'], [12, 1, '1']]), play: md(62, [0, 2, 3, 5, 7, 9, 10, 12]) }, 'Re dorico: solo tasti bianchi!'),
-        page('I sette nomi', 'I sette modi si chiamano: ionio (dal 1° grado), dorico (2°), frigio (3°), lidio (4°), misolidio (5°), eolio (6°) e locrio (7°). Lo ionio è la scala maggiore, l’eolio la minore naturale.', 'Ionio · Dorico · Frigio · Lidio · Misolidio · Eolio · Locrio', { notes: [] }, 'Sette scale con le stesse note!'),
+        page('I sette nomi', 'I sette modi si chiamano: ionico (dal 1° grado), dorico (2°), frigio (3°), lidio (4°), misolidio (5°), eolio (6°) e locrio (7°). Lo ionico è la scala maggiore, l’eolio la minore naturale.', 'Ionico · Dorico · Frigio · Lidio · Misolidio · Eolio · Locrio', { notes: [] }, 'Sette scale con le stesse note!'),
       ],
     },
     2: {
       pages: [
-        page('Maggiori: ionio, lidio, misolidio', 'Hanno la terza maggiore. Il lidio ha il quarto grado alzato (♯4): suona luminoso, sognante. Il misolidio ha il settimo abbassato (♭7): suona rock e blues. Qui il Fa lidio.', 'Lidio: ♯4 · Misolidio: ♭7', { base: 65, notes: mk(65, [[0, 1, '1'], [2, 2, '2'], [4, 3, '3'], [6, 4, '♯4'], [7, 5, '5'], [9, 6, '6'], [11, 7, '7'], [12, 1, '1']]), play: md(65, [0, 2, 4, 6, 7, 9, 11, 12]) }, 'Quel ♯4 è inconfondibile!'),
-        page('Minori: dorico, eolio, frigio, locrio', 'Hanno la terza minore. Il dorico ha la sesta maggiore, l’eolio la sesta minore (è la minore naturale). Il frigio ha la seconda abbassata (♭2): suono spagnolo. Il locrio ha la quinta abbassata (♭5) ed è instabile.', 'Dorico: 6 · Frigio: ♭2 · Locrio: ♭5', { base: 64, notes: mk(64, [[0, 1, '1'], [1, 2, '♭2'], [3, 3, '♭3'], [5, 4, '4'], [7, 5, '5'], [8, 6, '♭6'], [10, 7, '♭7'], [12, 1, '1']]), play: md(64, [0, 1, 3, 5, 7, 8, 10, 12]) }, 'Mi frigio: senti il ♭2?'),
+        page('Maggiori: ionico, lidio, misolidio', 'Hanno la terza maggiore. Il lidio ha il quarto grado alzato (♯4): suona luminoso, sognante. Il misolidio ha il settimo abbassato (♭7): suona rock e blues. Qui il Fa lidio.', 'Lidio: ♯4 · Misolidio: ♭7', { base: 65, notes: mk(65, [[0, 1, '1'], [2, 2, '2'], [4, 3, '3'], [6, 4, '♯4'], [7, 5, '5'], [9, 6, '6'], [11, 7, '7'], [12, 1, '1']]), play: md(65, [0, 2, 4, 6, 7, 9, 11, 12]) }, 'Quel ♯4 è inconfondibile!'),
+        page('Minori: dorico, eolio, frigio, locrio', 'Hanno la terza minore. Il dorico ha la sesta maggiore, l’eolio la sesta minore (è la minore naturale). Il frigio ha la seconda abbassata (♭2): suono spagnolo. Il locrio ha la seconda abbassata (♭2) e la quinta abbassata (♭5) ed è instabile.', 'Dorico: 6 · Frigio: ♭2 · Locrio: ♭2 e ♭5', { base: 64, notes: mk(64, [[0, 1, '1'], [1, 2, '♭2'], [3, 3, '♭3'], [5, 4, '4'], [7, 5, '5'], [8, 6, '♭6'], [10, 7, '♭7'], [12, 1, '1']]), play: md(64, [0, 1, 3, 5, 7, 8, 10, 12]) }, 'Mi frigio: senti il ♭2?'),
       ],
     },
     3: {
@@ -45,9 +45,9 @@ export default {
     5: {
       kind: 'ear',
       questions: [
-        { prompt: 'Ascolta: che modo senti?', play: md(62, [0, 2, 3, 5, 7, 9, 10, 12]), options: ['Ionio', 'Dorico', 'Frigio', 'Misolidio'], answer: 1, explanation: 'Terza minore e sesta maggiore: è il modo dorico.' },
+        { prompt: 'Ascolta: che modo senti?', play: md(62, [0, 2, 3, 5, 7, 9, 10, 12]), options: ['Ionico', 'Dorico', 'Frigio', 'Misolidio'], answer: 1, explanation: 'Terza minore e sesta maggiore: è il modo dorico.' },
         { prompt: 'Ascolta: che modo senti?', play: md(55, [0, 2, 4, 5, 7, 9, 10, 12]), options: ['Misolidio', 'Lidio', 'Eolio', 'Locrio'], answer: 0, explanation: 'Terza maggiore e settima minore: è il misolidio.' },
-        { prompt: 'Ascolta: che modo senti?', play: md(65, [0, 2, 4, 6, 7, 9, 11, 12]), options: ['Ionio', 'Dorico', 'Lidio', 'Frigio'], answer: 2, explanation: 'Il quarto grado alzato (♯4) caratterizza il modo lidio.' },
+        { prompt: 'Ascolta: che modo senti?', play: md(65, [0, 2, 4, 6, 7, 9, 11, 12]), options: ['Ionico', 'Dorico', 'Lidio', 'Frigio'], answer: 2, explanation: 'Il quarto grado alzato (♯4) caratterizza il modo lidio.' },
         { prompt: 'Ascolta: che modo senti?', play: md(64, [0, 1, 3, 5, 7, 8, 10, 12]), options: ['Eolio', 'Locrio', 'Dorico', 'Frigio'], answer: 3, explanation: 'La seconda abbassata (♭2) caratterizza il modo frigio.' },
       ],
     },

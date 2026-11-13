@@ -251,7 +251,7 @@ export const HANDBOOK = [
     id: 'modulation', chapter: 7, title: 'Modulazione', subtitle: 'Cambiare tonalità',
     def: 'Modulare vuol dire passare da una tonalità a un’altra. Il modo più naturale usa un accordo pivot, che appartiene a entrambe le tonalità, seguito da una cadenza nella nuova.',
     formula: 'Pivot → V7 della nuova tonalità → nuova tonica',
-    points: ['Le tonalità vicine (una alterazione di differenza) modulano più facilmente', 'In Do: la relativa Am, la dominante G, la sottodominante F', 'Am è vi in Do e ii in Sol: un buon pivot'],
+    points: ['Le tonalità vicine (una alterazione di differenza) modulano più facilmente', 'In Do: la relativa La minore, la dominante Sol, la sottodominante Fa', 'Am è vi in Do e ii in Sol: un buon pivot'],
     examples: [pr('Da Do a Sol: C – Am – D7 – G', [['I', 'C', C], ['vi = ii', 'Am', Am], ['V7', 'D7', [62, 66, 69, 72]], ['I', 'G', [55, 59, 62]]])],
   },
 
@@ -259,7 +259,7 @@ export const HANDBOOK = [
   {
     id: 'modes', chapter: 8, title: 'I sette modi', subtitle: 'Sette scale da una sola scala',
     def: 'Partendo da ogni grado della scala maggiore e suonando sempre le stesse note si ottengono i modi. Ognuno ha un suo colore, dato dal grado caratteristico.',
-    formula: 'Ionio 1 2 3 4 5 6 7 · Dorico 1 2 ♭3 4 5 6 ♭7 · Frigio 1 ♭2 ♭3 4 5 ♭6 ♭7 · Lidio 1 2 3 ♯4 5 6 7 · Misolidio 1 2 3 4 5 6 ♭7 · Eolio 1 2 ♭3 4 5 ♭6 ♭7 · Locrio 1 ♭2 ♭3 4 ♭5 ♭6 ♭7',
+    formula: 'Ionico 1 2 3 4 5 6 7 · Dorico 1 2 ♭3 4 5 6 ♭7 · Frigio 1 ♭2 ♭3 4 5 ♭6 ♭7 · Lidio 1 2 3 ♯4 5 6 7 · Misolidio 1 2 3 4 5 6 ♭7 · Eolio 1 2 ♭3 4 5 ♭6 ♭7 · Locrio 1 ♭2 ♭3 4 ♭5 ♭6 ♭7',
     points: ['Dorico: la 6ª maggiore lo distingue dal minore naturale', 'Frigio: ♭2, suono spagnoleggiante', 'Lidio: ♯4, suono luminoso', 'Misolidio: ♭7, suono da dominante'],
     examples: [sc('Re dorico', 62, '1 2 ♭3 4 5 6 ♭7'), sc('Fa lidio', 65, '1 2 3 ♯4 5 6 7'), sc('Sol misolidio', 55, '1 2 3 4 5 6 ♭7')],
   },
@@ -343,7 +343,7 @@ export const HANDBOOK = [
     id: 'tritone', chapter: 12, title: 'Sostituzione di tritono', subtitle: 'V7 al posto di ♭II7',
     def: 'Due settime di dominante a distanza di tritono condividono la terza e la settima (con ruoli scambiati). Per questo la dominante si può sostituire con la settima sul ♭II.',
     formula: 'V7 ↔ ♭II7 (G7 ↔ D♭7)',
-    points: ['Le note guida B e F restano uguali', 'Il basso scende per semitoni: ii – ♭II – I', 'In Do: Dm7 – D♭7 – Cmaj7'],
+    points: ['Le note guida Si e Fa restano uguali', 'Il basso scende per semitoni: ii – ♭II – I', 'In Do: Dm7 – D♭7 – Cmaj7'],
     examples: [pr('Dm7 – D♭7 – Cmaj7', [['iim7', 'Dm7', [53, 57, 60, 62]], ['♭II7', 'D♭7', [53, 56, 59, 61]], ['Imaj7', 'Cmaj7', [55, 59, 60, 64]]])],
   },
   {
