@@ -11,6 +11,8 @@ const WHITE = [0, 2, 4, 5, 7, 9, 11]
 
 // Porta nel campo della tastiera di un'ottava le note che ne escono (es. la 9ª)
 function fold(notes, base) {
+  // gli accordi con estensioni (9, 11, 13) restano un'ottava sopra: la tastiera si allarga, non si ripiega
+  if (notes.some((n) => /(9|11|13)$/.test(n.label))) return notes
   const seen = new Set()
   return notes
     .map((n) => (n.midi > base + 12 ? { ...n, midi: n.midi - 12 * Math.ceil((n.midi - base - 12) / 12) } : n))

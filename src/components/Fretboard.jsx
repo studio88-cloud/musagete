@@ -47,25 +47,44 @@ function pickPosition(instrument, highlights) {
   const base = nut ? 1 : rf - 1
   const inWin = (fr) => (nut ? fr >= 0 && fr <= POS_COLS : fr >= base && fr < base + POS_COLS)
   const dots = []
+  let maxFret = base + POS_COLS - 1
   entries.forEach(([pc, note]) => {
     let target = rootMidi
+    const exact = note.rel !== undefined && note.rel >= 12 // 9, 11, 13: l'altezza giusta conta, non solo il nome
     if (note.rel !== undefined) target = rootMidi + note.rel
     else while (((target % 12) + 12) % 12 !== pc) target++
     let best = null
-    const consider = (win) => {
+    const consider = (win, maxFr = 12, only = false) => {
       tuning.forEach((open, s) => {
-        for (let fr = 0; fr <= 12; fr++) {
+        for (let fr = 0; fr <= maxFr; fr++) {
           if (!win(fr) || (open + fr) % 12 !== pc) continue
+          if (only && open + fr !== target) continue
           const cost = Math.abs(open + fr - target) * 10 + Math.abs(fr - rf) + (s === rs && fr === rf ? -100 : 0)
           if (!best || cost < best.cost) best = { s, fr, cost }
         }
       })
     }
-    consider(inWin)
+    if (exact) {
+      consider(inWin, 12, true)
+      if (!best) consider((fr) => fr <= base + 7, 15, true) // fuori dalla posizione: la finestra si allarga (al massimo 8 tasti)
+    }
+    if (!best) consider(inWin)
     if (!best) consider(() => true)
+    maxFret = Math.max(maxFret, best.fr)
     dots.push({ key: `${best.s}-${best.fr}`, s: best.s, f: best.fr, note })
   })
-  return { nut, base, dots }
+  // la finestra si adatta alle note scelte: se una cade prima del primo tasto, o sulla corda a vuoto, la si sposta
+  let b = base
+  let n = nut
+  const frets = dots.map((d) => d.f)
+  if (frets.includes(0)) {
+    n = true
+    b = 1
+  } else if (!n) {
+    b = Math.min(base, ...frets)
+  }
+  const cols = Math.min(Math.max(POS_COLS, maxFret - b + 1), 8)
+  return { nut: n, base: b, dots, cols }
 }
 
 // highlights: Map pitch class -> nota; mode: 'degrees' | 'notes'
@@ -73,8 +92,8 @@ function pickPosition(instrument, highlights) {
 export default function Fretboard({ instrument, highlights, mode, firstPosition = false }) {
   const tuning = STRINGS[instrument]
   const pos = firstPosition ? pickPosition(instrument, highlights) : null
-  const COLS = pos ? POS_COLS : 12
-  const FRET_W = pos ? POS_FRET_W : 28.8
+  const COLS = pos ? pos.cols : 12
+  const FRET_W = pos ? (pos.cols === POS_COLS ? POS_FRET_W : (WIDTH - 6 - X0) / pos.cols) : 28.8
   const nut = pos ? pos.nut : true
   const base = pos ? pos.base : 1 // primo tasto mostrato (le colonne vanno da base a base + COLS - 1)
   const fretX = (n) => X0 + n * FRET_W // n = numero di colonna (0 = bordo sinistro)
