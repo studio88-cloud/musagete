@@ -1,6 +1,7 @@
 import StageNode from '../components/StageNode'
 import { CHAPTERS, INTRO } from '../data/chapters'
 import { chapterStatus } from '../lib/progress'
+import pollyCelebrate from '../images/polly-celebrate.webp' // la Polly festante di fine quiz
 
 const ROW = 210 // altezza di ogni tappa, in px
 const TOP = 24
@@ -13,7 +14,8 @@ export default function Path({ completed, onOpen }) {
     { kind: 'intro', ...INTRO },
     ...CHAPTERS.map((c) => ({ kind: 'chapter', id: c.n, number: c.n, title: c.title })),
   ]
-  const height = TOP + items.length * ROW + 24
+  const finished = CHAPTERS.every((c) => completed.includes(c.n)) // percorso completato: Polly festeggia in fondo
+  const height = TOP + items.length * ROW + 24 + (finished ? 190 : 0)
   const center = (i) => ({ x: i % 2 === 0 ? LEFT : RIGHT, y: TOP + i * ROW + HALF })
 
   const segments = items.slice(0, -1).map((_, i) => {
@@ -46,6 +48,7 @@ export default function Path({ completed, onOpen }) {
           onOpen={() => onOpen(item)}
         />
       ))}
+      {finished && <img className="path-polly" src={pollyCelebrate} alt="Polly festeggia: hai completato il percorso!" />}
     </div>
   )
 }

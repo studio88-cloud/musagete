@@ -2136,3 +2136,14 @@ a.btn {
   border-radius: 50%;
   flex: none;
 }
+
+/* Fine del percorso: Polly festante nell'angolo destro */
+.path-polly {
+  position: absolute;
+  right: 6px;
+  bottom: 8px;
+  width: 190px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
