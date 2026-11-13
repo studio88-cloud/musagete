@@ -1407,6 +1407,7 @@ a.btn {
   line-height: 1.5;
 }
 .hbe-points li {
+  white-space: pre-line; /* \n nel testo = a capo */
   margin-bottom: 6px;
 }
 .hbe-ex {

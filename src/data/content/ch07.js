@@ -50,10 +50,11 @@ export default {
     5: {
       kind: 'ear',
       questions: [
-        { prompt: 'Ascolta: dove porta questa progressione?', kind: 'progression', play: [C, Em, Am, D7, G], options: ['Resta in Do maggiore', 'Modula a Sol maggiore', 'Modula a Fa maggiore', 'Passa a Do minore'], answer: 1, explanation: 'D7 – G è una cadenza in Sol maggiore: la tonalità cambia.' },
-        { prompt: 'Ascolta: che cosa succede qui?', kind: 'progression', play: [C, md(60, [0, 3, 7])], options: ['Cambio di tonica', 'Cambio di modo', 'Cambio di ottava', 'Nessun cambio'], answer: 1, explanation: 'La tonica resta Do, ma da maggiore diventa minore.' },
-        { prompt: 'Ascolta: la cadenza finale dove si trova?', kind: 'progression', play: [G, md(55, [0, 3, 7])], options: ['In Do maggiore', 'In Sol maggiore', 'In Sol minore', 'In Re maggiore'], answer: 2, explanation: 'Il Sol maggiore passa a Sol minore: stessa tonica, nuovo modo.' },
-        { prompt: 'Ascolta: questa cadenza V7–I in quale tonalità arriva?', kind: 'progression', play: [D7, G], options: ['Do maggiore', 'Re maggiore', 'Sol maggiore', 'La minore'], answer: 2, explanation: 'D7 è il V7 di Sol e risolve sul suo I: Sol maggiore.' },
+        { prompt: 'Ascolta: questa progressione modula?', kind: 'progression', play: [C, F_, G7, C], options: ['No: resta sempre nella stessa tonalità', 'Sì: passa a una nuova tonalità', 'Sì: passa da maggiore a minore', 'Non si può dire'], answer: 0, explanation: 'Gli accordi girano intorno al I e si torna a casa: la tonalità non cambia.' },
+        { prompt: 'Ascolta: questa progressione modula?', kind: 'progression', play: [C, Em, Am, D7, G, Am, D7, G], options: ['No: resta sempre nella stessa tonalità', 'Sì: si ferma in una nuova tonalità e la conferma', 'No: è solo una breve deviazione', 'Cambia solo il modo'], answer: 1, explanation: 'Dopo il D7 si arriva a un nuovo punto di riposo e lo si conferma con una nuova cadenza: è una modulazione.' },
+        { prompt: 'Ascolta: a metà frase c’è un accordo estraneo, ma poi si torna a casa. Che cos’è?', kind: 'progression', play: [C, md(57, [0, 4, 7, 10]), Dm, G7, C], options: ['Una tonicizzazione', 'Una modulazione', 'Un cambio di modo', 'Una cadenza sospesa'], answer: 0, explanation: 'La deviazione è breve e la tonalità di partenza non si abbandona: è una tonicizzazione.' },
+        { prompt: 'Ascolta: dopo la prima frase, che cosa succede?', kind: 'progression', play: [C, F_, G7, C, md(62, [0, 4, 7]), G, md(57, [0, 4, 7, 10]), md(62, [0, 4, 7])], options: ['Il brano finisce', 'La stessa frase riparte più in alto, in una nuova tonalità', 'Si passa al modo minore', 'La tonalità non cambia'], answer: 1, explanation: 'È un cambio di tonalità per stacco: la frase ricomincia un tono sopra, senza preparazione.' },
+        { prompt: 'Ascolta: la tonica resta la stessa ma il colore cambia. Che cosa succede?', kind: 'progression', play: [C, md(60, [0, 3, 7])], options: ['Cambio di tonica', 'Cambio di modo', 'Cambio di ottava', 'Nessun cambio'], answer: 1, explanation: 'La tonica resta la stessa, ma da maggiore diventa minore.' },
       ],
     },
     8: {

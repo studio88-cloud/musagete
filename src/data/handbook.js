@@ -231,7 +231,10 @@ export const HANDBOOK = [
       foot: 'Le cifre sono gli intervalli da costruire sopra il basso: in 6/5, per esempio, sopra il basso ci sono una sesta e una quinta.',
     },
     points: ['Nessun numero: triade in stato fondamentale', '6: triade in primo rivolto', '6/4: triade in secondo rivolto', '7, 6/5, 4/3, 4/2: stato fondamentale e tre rivolti della settima'],
-    examples: [ch('Triade di Do sopra il Do', 60, '1 3 5')],
+    examples: [
+      pr('Triadi: 5/3 – 6 – 6/4', [['5/3', 'C', [60, 64, 67]], ['6', 'C/E', [64, 67, 72]], ['6/4', 'C/G', [67, 72, 76]]]),
+      pr('Quadriadi: 7 – 6/5 – 4/3 – 4/2', [['7', 'G7', [55, 59, 62, 65]], ['6/5', 'G7/B', [59, 62, 65, 67]], ['4/3', 'G7/D', [62, 65, 67, 71]], ['4/2', 'G7/F', [65, 67, 71, 74]]]),
+    ],
   },
 
   // ——— Capitolo 6 · Dominanti secondarie
@@ -239,7 +242,7 @@ export const HANDBOOK = [
     id: 'secdom', chapter: 6, title: 'Dominanti secondarie', subtitle: 'Una dominante per ogni grado',
     def: 'Una dominante secondaria è la settima di dominante del grado verso cui si dirige. Si scrive V7/x, dove x è l’accordo di arrivo.',
     formula: 'V7/ii · V7/iii · V7/IV · V7/V · V7/vi',
-    points: ['In Do: A7 → Dm · B7 → Em · C7 → F · D7 → G · E7 → Am', 'Introducono una nota estranea alla scala', 'Il V7/V è la più usata'],
+    points: ['In Do:\nA7 → Dm\nB7 → Em\nC7 → F\nD7 → G\nE7 → Am', 'Introducono una nota estranea alla scala', 'Il V7/V è la più usata'],
     examples: [pr('C – D7 – G7 – C', [['I', 'C', C], ['V7/V', 'D7', [62, 66, 69, 72]], ['V7', 'G7', G7], ['I', 'C', C]])],
   },
 
