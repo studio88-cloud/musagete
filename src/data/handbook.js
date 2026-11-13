@@ -295,7 +295,7 @@ export const HANDBOOK = [
     id: 'melodicmodes', chapter: 9, title: 'Modi della minore melodica', subtitle: 'Sette scale dalla minore melodica',
     def: 'Nel jazz la minore melodica si suona uguale in salita e in discesa. Partendo da ciascun grado si ottengono sette modi: qui sono tutti derivati da Do minore melodica (Do Re Mi♭ Fa Sol La Si).',
     formula: 'Minore melodica 1 2 ♭3 4 5 6 7 · Dorico ♭2 1 ♭2 ♭3 4 5 6 ♭7 · Lidio aumentato 1 2 3 ♯4 ♯5 6 7 · Lidio dominante 1 2 3 ♯4 5 6 ♭7 · Misolidio ♭6 1 2 3 4 5 ♭6 ♭7 · Locrio ♮2 1 2 ♭3 4 ♭5 ♭6 ♭7 · Alterata (Superlocrio) 1 ♭2 ♯2 3 ♭5 ♭6 ♭7',
-    points: ['Lidio dominante: ♯4 e ♭7, su 7♯11', 'Alterata o superlocrio: ♭9 ♯9 ♯11 ♭13, su 7alt', 'Per trovare l’alterata di X7: minore melodica un semitono sopra X', 'Locrio ♮2: su ø7. Misolidio ♭6: su 7♭13'],
+    points: ['Lidio dominante: ♯4 e ♭7, su 7♯11', 'Alterata o superlocrio: ♭9 ♯9 ♯11 ♭13, su 7alt', 'Per trovare l’alterata di un accordo 7alt: minore melodica un semitono sopra la fondamentale', 'Locrio ♮2: su ø7. Misolidio ♭6: su 7♭13'],
     examples: [
       sc('Do minore melodica', 60, '1 2 ♭3 4 5 6 7'),
       sc('Re dorico ♭2', 62, '1 ♭2 ♭3 4 5 6 ♭7'),

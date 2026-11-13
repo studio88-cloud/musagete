@@ -57,7 +57,7 @@ export default {
       passMark: 0.8,
       questions: [
         { prompt: 'Quale scala si usa di solito su un V7♭9 in una tonalità minore?', options: ['Frigio dominante', 'Lidio dominante', 'Dorico ♭2', 'Lidio aumentato'], answer: 0, explanation: 'Il frigio dominante, quinto modo della minore armonica, ha la ♭2 e la terza maggiore.' },
-        { prompt: 'Come si trova la scala alterata su un accordo X7alt?', options: ['Con la minore melodica un semitono sopra la fondamentale', 'Con la minore armonica sulla stessa nota', 'Con il misolidio ♭6', 'Con il modo dorico'], answer: 0, explanation: 'Per esempio C7alt: minore melodica di Re♭.' },
+        { prompt: 'Come si trova la scala alterata su un accordo 7alt?', options: ['Con la minore melodica un semitono sopra la fondamentale', 'Con la minore armonica sulla stessa nota', 'Con il misolidio ♭6', 'Con il modo dorico'], answer: 0, explanation: 'Per esempio C7alt: minore melodica di Re♭.' },
         { prompt: 'Su quale tipo di accordo si usa il lidio dominante?', options: ['7♯11', 'm7♭5', 'Δ♯5', 'mΔ'], answer: 0, explanation: 'Il ♯4 corrisponde alla ♯11 dell’accordo.' },
         { prompt: 'Qual è il settimo modo della minore melodica?', options: ['Alterata (superlocrio)', 'Ultralocrio', 'Locrio ♮2', 'Frigio dominante'], answer: 0, explanation: 'Alterata e superlocrio sono due nomi dello stesso modo. L’ultralocrio è invece il settimo modo della minore armonica.' },
         { prompt: 'Il locrio ♮2 si distingue dal locrio per...', options: ['la seconda maggiore', 'la quinta giusta', 'la settima maggiore', 'la terza maggiore'], answer: 0, explanation: 'Il locrio ha la ♭2, il locrio ♮2 ha la 2 maggiore.' },
