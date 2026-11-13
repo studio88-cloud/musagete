@@ -7,6 +7,7 @@ import { cs, formEx } from './content/helpers'
 
 // Forme intere (capitolo 14): battute con uno o due accordi
 const SEZ_A = ['B♭ G7', 'Cm7 F7', 'Dm7 G7', 'Cm7 F7', 'Fm7 B♭7', 'E♭ E°7', 'B♭/F G7', 'Cm7 F7']
+const SEZ_A_FINE = [...SEZ_A.slice(0, 6), 'Cm7 F7', 'B♭'] // seconda e terza A
 const PONTE = ['D7', 'D7', 'G7', 'G7', 'C7', 'C7', 'F7', 'F7']
 
 const nt = (midi, deg, label) => ({ midi, deg, label })
@@ -414,11 +415,12 @@ export const HANDBOOK = [
   {
     id: 'anatole', chapter: 14, title: 'Anatole', subtitle: 'La forma AABA di “I Got Rhythm”',
     def: 'L’Anatole (rhythm changes) è la forma AABA di trentadue battute più usata nel jazz dopo il blues. Si suona di solito in Si♭. Le sezioni A sono turnaround, il ponte è una catena di dominanti.',
-    formula: 'A A · B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7 | · Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7 | · B (ponte) · D7 | D7 | G7 | G7 | · C7 | C7 | F7 | F7 | · A come prima',
-    points: ['Sezione A: I – VI7 – iim7 – V7 e poi iiim7 – VI7 – iim7 – V7', 'Battute 5–8: iim7 – V7 verso il IV, diminuito di passaggio e ritorno', 'Ponte: III7 – VI7 – II7 – V7, dominanti che scendono per quinte', 'Nell’ultima A il giro si chiude sul I'],
+    formula: 'A, prima volta · B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7 | · Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7 | · A, seconda e terza volta · come sopra fino a E♭ E°7, poi Cm7 F7 | B♭ | · B (ponte) · D7 | D7 | G7 | G7 | · C7 | C7 | F7 | F7 |',
+    points: ['Sezione A: I – VI7 – iim7 – V7 e poi iiim7 – VI7 – iim7 – V7', 'Battute 5–8: iim7 – V7 verso il IV, diminuito di passaggio e ritorno', 'Ponte: III7 – VI7 – II7 – V7, dominanti che scendono per quinte', 'Seconda e terza A: le ultime due battute sono Cm7 F7 | B♭, così il giro chiude sul I'],
     examples: [
-      formEx('L’Anatole completo: trentadue battute', [...SEZ_A, ...SEZ_A, ...PONTE, ...SEZ_A.slice(0, 7), 'B♭']),
-      formEx('Una sezione A: otto battute', SEZ_A),
+      formEx('L’Anatole completo: trentadue battute', [...SEZ_A, ...SEZ_A_FINE, ...PONTE, ...SEZ_A_FINE]),
+      formEx('Prima A: otto battute', SEZ_A),
+      formEx('Seconda e terza A: otto battute', SEZ_A_FINE),
       formEx('Il ponte: otto battute', PONTE),
     ],
   },

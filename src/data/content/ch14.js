@@ -3,7 +3,9 @@ import { cs, formEx, page } from './helpers'
 const bars = (list) => list.map((b) => b.split(' ').map(cs))
 const SEZ_A = ['B♭ G7', 'Cm7 F7', 'Dm7 G7', 'Cm7 F7', 'Fm7 B♭7', 'E♭ E°7', 'B♭/F G7', 'Cm7 F7']
 const PONTE = ['D7', 'D7', 'G7', 'G7', 'C7', 'C7', 'F7', 'F7']
-const full = formEx('', [...SEZ_A, ...SEZ_A, ...PONTE, ...SEZ_A.slice(0, 7), 'B♭'])
+// seconda e terza A: le prime sei battute sono uguali, poi Cm7 F7 | B♭
+const SEZ_A_FINE = [...SEZ_A.slice(0, 6), 'Cm7 F7', 'B♭']
+const full = formEx('', [...SEZ_A, ...SEZ_A_FINE, ...PONTE, ...SEZ_A_FINE])
 const blues = formEx('', ['Cm7', 'Cm7', 'Cm7', 'Cm7', 'Fm7', 'Fm7', 'Cm7', 'Cm7', 'A♭7', 'G7', 'Cm7', 'G7'])
 
 export default {
@@ -29,13 +31,13 @@ export default {
       pages: [
         page('Che cos’è l’Anatole', 'L’Anatole (in inglese rhythm changes) è la forma AABA costruita sugli accordi di “I Got Rhythm” di Gershwin. Ha dato origine a centinaia di brani e si suona di solito in Si♭. È la forma jazz più diffusa dopo il blues.', 'Anatole = AABA di 32 battute, di solito in Si♭', { notes: [] }, 'Quasi un linguaggio comune!'),
         page('Le prime quattro battute', 'La sezione A comincia con un turnaround di due battute, ripetuto con una piccola variante: B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7. Sono I – VI7 – iim7 – V7, poi iiim7 – VI7 – iim7 – V7. Ogni battuta ha due accordi.', 'I – VI7 – iim7 – V7 · iiim7 – VI7 – iim7 – V7', { notes: [], play: bars(SEZ_A.slice(0, 4)).flat(), progression: true, chords: [{ fn: 'I', sym: 'B♭' }, { fn: 'VI7', sym: 'G7' }, { fn: 'iim7', sym: 'Cm7' }, { fn: 'V7', sym: 'F7' }, { fn: 'iiim7', sym: 'Dm7' }, { fn: 'VI7', sym: 'G7' }, { fn: 'iim7', sym: 'Cm7' }, { fn: 'V7', sym: 'F7' }] }, 'Un turnaround doppio!'),
-        page('Le ultime quattro battute', 'Le battute 5–8 vanno al IV e tornano: Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7. Fm7 B♭7 è il II–V che porta a E♭, il IV grado. E°7 è un diminuito di passaggio. B♭/F è il I in secondo rivolto, poi si riparte con VI7 – iim7 – V7. Nell’ultima A il giro si chiude sul I: B♭.', 'Fm7 B♭7 | E♭ E°7 | · B♭/F G7 | Cm7 F7 |', { notes: [], play: bars(SEZ_A.slice(4)).flat(), progression: true, chords: [{ fn: 'iim7/IV', sym: 'Fm7' }, { fn: 'V7/IV', sym: 'B♭7' }, { fn: 'IV', sym: 'E♭' }, { fn: '♯IV°7', sym: 'E°7' }, { fn: 'I', sym: 'B♭/F' }, { fn: 'VI7', sym: 'G7' }, { fn: 'iim7', sym: 'Cm7' }, { fn: 'V7', sym: 'F7' }] }, 'Si va al IV e si torna!'),
+        page('Le ultime quattro battute', 'Le battute 5–8 vanno al IV e tornano: Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7. Fm7 B♭7 è il II–V che porta a E♭, il IV grado. E°7 è un diminuito di passaggio. B♭/F è il I in secondo rivolto, poi si riparte con VI7 – iim7 – V7, e si torna all’inizio. Nella seconda e nella terza A le battute 7–8 cambiano: Cm7 F7 | B♭. La seconda A chiude sul I prima del ponte, l’ultima chiude il chorus.', 'Fm7 B♭7 | E♭ E°7 | · B♭/F G7 | Cm7 F7 |', { notes: [], play: bars(SEZ_A.slice(4)).flat(), progression: true, chords: [{ fn: 'iim7/IV', sym: 'Fm7' }, { fn: 'V7/IV', sym: 'B♭7' }, { fn: 'IV', sym: 'E♭' }, { fn: '♯IV°7', sym: 'E°7' }, { fn: 'I', sym: 'B♭/F' }, { fn: 'VI7', sym: 'G7' }, { fn: 'iim7', sym: 'Cm7' }, { fn: 'V7', sym: 'F7' }] }, 'Si va al IV e si torna!'),
       ],
     },
     3: {
       pages: [
         page('Una catena di dominanti', 'Il ponte (B) è fatto di quattro dominanti di fila, due battute ciascuna: D7 | G7 | C7 | F7. Ogni accordo è la dominante del successivo (D7 verso G, G7 verso C, C7 verso F) e l’ultimo, F7, riporta a B♭. Sono i gradi III7 – VI7 – II7 – V7, dominanti secondarie che scendono per quinte.', 'III7 – VI7 – II7 – V7', { notes: [], play: ['D7', 'G7', 'C7', 'F7'].map(cs).map((c) => c), progression: true, chords: [{ fn: 'III7', sym: 'D7' }, { fn: 'VI7', sym: 'G7' }, { fn: 'II7', sym: 'C7' }, { fn: 'V7', sym: 'F7' }] }, 'Ogni accordo spinge il successivo!'),
-        page('La forma intera', 'Mettiamo tutto insieme: A A B A, quattro battute per riga. Ascolta la forma completa, trentadue battute.', 'A A · B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7 | · Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7 | · B (ponte) · D7 | D7 | G7 | G7 | · C7 | C7 | F7 | F7 | · A come prima', { notes: [], play: full.play, progression: true, form: true, weights: full.weights }, 'Trentadue battute, una forma!'),
+        page('La forma intera', 'Mettiamo tutto insieme: A A B A, quattro battute per riga. Le prime sei battute di ogni A sono uguali, ma la prima A finisce con Cm7 F7 (per ripartire), mentre la seconda e la terza finiscono con Cm7 F7 | B♭. Ascolta la forma completa, trentadue battute.', 'A, prima volta · B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7 | · Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7 | · A, seconda e terza volta · come sopra fino a E♭ E°7, poi Cm7 F7 | B♭ | · B (ponte) · D7 | D7 | G7 | G7 | · C7 | C7 | F7 | F7 |', { notes: [], play: full.play, progression: true, form: true, weights: full.weights }, 'Trentadue battute, una forma!'),
       ],
     },
     4: {
