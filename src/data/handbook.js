@@ -366,9 +366,13 @@ export const HANDBOOK = [
   {
     id: 'relsub', chapter: 12, title: 'Sostituzioni diatoniche', subtitle: 'Accordi che hanno due note in comune',
     def: 'Un accordo può sostituirne un altro della stessa funzione quando condivide almeno due note. È un modo semplice per variare un accompagnamento.',
-    formula: 'I ↔ iii · vi · IV ↔ ii · V ↔ vii°',
+    formula: 'I ↔ iii ↔ vi · IV ↔ ii · V ↔ vii°',
     points: ['C (Do Mi Sol) ↔ Am (La Do Mi) ↔ Em (Mi Sol Si)', 'F (Fa La Do) ↔ Dm (Re Fa La)', 'G7 ↔ B° (Si Re Fa)'],
-    examples: [pr('Tonica in tre versioni', [['I', 'C', C], ['vi', 'Am', Am], ['iii', 'Em', Em]])],
+    examples: [
+      pr('Tonica in tre versioni: C – Am – Em', [['I', 'C', C], ['vi', 'Am', Am], ['iii', 'Em', Em]]),
+      pr('Sottodominante in due versioni: F – Dm', [['IV', 'F', [60, 65, 69]], ['ii', 'Dm', [62, 65, 69]]]),
+      pr('Dominante in due versioni: G7 – B°', [['V7', 'G7', G7], ['vii°', 'B°', [59, 62, 65]]]),
+    ],
   },
 
   // ——— Capitolo 13 · Armonia jazz avanzata
