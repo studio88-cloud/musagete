@@ -130,11 +130,15 @@ const CH = {
     chord('E·A·D', '', 'E', '1 4 ♭7', 'Mi – La – Re'),
     chord('F·B♭·E♭', '', 'F', '1 4 ♭7', 'Fa – Si♭ – Mi♭'),
   ])],
-  17: [prog('Trasforma la progressione nel suo negativo', [
-    chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
-    chord('Cm', 'i', 'C', '1 ♭3 5', 'Do minore'),
-    chord('F', 'IV', 'F', '1 3 5', 'Fa maggiore'),
-    chord('Fm', 'iv', 'F', '1 ♭3 5', 'Fa minore'),
+  17: [prog('Suona il negativo di C – F – G7 – C (asse di Do)', [
+    chord('Cm', 'Cm', 'C', '1 ♭3 5', 'Do minore', { why: 'Il negativo di Do Mi Sol è Sol Mi♭ Do: Do minore.' }),
+    chord('Gm', 'Gm', 'G', '1 ♭3 5', 'Sol minore', { why: 'Il negativo di Fa La Do è Re Si♭ Sol: Sol minore.' }),
+    chord('Fm6', 'Fm6', 'F', '1 ♭3 5 6', 'Fa minore sesta', { why: 'Il negativo di Sol Si Re Fa è Do La♭ Fa Re: Fm6.' }),
+    chord('Cm', 'Cm', 'C', '1 ♭3 5', 'Do minore'),
+  ]), prog('Suona il negativo di Dm7 – G7 – CΔ (asse di Do)', [
+    chord('Gm7', 'Gm7', 'G', '1 ♭3 5 ♭7', 'Sol minore settima', { why: 'Il negativo di Re Fa La Do è Fa Re Si♭ Sol: Gm7.' }),
+    chord('Fm6', 'Fm6', 'F', '1 ♭3 5 6', 'Fa minore sesta', { why: 'Il negativo di G7 è Fm6.' }),
+    chord('Cm♭6', 'Cm♭6', 'C', '1 ♭3 5 ♭6', 'Do minore ♭6', { why: 'Il negativo di Do Mi Sol Si è Do Mi♭ Sol La♭.' }),
   ])],
   18: [prog('Arrangia la canzone: suona gli accordi del giro', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),

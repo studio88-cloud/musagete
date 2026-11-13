@@ -521,10 +521,13 @@ export const HANDBOOK = [
   // ——— Capitolo 17 · Armonia negativa
   {
     id: 'negative', chapter: 17, title: 'Armonia negativa', subtitle: 'Riflettere le note come in uno specchio',
-    def: 'Ogni nota viene specchiata rispetto a un asse. Con l’asse di Do (tra Mi♭ e Mi) le note si scambiano a coppie.',
+    def: 'Ogni nota viene specchiata rispetto a un asse. Con l’asse di Do (tra Mi♭ e Mi) le note si scambiano a coppie. È un metodo di calcolo per trovare accordi nuovi (da Ernst Levy, ripreso da Jacob Collier), non una legge dell’armonia.',
     formula: 'Do↔Sol · Re↔Fa · Mi↔Mi♭ · La↔Si♭ · Si↔La♭ · Do♯↔Fa♯',
-    points: ['Do maggiore (Do Mi Sol) → Do minore (Sol Mi♭ Do)', 'G7 → Fm6', 'Una cadenza maggiore diventa minore e sospesa'],
-    examples: [pr('C – F – G7 – C → Cm – Gm – Fm6 – Cm', [['i', 'Cm', Cm], ['v', 'Gm', [55, 58, 62]], ['iv6', 'Fm6', [53, 56, 60, 62]], ['i', 'Cm', Cm]])],
+    points: ['Do maggiore (Do Mi Sol) → Do minore (Sol Mi♭ Do)', 'Fa maggiore → Sol minore · G7 → Fm6', 'CΔ → Cm♭6 (= A♭Δ/C)', 'Una cadenza maggiore diventa minore e sospesa'],
+    examples: [
+      pr('C – F – G7 – C → Cm – Gm – Fm6 – Cm', [['Cm', 'Cm', Cm], ['Gm', 'Gm', [55, 58, 62]], ['Fm6', 'Fm6', [53, 56, 60, 62]], ['Cm', 'Cm', Cm]]),
+      pr('Dm7 – G7 – CΔ → Gm7 – Fm6 – Cm♭6', [['Gm7', 'Gm7', [55, 58, 62, 65]], ['Fm6', 'Fm6', [53, 56, 60, 62]], ['Cm♭6', 'Cm♭6', [60, 63, 67, 68]]]),
+    ],
   },
 
   // ——— Capitolo 18 · Arrangiare e accompagnare

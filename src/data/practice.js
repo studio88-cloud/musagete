@@ -680,9 +680,9 @@ export const PRACTICE_MORE = {
     intro: 'L’armonia negativa è uno specchio: ogni accordo ha il suo opposto. Capirlo apre un modo nuovo di sentire le progressioni.',
     play: [
       {
-        title: 'Lo specchio di I – IV – V – I',
-        text: 'In Do l’asse sta fra Mi♭ e Mi: Do diventa Sol, Re diventa Fa, Mi diventa Mi♭ e così via. Suona C – F – G – C e poi la sua versione negativa: Cm – Gm – Fm – Cm.',
-        example: prog('I – IV – V – I e il suo negativo', [['I', 'C', V.C], ['IV', 'F', V.F], ['V', 'G', V.G], ['I', 'C', V.C], ['i', 'Cm', V.Cm], ['v (neg. di IV)', 'Gm', V.Gm], ['iv (neg. di V)', 'Fm', V.Fm], ['i', 'Cm', V.Cm]]),
+        title: 'Lo specchio di I – IV – V7 – I',
+        text: 'In Do l’asse sta fra Mi♭ e Mi: Do diventa Sol, Re diventa Fa, Mi diventa Mi♭ e così via. Suona C – F – G7 – C e poi la sua versione negativa: Cm – Gm – Fm6 – Cm.',
+        example: prog('I – IV – V7 – I e il suo negativo', [['I', 'C', V.C], ['IV', 'F', V.F], ['V7', 'G7', V.G7], ['I', 'C', V.C], ['Cm', 'Cm', V.Cm], ['Gm', 'Gm', V.Gm], ['Fm6', 'Fm6', [53, 56, 60, 62]], ['Cm', 'Cm', V.Cm]]),
       },
       {
         title: 'Specchia una nota',
@@ -704,7 +704,7 @@ export const PRACTICE_MORE = {
       'Controlla il risultato con l’orecchio: se non suona bene, riprova con un asse diverso.',
     ],
     mistakes: [
-      'Dimenticare che il risultato è un accordo con un nome diverso: C maggiore diventa C minore.',
+      'Leggere la fondamentale dell’accordo specchiato dal posto sbagliato: il negativo di F non è “Re”, ma Sol minore (Re Si♭ Sol): si leggono le note, non la sigla.',
       'Applicare la trasformazione a note e accordi in modo incoerente.',
       'Prenderlo come una regola fissa: è un metodo, non una legge.',
     ],

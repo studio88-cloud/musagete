@@ -108,6 +108,7 @@ const CH = {
     ex('Il negativo di Do maggiore: costruisci Do minore', 'C', '1 ♭3 5', 'Do minore'),
     ex('Il negativo di Sol settima: costruisci Fa minore sesta', 'F', '1 ♭3 5 6', 'Fa minore sesta'),
     ex('Il negativo di Fa maggiore: costruisci Sol minore', 'G', '1 ♭3 5', 'Sol minore'),
+    ex('Il negativo di Do maggiore settima: costruisci Do minore ♭6', 'C', '1 ♭3 5 ♭6', 'Do minore ♭6'),
   ],
   18: [
     ex('Costruisci La minore settima', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
