@@ -15,6 +15,9 @@ import Lesson from './screens/Lesson'
 import Quiz from './screens/Quiz'
 import Apply from './screens/Apply'
 import Practice from './screens/Practice'
+import LanguagePicker from './screens/LanguagePicker'
+import Settings from './screens/Settings'
+import { useLang } from './lib/lang'
 import { applyFor } from './data/apply'
 import Build from './screens/Build'
 import Placement from './screens/Placement'
@@ -40,7 +43,9 @@ function loadInstrument() {
 }
 
 export default function App() {
-  const [screen, setScreen] = useState('welcome')
+  const langState = useLang()
+  const [screen, setScreen] = useState(() => (langState.chosen ? 'welcome' : 'language'))
+  const [settings, setSettings] = useState(false)
   const [tab, setTab] = useState('path')
   const [openItem, setOpenItem] = useState(null)
   const [instrument, setInstrument] = useState(loadInstrument)
@@ -76,6 +81,20 @@ export default function App() {
     }
   }, [instrument])
 
+  if (screen === 'language') {
+    return (
+      <div className="app">
+        <LanguagePicker
+          current={langState.lang}
+          onPick={(id) => {
+            langState.setLang(id)
+            setScreen('welcome')
+          }}
+        />
+      </div>
+    )
+  }
+
   if (screen === 'welcome') {
     return (
       <div className="app">
@@ -88,11 +107,25 @@ export default function App() {
     hbScroll.current = 0
     setOpenItem(null)
     setOpenStep(null)
+    setSettings(false)
     setTab(id)
   }
 
   let content
-  if (openItem && openItem.id === 'interchange') {
+  if (settings) {
+    content = (
+      <Settings
+        lang={langState.lang}
+        onLang={langState.setLang}
+        noteStyle={langState.noteStyle}
+        onNoteStyle={langState.setNoteStyle}
+        notes={langState.notes}
+        instrument={instrument}
+        onInstrument={setInstrument}
+        onBack={() => setSettings(false)}
+      />
+    )
+  } else if (openItem && openItem.id === 'interchange') {
     content = <Interchange onBack={() => setOpenItem(null)} />
   } else if (openItem && openItem.examples) {
     content = <HandbookEntry entry={openItem} instrument={instrument} onBack={() => setOpenItem(null)} />
@@ -237,7 +270,7 @@ export default function App() {
         <span aria-hidden="true">⟳</span>
         <p>Gira il telefono in verticale per usare Musagete</p>
       </div>
-      <TopBar instrument={instrument} onInstrumentChange={setInstrument} />
+      <TopBar instrument={instrument} onInstrumentChange={setInstrument} onSettings={() => setSettings(true)} />
       <main className="screen">{content}</main>
       <TabBar active={tab} onChange={changeTab} />
     </div>
