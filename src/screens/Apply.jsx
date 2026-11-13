@@ -4,7 +4,7 @@ import BuildInstrument from '../components/BuildInstrument'
 import ReadStaff from '../components/ReadStaff'
 import { Results } from './Quiz'
 import { applyFor, midiOfStep } from '../data/apply'
-import { playNotes, stopPlaying } from '../lib/audio'
+import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
 
 const XP_PER_ANSWER = 10
 
@@ -16,7 +16,7 @@ function BackArrow() {
   )
 }
 const joinIt = (a) => (a.length > 1 ? `${a.slice(0, -1).join(', ')} e ${a[a.length - 1]}` : a[0])
-const shiftFor = (instrument) => (instrument === 'bass' ? -24 : 0)
+const shiftFor = instrumentShift
 
 // Modello C · Applica (provvisorio): C1 percorri una progressione, C2 armonizza una melodia
 export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer, onDone, onExit }) {
@@ -55,7 +55,7 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
       seconds,
       xp: corr * XP_PER_ANSWER,
       passed: true,
-      sub: q.kind === 'harm' ? `Hai scelto l’accordo giusto in ${corr} battute su ${tot}.` : `Hai suonato subito l’accordo giusto in ${corr} casi su ${tot}.`,
+      sub: q.kind === 'harm' ? `Hai scelto l’accordo giusto in ${corr} battute su ${tot}.` : q.scale ? `Hai suonato subito la scala giusta in ${corr} casi su ${tot}.` : `Hai suonato subito l’accordo giusto in ${corr} casi su ${tot}.`,
     })
   }
   const nextExercise = (corr, tot) => {
@@ -71,13 +71,18 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
     } else finish(corr, tot)
   }
 
-  const listen = (chords) => {
+  const listen = (chords, asScale = false) => {
     if (playing) {
       stopPlaying()
       setPlaying(false)
       return
     }
     setPlaying(true)
+    if (asScale) {
+      const m = chords[0].map((x) => x + shift)
+      playNotes([...m, m[0] + 12], { kind: 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
+      return
+    }
     playNotes(chords.map((m) => m.map((x) => x + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
   }
 
@@ -151,7 +156,7 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
       setResult(null)
       setAttempted(false)
     }
-    const detail = joinIt(ch.expected.map((e) => `${e.role} (${e.name})`))
+    const detail = joinIt(ch.expected.map((e) => `${q.scale ? `grado ${e.label}` : e.role} (${e.name})`))
     const fb = result?.ok
       ? `Ottimo! ${ch.name}: ${detail}.${ch.why ? ` ${ch.why}` : ''}`
       : result && !result.bassOk
@@ -162,11 +167,11 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
 
     return (
       <section className="lesson" aria-label={`${step.id}. ${step.title}`}>
-        {header((c + (result ? 1 : 0)) / q.chords.length, `Accordo ${c + 1} di ${q.chords.length}`)}
+        {header((c + (result ? 1 : 0)) / q.chords.length, `${q.scale ? 'Scala' : 'Accordo'} ${c + 1} di ${q.chords.length}`)}
         <article className="lesson-card bld apl">
           <h2 className="bld-q">{q.prompt}</h2>
 
-          <div className="apl-row" role="list" aria-label="Progressione">
+          <div className="apl-row" role="list" aria-label={q.scale ? 'Scale' : 'Progressione'}>
             {q.chords.map((x, k) => {
               const st = k < c || (k === c && result?.ok) ? (done[k] === false ? 'miss' : 'done') : k === c ? 'now' : 'todo'
               return (
@@ -189,7 +194,7 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
             <button type="button" className="apl-btn" onClick={() => { stopPlaying(); setSelected([]); setResult(null) }} disabled={selected.length === 0}>
               Azzera
             </button>
-            <button type="button" className="apl-btn" onClick={() => listen(q.chords.map((x) => x.midis))}>
+            <button type="button" className="apl-btn" onClick={() => (q.scale ? listen([ch.midis], true) : listen(q.chords.map((x) => x.midis)))}>
               {playing ? 'Ferma' : 'Ascolta'}
             </button>
           </div>
@@ -206,7 +211,7 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
             </button>
           ) : result.ok ? (
             <button ref={btnRef} type="button" className="btn btn-primary quiz-check" onClick={next}>
-              {last ? 'Vedi il risultato' : 'Accordo successivo'}
+              {last ? 'Vedi il risultato' : q.scale ? 'Scala successiva' : 'Accordo successivo'}
             </button>
           ) : (
             <div className="sheet-btns bld-btns">

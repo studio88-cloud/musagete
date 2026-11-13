@@ -45,6 +45,12 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
     setPlaying(true)
     const shift = instrumentShift(instrument)
     const src = page.play || page.notes.map((n) => n.midi)
+    if (page.pairs) {
+      // due esempi di fila (es. Mi–Fa e poi Si–Do), con una pausa in mezzo
+      const seq = page.pairs.flatMap((p, k) => (k ? [null, ...p.map((m) => m + shift)] : p.map((m) => m + shift)))
+      playNotes(seq, { kind: 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
+      return
+    }
     if (page.progression) {
       playNotes(src.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     } else {

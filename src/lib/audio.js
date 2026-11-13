@@ -252,10 +252,19 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     })
     total += 0.4
   } else if (kind === 'scale') {
+    // null = pausa tra due esempi
     const step = 0.3
     const dur = 0.55
-    midis.forEach((midi, i) => events.push({ midi, at: i * step, dur, vol: 0.5 }))
-    total = (midis.length - 1) * step + dur
+    let t = 0
+    midis.forEach((midi) => {
+      if (midi === null) {
+        t += 0.9
+        return
+      }
+      events.push({ midi, at: t, dur, vol: 0.5 })
+      t += step
+    })
+    total = t - step + dur
   } else if (arpeggio) {
     // accordo in arpeggio: una nota dopo l'altra, con calma
     const step = 0.5

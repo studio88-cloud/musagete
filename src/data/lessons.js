@@ -31,6 +31,7 @@ const CH1 = {
         body: 'La distanza pi\u00f9 piccola tra due note \u00e8 il semitono: due tasti vicini, bianchi o neri. Tra Mi e Fa e tra Si e Do non c\u2019\u00e8 un tasto nero in mezzo: sono semitoni \u201cnaturali\u201d.',
         remember: 'Semitoni naturali: Mi\u2013Fa e Si\u2013Do.',
         notes: [n(64, 3, 'Mi'), n(65, 4, 'Fa'), n(71, 7, 'Si'), n(72, 1, 'Do')],
+        pairs: [[64, 65], [71, 72]],
         polly: 'Qui non c\u2019\u00e8 nessun tasto nero!',
       },
     ],

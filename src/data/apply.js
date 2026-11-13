@@ -22,7 +22,7 @@ const chord = (sym, fn, rootId, formula, name, opts = {}) => {
   }
   return { sym, fn, name, expected, midis, bassPc: opts.bass ?? null, why: opts.why || '' }
 }
-const prog = (prompt, chords) => ({ kind: 'prog', prompt, chords })
+const prog = (prompt, chords, extra = {}) => ({ kind: 'prog', prompt, chords, ...extra })
 
 // altezza MIDI di un gradino del pentagramma (Mi4 = 0, scala di Do)
 const LET = [0, 2, 4, 5, 7, 9, 11]
@@ -33,6 +33,12 @@ export const midiOfStep = (step) => {
 }
 
 const CH = {
+  // capitolo 1: tre scale da suonare sullo strumento (stesso modello della progressione, ma ogni voce è una scala)
+  1: [prog('Suona le scale: Sol maggiore – Fa maggiore – La minore naturale', [
+    chord('Sol', '', 'G', '1 2 3 4 5 6 7', 'Sol maggiore', { why: 'Ha un solo diesis, il Fa♯.' }),
+    chord('Fa', '', 'F', '1 2 3 4 5 6 7', 'Fa maggiore', { why: 'Ha un solo bemolle, il Si♭.' }),
+    chord('Lam', '', 'A', '1 2 ♭3 4 5 ♭6 ♭7', 'La minore naturale', { why: 'Ha le stesse note di Do maggiore, ma parte dal La.' }),
+  ], { scale: true })],
   2: [prog('Suona la progressione Do – La minore – Fa – Sol', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Am', 'VI', 'A', '1 ♭3 5', 'La minore'),
