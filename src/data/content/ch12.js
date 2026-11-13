@@ -1,45 +1,40 @@
 import { mk, md, page } from './helpers'
 
-const Dm7 = md(62, [0, 3, 7, 10])
-const G7 = md(55, [0, 4, 7, 10])
-const Db7 = md(61, [0, 4, 7, 10])
-const CM7 = md(60, [0, 4, 7, 11])
-const Am7 = md(57, [0, 3, 7, 10])
-
 export default {
   steps: [
-    { id: 1, kind: 'lesson', title: 'La sostituzione tritonale', min: 4 },
-    { id: 2, kind: 'lesson', title: 'Sostituire per terze', min: 4 },
-    { id: 3, kind: 'lesson', title: 'Diminuiti e II–V di passaggio', min: 4 },
-    { id: 4, kind: 'lesson', title: 'Le sostituzioni in pratica', min: 4 },
-    { id: 5, kind: 'ear', title: 'Riconosci la sostituzione', min: 5 },
-    { id: 6, kind: 'build', title: 'Sostituisci gli accordi sullo strumento', min: 5 },
-    { id: 7, kind: 'apply', title: 'Riarmonizza un giro', min: 6 },
+    { id: 1, kind: 'lesson', title: 'Le estensioni: 9, 11 e 13', min: 4 },
+    { id: 2, kind: 'lesson', title: 'Le alterazioni sulla dominante', min: 4 },
+    { id: 3, kind: 'lesson', title: 'Quali estensioni usare', min: 4 },
+    { id: 4, kind: 'lesson', title: 'Voicing essenziali', min: 4 },
+    { id: 5, kind: 'ear', title: 'Riconosci le estensioni', min: 5 },
+    { id: 6, kind: 'build', title: 'Costruisci gli accordi estesi', min: 5 },
+    { id: 7, kind: 'apply', title: 'Arricchisci un II–V–I', min: 6 },
     { id: 8, kind: 'quiz', title: 'Quiz finale', min: 5 },
   ],
   lessons: {
     1: {
       pages: [
-        page('Un tritono, due accordi', 'G7 contiene il tritono Si–Fa, la tensione che chiede risoluzione. Anche D♭7 (Re♭ Fa La♭ Do♭) contiene lo stesso tritono: Fa e Do♭, che è un Si. I due accordi hanno quindi le stesse note guida, a ruoli invertiti.', 'G7 e D♭7 condividono il tritono Si–Fa.', { base: 59, notes: mk(59, [[0, 3, '3'], [6, 7, '♭7']]), play: md(59, [0, 6]), chord: true }, 'Lo stesso tritono!'),
-        page('Il sostituto tritonale', 'Il sostituto tritonale si trova alla distanza di un tritono dall’accordo originale: D♭7 al posto di G7. Risolve sul Do con un semitono discendente nel basso, Re♭ → Do. È molto usato nel jazz.', 'V7 → ♭II7', { notes: [], play: [Db7, CM7], progression: true, chords: [{ fn: '♭II7', sym: 'D♭7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Il basso scende per semitono!'),
+        page('Oltre la settima', 'Dopo la settima si possono aggiungere altre terze: la 9, l’11 e la 13. Sono le stesse note di 2, 4 e 6, un’ottava sopra. Nei diagrammi e sugli strumenti le trovi un’ottava sopra la fondamentale.', '9 = 2 (+ ottava) · 11 = 4 (+ ottava) · 13 = 6 (+ ottava)', { notes: mk(60, [[0, 1, '1'], [14, 2, '9'], [4, 3, '3'], [7, 5, '5'], [11, 7, '7']]), play: md(60, [0, 4, 7, 11, 14]), chord: true }, 'CΔ9: ricco e raffinato!'),
+        page('Maj9, 9 e m9', 'CΔ9 aggiunge la nona alla settima maggiore. C9 la aggiunge alla settima di dominante. Cm9 la aggiunge alla minore settima. La nona dà più spessore all’accordo senza cambiarne la funzione.', 'Δ9 · 9 · m9', { notes: mk(60, [[0, 1, '1'], [14, 2, '9'], [4, 3, '3'], [7, 5, '5'], [10, 7, '♭7']]), play: md(60, [0, 4, 7, 10, 14]), chord: true }, 'C9 ha la nona sopra la dominante!'),
+        page('Undicesima e tredicesima', 'L’11 è la quarta un’ottava sopra e si usa soprattutto sui minori: Cm11. La 13 è la sesta un’ottava sopra e si usa sulle dominanti e sui maggiori: C13. Più si sale, più le note sono facoltative: spesso si omettono quinta e nona.', 'm11 · 13', { notes: mk(60, [[0, 1, '1'], [4, 3, '3'], [21, 6, '13'], [10, 7, '♭7']]), play: md(60, [0, 4, 10, 21]), chord: true }, 'C13: la sesta suona in alto!'),
       ],
     },
     2: {
       pages: [
-        page('Accordi imparentati', 'Alcuni accordi hanno note in comune e possono sostituirsi. CΔ (Do Mi Sol Si) e Am7 (La Do Mi Sol) condividono quasi tutte le note, e lo stesso vale per Em7 (Mi Sol Si Re). Sono i tre accordi di tonica.', 'I ↔ vi ↔ iii', { base: 57, notes: mk(57, [[0, 6, '1'], [3, 1, '♭3'], [7, 3, '5'], [10, 5, '♭7']]), play: Am7, chord: true }, 'Am7 è un CΔ col La al basso!'),
-        page('Vii e V', 'Anche il V7 ha un parente: Bø7 (Si Re Fa La) contiene le note guida di G7 e ne ha la stessa funzione. Si può quindi usare Bø7 al posto di G7, anche se il basso diventa più leggero.', 'V7 ↔ viim7♭5', { base: 59, notes: mk(59, [[0, 7, '3'], [3, 2, '5'], [6, 4, '♭7'], [10, 6, '9']]), play: md(59, [0, 3, 6, 10]), chord: true }, 'Senti lo stesso colore?'),
+        page('♭9 e ♯9', 'La dominante può avere la nona alterata. C7♭9 ha il Re♭, C7♯9 ha il Re♯. Sono suoni tesi che spingono con forza verso la risoluzione. Il 7♯9 è l’accordo del rock di Hendrix.', '7♭9 · 7♯9', { notes: mk(60, [[0, 1, '1'], [13, 2, '♭9'], [4, 3, '3'], [7, 5, '5'], [10, 7, '♭7']]), play: md(60, [0, 4, 7, 10, 13]), chord: true }, 'La ♭9 è molto tesa!'),
+        page('♯11 e ♭13', 'Si possono alterare anche l’undicesima e la tredicesima: 7♯11 ha il Fa♯, 7♭13 ha il La♭. Insieme alle none alterate formano la dominante “alterata”, adatta quando la tensione deve essere massima.', '7♯11 · 7♭13', { notes: mk(60, [[0, 1, '1'], [4, 3, '3'], [18, 4, '♯11'], [10, 7, '♭7']]), play: md(60, [0, 4, 10, 18]), chord: true }, 'Il ♯11 è da lidio!'),
       ],
     },
     3: {
       pages: [
-        page('Il diminuito al posto del V7♭9', 'Un accordo di dominante con la ♭9, senza fondamentale, è un diminuito. G7♭9 senza il Sol è Si Re Fa La♭, cioè B°7. Perciò il B°7 si può usare al posto di G7♭9 e risolve sul Do.', 'V7♭9 ≈ vii°7', { base: 59, notes: mk(59, [[0, 3, '3'], [3, 5, '5'], [6, 7, '♭7'], [9, 2, '♭9']]), play: md(59, [0, 3, 6, 9]), chord: true }, 'Un accordo che ne contiene un altro!'),
-        page('Il II–V di passaggio', 'Prima di qualunque accordo si può inserire il suo II–V. Per arrivare a Re minore si suona Em7 – A7, il II–V di Re. Il giro C – Dm7 diventa così C – Em7 – A7 – Dm7: più movimento, stessa destinazione.', 'Em7 – A7 → Dm7', { notes: [], play: [md(64, [0, 3, 7, 10]), md(57, [0, 4, 7, 10]), Dm7], progression: true, chords: [{ fn: 'ii/ii', sym: 'Em7' }, { fn: 'V7/ii', sym: 'A7' }, { fn: 'ii', sym: 'Dm7' }] }, 'Arrivare con più passi!'),
+        page('Le note da evitare', 'Non tutte le estensioni vanno bene su ogni accordo. L’11 naturale sul maggiore urta con la terza (Fa contro Mi) e si evita: si usa invece il ♯11. Anche il ♭13 su un accordo minore con 5 giusta può risultare ambiguo.', 'Sul maggiore: ♯11, non 11.', { notes: [] }, 'La terza non va disturbata!'),
+        page('Estensioni per tipo di accordo', 'Δ: 9, ♯11, 13. Dominante: 9, 13, oppure le alterazioni ♭9 ♯9 ♯11 ♭13. m7: 9, 11. ø7: 11, ♭13. Come regola pratica, le estensioni sono le note della scala adatta all’accordo, quindi la scelta viene dal modo.', 'Δ: 9 ♯11 13 · 7: 9 13 · m7: 9 11', { notes: [] }, 'Scegli quelle della scala giusta!'),
       ],
     },
     4: {
       pages: [
-        page('Il II–V–I con sostituzione', 'Il giro Dm7 – G7 – CΔ diventa Dm7 – D♭7 – CΔ. La linea del basso scende per semitoni: Re, Re♭, Do. Il suono è più morbido e più “jazz”.', 'Dm7 – D♭7 – CΔ', { notes: [], play: [Dm7, Db7, CM7], progression: true, chords: [{ fn: 'iim7', sym: 'Dm7' }, { fn: '♭II7', sym: 'D♭7' }, { fn: 'IΔ', sym: 'CΔ' }] }, 'Il basso scende dolcemente!'),
-        page('La regola d’oro', 'Una sostituzione funziona se mantiene la funzione e non va in conflitto con la melodia. Prima di sostituire un accordo controlla la nota che la melodia suona su di esso: deve far parte dell’accordo nuovo oppure essere un’estensione.', 'Mantieni funzione e melodia.', { notes: [] }, 'Ascolta sempre il risultato!'),
+        page('Shell voicing', 'Un accordo esteso può essere pesante. Il modo più semplice per suonarlo è lo shell voicing: solo fondamentale, terza e settima. Le tre note bastano a definire l’accordo e lasciano spazio a melodia e basso.', 'Shell = 1 · 3 · 7', { notes: mk(60, [[0, 1, '1'], [4, 3, '3'], [10, 7, '♭7']]), play: md(60, [0, 4, 10]), chord: true }, 'C7 con tre sole note!'),
+        page('Rootless voicing', 'Quando c’è già un bassista si può togliere la fondamentale. Su Dm7 si suona Fa La Do Mi, cioè 3 5 7 9, che sono già un Fa maggiore settima. Il suono è moderno e aperto, tipico del piano jazz.', 'Rootless Dm7: 3 5 7 9', { base: 65, notes: mk(65, [[0, 3, '♭3'], [4, 5, '5'], [7, 7, '♭7'], [11, 2, '9']]), play: md(65, [0, 4, 7, 11]), chord: true }, 'Senza fondamentale, ma si sente!'),
       ],
     },
   },
@@ -47,21 +42,21 @@ export default {
     5: {
       kind: 'ear',
       questions: [
-        { prompt: 'Ascolta: che cadenza finale senti?', kind: 'progression', play: [Db7, CM7], options: ['V7 – I', '♭II7 – I', 'IV – I', 'ii – I'], answer: 1, explanation: 'D♭7 al posto di G7: sostituzione tritonale, con basso che scende per semitono.' },
-        { prompt: 'Ascolta: come si muove il basso nell’ultima cadenza?', kind: 'progression', play: [Dm7, Db7, CM7], options: ['Scende per semitono fino alla tonica', 'Sale di quarta', 'Resta fermo', 'Sale per semitono'], answer: 0, explanation: 'Il basso scende Re – Re♭ – Do: è il segno della sostituzione tritonale.' },
-        { prompt: 'Ascolta: dove risolve il diminuito rispetto alla sua fondamentale?', kind: 'progression', play: [md(59, [0, 3, 6, 9]), md(60, [0, 4, 7])], options: ['Un semitono sopra', 'Un tono sopra', 'Una quarta sopra', 'Un semitono sotto'], answer: 0, explanation: 'B°7 ≈ G7♭9: la fondamentale sale di semitono e risolve sulla tonica.' },
-        { prompt: 'Ascolta: questo II–V–I usa la dominante normale o una sostituzione?', kind: 'progression', play: [Dm7, G7, CM7], options: ['Dominante normale (V7)', 'Sostituzione tritonale', 'Diminuito di passaggio', 'Sostituzione per terze'], answer: 0, explanation: 'Il basso sale di quarta da Re a Sol e poi scende di quinta: è il V7 normale, senza il basso che scende per semitono.' },
+        { prompt: 'Ascolta: che accordo senti?', kind: 'chord', play: md(60, [0, 4, 7, 11, 14]), options: ['CΔ9', 'C9', 'Cm9', 'C7♭9'], answer: 0, explanation: 'Settima maggiore con la nona: CΔ9.' },
+        { prompt: 'Ascolta: che accordo senti?', kind: 'chord', play: md(60, [0, 4, 7, 10, 14]), options: ['CΔ9', 'C9', 'Cm9', 'C6'], answer: 1, explanation: 'Settima di dominante con la nona: C9.' },
+        { prompt: 'Ascolta: che accordo senti?', kind: 'chord', play: md(60, [0, 3, 7, 10, 14]), options: ['C9', 'CΔ9', 'Cm9', 'Cø7'], answer: 2, explanation: 'Terza minore, settima minore e nona: Cm9.' },
+        { prompt: 'Ascolta: che accordo senti?', kind: 'chord', play: md(60, [0, 4, 7, 10, 15]), options: ['Dominante con 9 naturale', 'Dominante con ♯9', 'Settima maggiore', 'Minore settima'], answer: 1, explanation: 'La nona è alzata di un semitono: 7♯9.' },
       ],
     },
     8: {
       kind: 'quiz',
       passMark: 0.8,
       questions: [
-        { prompt: 'Qual è il sostituto tritonale di G7?', options: ['D7', 'D♭7', 'A♭7', 'C7'], answer: 1, explanation: 'D♭7 dista un tritono da G7 e ha le stesse note guida.' },
-        { prompt: 'Quale tritono hanno in comune G7 e D♭7?', options: ['Do – Fa♯', 'Si – Fa', 'Re – La♭', 'Mi – Si♭'], answer: 1, explanation: 'Si e Fa: terza e settima di G7.' },
-        { prompt: 'Quale accordo si può usare al posto di CΔ?', options: ['Am7', 'Dm7', 'G7', 'F7'], answer: 0, explanation: 'Am7 ha quasi le stesse note e la stessa funzione di tonica.' },
-        { prompt: 'Il B°7 corrisponde a...', options: ['G7♭9 senza fondamentale', 'C7 senza fondamentale', 'D7 con quinta alterata', 'E7 senza terza'], answer: 0, explanation: 'Si Re Fa La♭ sono le note di G7♭9 tranne il Sol.' },
-        { prompt: 'Nel II–V–I con sostituzione tritonale il basso...', options: ['sale per quinte', 'scende per semitoni', 'resta fermo', 'salta di terza'], answer: 1, explanation: 'Re – Re♭ – Do: scende di semitono due volte.' },
+        { prompt: 'A quale grado della scala corrisponde la 9?', options: ['Al 2, un’ottava sopra', 'Al 4', 'Al 6', 'Al 7'], answer: 0, explanation: 'La 9 è la seconda nota un’ottava più in alto.' },
+        { prompt: 'La 13 corrisponde al grado...', options: ['2', '4', '6', '7'], answer: 2, explanation: 'La 13 è la sesta un’ottava sopra.' },
+        { prompt: 'Quale estensione si evita sul maggiore?', options: ['La 9', 'L’11 naturale', 'Il ♯11', 'La 13'], answer: 1, explanation: 'L’11 naturale urta con la terza maggiore.' },
+        { prompt: 'Quale nota ha C7♯9 oltre a Do Mi Sol Si♭?', options: ['Re♭', 'Re♯', 'Fa♯', 'La♭'], answer: 1, explanation: 'La ♯9 è il Re♯ (Mi♭).' },
+        { prompt: 'Un shell voicing contiene...', options: ['Tutte le note dell’accordo', 'Fondamentale, terza e settima', 'Solo la fondamentale', 'Quinta e nona'], answer: 1, explanation: 'Bastano 1, 3 e 7 per definire l’accordo.' },
       ],
     },
   },

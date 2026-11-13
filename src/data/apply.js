@@ -84,59 +84,65 @@ const CH = {
     chord('Fm', '♭IV', 'F', '1 ♭3 5', 'Fa minore', { why: 'Preso in prestito da Do minore.' }),
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
   ])],
-  9: [prog('Suona gli accordi su cui improvvisi con la pentatonica di La minore', [
+  9: [prog('Suona la scala giusta su ogni accordo: G7♭9 – F7♯11 – Aø7 – C7alt', [
+    chord('G7♭9', '', 'G', '1 ♭2 3 4 5 ♭6 ♭7', 'Sol frigio dominante', { why: 'È la dominante del minore: ♭2 e ♭6 sono le sue note caratteristiche.' }),
+    chord('F7♯11', '', 'F', '1 2 3 ♯4 5 6 ♭7', 'Fa lidio dominante', { why: 'Il ♯4 corrisponde alla ♯11 dell’accordo.' }),
+    chord('Aø7', '', 'A', '1 2 ♭3 4 ♭5 ♭6 ♭7', 'La locrio ♮2', { why: 'Un locrio con la seconda maggiore: più dolce sul semidiminuito.' }),
+    chord('C7alt', '', 'C', '1 ♭2 ♯2 3 ♭5 ♭6 ♭7', 'Do alterata', { why: 'Contiene ♭9, ♯9, ♭5 e ♭13: tutte le alterazioni della dominante.' }),
+  ], { scale: true })],
+  10: [prog('Suona gli accordi su cui improvvisi con la pentatonica di La minore', [
     chord('Am7', 'im7', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     chord('Dm7', 'ivm7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),
     chord('E7', 'V', 'E', '1 3 5 ♭7', 'Mi settima'),
     chord('Am7', 'im7', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
   ])],
-  10: [prog('Inserisci l’accordo cromatico nel giro', [
+  11: [prog('Inserisci l’accordo cromatico nel giro', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('C♯dim7', '♯I°', 'C♯', '1 ♭3 ♭5 ♭♭7', 'Do♯ diminuito settima'),
     chord('Dm', 'ii', 'D', '1 ♭3 5', 'Re minore'),
     chord('G7', 'V', 'G', '1 3 5 ♭7', 'Sol settima'),
   ])],
-  11: [prog('Arricchisci il II–V–I con le estensioni', [
+  12: [prog('Arricchisci il II–V–I con le estensioni', [
     chord('Dm7', 'iim7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),
     chord('G9', 'V', 'G', '1 3 5 ♭7 9', 'Sol nona'),
     chord('Cmaj9', 'I', 'C', '1 3 5 7 9', 'Do maggiore nona'),
   ])],
-  12: [prog('Riarmonizza il giro con una sostituzione di tritono', [
+  13: [prog('Riarmonizza il giro con una sostituzione di tritono', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Am', 'vi', 'A', '1 ♭3 5', 'La minore'),
     chord('Dm', 'ii', 'D', '1 ♭3 5', 'Re minore'),
     chord('D♭7', '♭II7', 'D♭', '1 3 5 ♭7', 'Re♭ settima', { why: 'Sostituisce Sol settima: hanno in comune Fa e Si.' }),
   ])],
-  13: [prog('Suona il blues in Fa', [
+  14: [prog('Suona il blues in Fa', [
     chord('F7', 'I7', 'F', '1 3 5 ♭7', 'Fa settima'),
     chord('B♭7', 'IV7', 'B♭', '1 3 5 ♭7', 'Si♭ settima'),
     chord('F7', 'I7', 'F', '1 3 5 ♭7', 'Fa settima'),
     chord('C7', 'V7', 'C', '1 3 5 ♭7', 'Do settima'),
   ])],
-  14: [prog('Suona il ponte dell’Anatole', [
+  15: [prog('Suona il ponte dell’Anatole', [
     chord('D7', 'III7', 'D', '1 3 5 ♭7', 'Re settima'),
     chord('G7', 'VI7', 'G', '1 3 5 ♭7', 'Sol settima'),
     chord('C7', 'II7', 'C', '1 3 5 ♭7', 'Do settima'),
     chord('F7', 'V7', 'F', '1 3 5 ♭7', 'Fa settima'),
   ])],
-  15: [prog('Suona una frase con accordi per quarte che salgono', [
+  16: [prog('Suona una frase con accordi per quarte che salgono', [
     chord('D·G·C', '', 'D', '1 4 ♭7', 'Re – Sol – Do'),
     chord('E·A·D', '', 'E', '1 4 ♭7', 'Mi – La – Re'),
     chord('F·B♭·E♭', '', 'F', '1 4 ♭7', 'Fa – Si♭ – Mi♭'),
   ])],
-  16: [prog('Trasforma la progressione nel suo negativo', [
+  17: [prog('Trasforma la progressione nel suo negativo', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Cm', 'i', 'C', '1 ♭3 5', 'Do minore'),
     chord('F', 'IV', 'F', '1 3 5', 'Fa maggiore'),
     chord('Fm', 'iv', 'F', '1 ♭3 5', 'Fa minore'),
   ])],
-  17: [prog('Arrangia la canzone: suona gli accordi del giro', [
+  18: [prog('Arrangia la canzone: suona gli accordi del giro', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Am7', 'VI', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     chord('Dm7', 'iim7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),
     chord('G7', 'V', 'G', '1 3 5 ♭7', 'Sol settima'),
   ])],
-  18: [prog('Il tuo primo brano: suona gli accordi del giro', [
+  19: [prog('Il tuo primo brano: suona gli accordi del giro', [
     chord('Cmaj7', 'I', 'C', '1 3 5 7', 'Do maggiore settima'),
     chord('Am7', 'VI', 'A', '1 ♭3 5 ♭7', 'La minore settima'),
     chord('Dm7', 'iim7', 'D', '1 ♭3 5 ♭7', 'Re minore settima'),

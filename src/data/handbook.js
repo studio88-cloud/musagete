@@ -275,46 +275,116 @@ export const HANDBOOK = [
     formula: '', points: [], examples: [],
   },
 
-  // ——— Capitolo 9 · Scale
+  // ——— Capitolo 9 · Modi delle scale minori
   {
-    id: 'minorscales', chapter: 9, title: 'Scale minori', subtitle: 'Naturale, armonica e melodica',
+    id: 'harmonicmodes', chapter: 9, title: 'Modi della minore armonica', subtitle: 'Sette scale dalla minore armonica',
+    def: 'Partendo da ciascun grado della scala minore armonica e suonando sempre le stesse note si ottengono sette modi. Qui sono tutti derivati da Do minore armonica (Do Re Mi♭ Fa Sol La♭ Si).',
+    formula: 'Minore armonica 1 2 ♭3 4 5 ♭6 7 · Locrio ♮6 1 ♭2 ♭3 4 ♭5 6 ♭7 · Ionico ♯5 1 2 3 4 ♯5 6 7 · Dorico ♯4 1 2 ♭3 ♯4 5 6 ♭7 · Frigio dominante 1 ♭2 3 4 5 ♭6 ♭7 · Lidio ♯2 1 ♯2 3 ♯4 5 6 7 · Ultralocrio 1 ♭2 ♭3 ♭4 ♭5 ♭6 ♭♭7',
+    points: ['Frigio dominante: il più usato, sul V7♭9 di una tonalità minore', 'Minore armonica: su imΔ e sul V7', 'Gli altri modi sono rari e si ascoltano qui sotto', 'L’ultralocrio ha la ♭♭7: è la scala del diminuito settima'],
+    examples: [
+      sc('Do minore armonica', 60, '1 2 ♭3 4 5 ♭6 7'),
+      sc('Re locrio ♮6', 62, '1 ♭2 ♭3 4 ♭5 6 ♭7'),
+      sc('Mi♭ ionico ♯5', 63, '1 2 3 4 ♯5 6 7'),
+      sc('Fa dorico ♯4', 65, '1 2 ♭3 ♯4 5 6 ♭7'),
+      sc('Sol frigio dominante', 55, '1 ♭2 3 4 5 ♭6 ♭7'),
+      sc('La♭ lidio ♯2', 56, '1 ♯2 3 ♯4 5 6 7'),
+      sc('Si ultralocrio', 59, '1 ♭2 ♯2 3 ♭5 ♭6 ♭♭7'),
+    ],
+  },
+  {
+    id: 'melodicmodes', chapter: 9, title: 'Modi della minore melodica', subtitle: 'Sette scale dalla minore melodica',
+    def: 'Nel jazz la minore melodica si suona uguale in salita e in discesa. Partendo da ciascun grado si ottengono sette modi: qui sono tutti derivati da Do minore melodica (Do Re Mi♭ Fa Sol La Si).',
+    formula: 'Minore melodica 1 2 ♭3 4 5 6 7 · Dorico ♭2 1 ♭2 ♭3 4 5 6 ♭7 · Lidio aumentato 1 2 3 ♯4 ♯5 6 7 · Lidio dominante 1 2 3 ♯4 5 6 ♭7 · Misolidio ♭6 1 2 3 4 5 ♭6 ♭7 · Locrio ♮2 1 2 ♭3 4 ♭5 ♭6 ♭7 · Alterata (Superlocrio) 1 ♭2 ♯2 3 ♭5 ♭6 ♭7',
+    points: ['Lidio dominante: ♯4 e ♭7, su 7♯11', 'Alterata o superlocrio: ♭9 ♯9 ♯11 ♭13, su 7alt', 'Per trovare l’alterata di X7: minore melodica un semitono sopra X', 'Locrio ♮2: su ø7. Misolidio ♭6: su 7♭13'],
+    examples: [
+      sc('Do minore melodica', 60, '1 2 ♭3 4 5 6 7'),
+      sc('Re dorico ♭2', 62, '1 ♭2 ♭3 4 5 6 ♭7'),
+      sc('Mi♭ lidio aumentato', 63, '1 2 3 ♯4 ♯5 6 7'),
+      sc('Fa lidio dominante', 65, '1 2 3 ♯4 5 6 ♭7'),
+      sc('Sol misolidio ♭6', 55, '1 2 3 4 5 ♭6 ♭7'),
+      sc('La locrio ♮2', 57, '1 2 ♭3 4 ♭5 ♭6 ♭7'),
+      sc('Si alterata (superlocrio)', 59, '1 ♭2 ♯2 3 ♭5 ♭6 ♭7'),
+    ],
+  },
+  {
+    id: 'harmonicchords', chapter: 9, title: 'Accordi e scale: minore armonico', subtitle: 'Quale scala su quale accordo, in Do minore',
+    def: 'Armonizzando la minore armonica si ottengono sette accordi, ognuno con il suo modo. Nella pratica si usano soprattutto CmΔ, G7♭9 e B°7.',
+    formula: 'imΔ iiø7 ♭IIIΔ♯5 ivm7 V7♭9 ♭VIΔ vii°7',
+    formulaTable: {
+      title: 'Gli accordi della minore armonica',
+      head: ['Grado', 'Accordo', 'Scala'],
+      rows: [
+        ['imΔ', 'CmΔ', 'Minore armonica'],
+        ['iiø7', 'Dø7', 'Locrio ♮6'],
+        ['♭IIIΔ♯5', 'E♭Δ♯5', 'Ionico ♯5'],
+        ['ivm7', 'Fm7', 'Dorico ♯4'],
+        ['V7♭9', 'G7♭9', 'Frigio dominante'],
+        ['♭VIΔ', 'A♭Δ', 'Lidio ♯2'],
+        ['vii°7', 'B°7', 'Ultralocrio'],
+      ],
+    },
+    points: [], examples: [],
+  },
+  {
+    id: 'melodicchords', chapter: 9, title: 'Accordi e scale: minore melodico', subtitle: 'Quale scala su quale accordo, in Do minore',
+    def: 'Dalla minore melodica nascono sette accordi molto usati nel jazz. Ognuno suona su un tipo di accordo preciso.',
+    formula: 'imΔ iim7♭9 ♭IIIΔ♯5 IV7♯11 V7♭13 viø7 vii7alt',
+    formulaTable: {
+      title: 'Gli accordi della minore melodica',
+      head: ['Grado', 'Accordo', 'Scala'],
+      rows: [
+        ['imΔ', 'CmΔ', 'Minore melodica'],
+        ['iim7♭9', 'Dm7 (♭9)', 'Dorico ♭2'],
+        ['♭IIIΔ♯5', 'E♭Δ♯5', 'Lidio aumentato'],
+        ['IV7♯11', 'F7♯11', 'Lidio dominante'],
+        ['V7♭13', 'G7♭13', 'Misolidio ♭6'],
+        ['viø7', 'Aø7', 'Locrio ♮2'],
+        ['vii7alt', 'B7alt', 'Alterata (Superlocrio)'],
+      ],
+    },
+    points: [], examples: [],
+  },
+
+  // ——— Capitolo 10 · Scale
+  {
+    id: 'minorscales', chapter: 10, title: 'Scale minori', subtitle: 'Naturale, armonica e melodica',
     def: 'Esistono tre forme della scala minore. L’armonica alza il settimo grado per avere una sensibile e la melodica alza anche il sesto salendo, per evitare il salto di seconda eccedente.',
     formula: 'Naturale 1 2 ♭3 4 5 ♭6 ♭7 · Armonica 1 2 ♭3 4 5 ♭6 7 · Melodica 1 2 ♭3 4 5 6 7',
     points: ['L’armonica ha una seconda eccedente tra ♭6 e 7', 'La melodica, scendendo, torna alla naturale', 'La minore naturale è il modo eolio'],
     examples: [sc('La minore naturale', 57, '1 2 ♭3 4 5 ♭6 ♭7'), sc('La minore armonica', 57, '1 2 ♭3 4 5 ♭6 7'), sc('La minore melodica (salendo)', 57, '1 2 ♭3 4 5 6 7')],
   },
   {
-    id: 'pentatonic', chapter: 9, title: 'Pentatoniche', subtitle: 'Cinque note, molti usi',
+    id: 'pentatonic', chapter: 10, title: 'Pentatoniche', subtitle: 'Cinque note, molti usi',
     def: 'Le scale pentatoniche hanno cinque note e nessun semitono, per questo suonano bene su moltissimi accordi.',
     formula: 'Maggiore 1 2 3 5 6 · Minore 1 ♭3 4 5 ♭7',
     points: ['La minore è la relativa della maggiore (Do maggiore e La minore)', 'Nel rock e nel blues la minore è la scala base', 'Nessuna nota “sbagliata”: ottima per iniziare a improvvisare'],
     examples: [sc('Do pentatonica maggiore', 60, '1 2 3 5 6'), sc('La pentatonica minore', 57, '1 ♭3 4 5 ♭7')],
   },
   {
-    id: 'blues', chapter: 9, title: 'Scala blues', subtitle: 'La pentatonica con la “blue note”',
+    id: 'blues', chapter: 10, title: 'Scala blues', subtitle: 'La pentatonica con la “blue note”',
     def: 'È la pentatonica minore a cui si aggiunge la quinta diminuita, la “blue note”, che dà il tipico colore.',
     formula: '1 ♭3 4 ♭5 5 ♭7',
     points: ['La ♭5 si usa come nota di passaggio', 'Si suona su tutti gli accordi del blues', 'La versione maggiore usa 1 2 ♭3 3 5 6'],
     examples: [sc('Do blues', 60, '1 ♭3 4 ♭5 5 ♭7')],
   },
   {
-    id: 'symmetric', chapter: 9, title: 'Scale simmetriche', subtitle: 'Toni interi e scale diminuite',
+    id: 'symmetric', chapter: 10, title: 'Scale simmetriche', subtitle: 'Toni interi e scale diminuite',
     def: 'Sono scale che ripetono lo stesso schema: la scala per toni interi, fatta di soli toni, e le due scale diminuite, che alternano tono e semitono (o semitono e tono).',
     formula: 'Toni interi 1 2 3 ♯4 ♯5 ♭7 · Diminuita T–S 1 2 ♭3 4 ♭5 ♭6 ♭♭7 7 · Diminuita S–T 1 ♭2 ♭3 3 ♯4 5 6 ♭7',
     points: ['Toni interi: suono sospeso, senza tonica netta', 'Diminuita tono – semitono: sugli accordi di settima diminuita. Semitono – tono: sulla settima di dominante', 'Entrambe si ripetono identiche al salto di certi intervalli'],
     examples: [sc('Do per toni interi', 60, '1 2 3 ♯4 ♯5 ♭7'), sc('Do diminuita (tono – semitono)', 60, '1 2 ♭3 4 ♭5 ♭6 ♭♭7 7'), sc('Do diminuita (semitono – tono)', 60, '1 ♭2 ♭3 3 ♯4 5 6 ♭7')],
   },
 
-  // ——— Capitolo 10 · Armonia cromatica
+  // ——— Capitolo 11 · Armonia cromatica
   {
-    id: 'neapolitan', chapter: 10, title: 'Sesta napoletana', subtitle: 'L’accordo di ♭II in primo rivolto',
+    id: 'neapolitan', chapter: 11, title: 'Sesta napoletana', subtitle: 'L’accordo di ♭II in primo rivolto',
     def: 'È la triade maggiore costruita sul secondo grado abbassato, di solito usata in primo rivolto (da qui il nome “sesta”). Precede la dominante e dà un colore drammatico.',
     formula: '♭II6 → V → I (in minore)',
     points: ['In Do minore: Re♭/Fa (Fa La♭ Re♭)', 'Fa è anche la quarta della scala: è un accordo di sottodominante', 'Risolve sulla dominante, poi sulla tonica'],
     examples: [pr('Fm – D♭/F – G7 – Cm', [['iv', 'Fm', [53, 56, 60]], ['♭II6', 'D♭/F', [53, 56, 61]], ['V7', 'G7', G7], ['i', 'Cm', Cm]])],
   },
   {
-    id: 'augsixth', chapter: 10, title: 'Seste aumentate', subtitle: 'Italiana, francese e tedesca',
+    id: 'augsixth', chapter: 11, title: 'Seste aumentate', subtitle: 'Italiana, francese e tedesca',
     def: 'Sono accordi cromatici costruiti sul ♭6 della scala, in cui la sesta aumentata tra ♭6 e ♯4 si allarga verso l’ottava della dominante.',
     formula: 'Italiana ♭6 1 ♯4 · Tedesca ♭6 1 ♭3 ♯4 · Francese ♭6 1 2 ♯4',
     points: ['In Do minore la sesta aumentata è La♭ – Fa♯', 'Le due note si aprono verso Sol–Sol', 'La tedesca suona come una dominante, ma risolve in modo diverso'],
@@ -325,16 +395,16 @@ export const HANDBOOK = [
     ],
   },
   {
-    id: 'dimpass', chapter: 10, title: 'Diminuito di passaggio', subtitle: 'Collegare due accordi con una settima diminuita',
+    id: 'dimpass', chapter: 11, title: 'Diminuito di passaggio', subtitle: 'Collegare due accordi con una settima diminuita',
     def: 'Una settima diminuita tra due accordi riempie il salto cromatico, creando una linea di basso che sale per semitoni.',
     formula: 'I – ♯i° – ii',
     points: ['In Do: C – C♯°7 – Dm', 'Il basso sale per semitoni: Do, Do♯, Re', 'Si ottiene anche come dominante senza fondamentale'],
     examples: [pr('C – C♯° – Dm', [['I', 'C', C], ['♯i°7', 'C♯°7', [61, 64, 67, 70]], ['ii', 'Dm', Dm]])],
   },
 
-  // ——— Capitolo 11 · Estensioni e alterazioni
+  // ——— Capitolo 12 · Estensioni e alterazioni
   {
-    id: 'extensions', chapter: 11, title: 'Estensioni', subtitle: 'Nona, undicesima, tredicesima',
+    id: 'extensions', chapter: 12, title: 'Estensioni', subtitle: 'Nona, undicesima, tredicesima',
     def: 'Le estensioni sono note che si aggiungono sopra la settima, continuando a impilare terze. Sono le note della scala un’ottava sopra: 9 = 2, 11 = 4, 13 = 6.',
     formula: '9 = 2 (+ ottava) · 11 = 4 (+ ottava) · 13 = 6 (+ ottava)',
     points: ['Cmaj9 = 1 3 5 7 9', 'Su un accordo maggiore l’11 giusto stona con la terza: si usa ♯11', 'Spesso si omette la quinta'],
@@ -348,7 +418,7 @@ export const HANDBOOK = [
     ],
   },
   {
-    id: 'altered', chapter: 11, title: 'Dominante alterata', subtitle: 'Alterare nona e quinta sul V7',
+    id: 'altered', chapter: 12, title: 'Dominante alterata', subtitle: 'Alterare nona e quinta sul V7',
     def: 'Sulla settima di dominante si possono alterare nona e quinta (♭9, ♯9, ♯11, ♭13) per aumentare la tensione prima di risolvere.',
     formula: '7 + ♭9 · ♯9 · ♯11 · ♭13',
     points: ['G7♭9 → Cm: la ♭9 si risolve sulla quinta', 'G7alt è una famiglia di accordi con più alterazioni', 'La scala alterata (settimo modo del minore melodico) le contiene tutte'],
@@ -361,16 +431,16 @@ export const HANDBOOK = [
     ],
   },
 
-  // ——— Capitolo 12 · Sostituzioni
+  // ——— Capitolo 13 · Sostituzioni
   {
-    id: 'tritone', chapter: 12, title: 'Sostituzione di tritono', subtitle: 'V7 al posto di ♭II7',
+    id: 'tritone', chapter: 13, title: 'Sostituzione di tritono', subtitle: 'V7 al posto di ♭II7',
     def: 'Due settime di dominante a distanza di tritono condividono la terza e la settima (con ruoli scambiati). Per questo la dominante si può sostituire con la settima sul ♭II.',
     formula: 'V7 ↔ ♭II7 (G7 ↔ D♭7)',
     points: ['Le note guida Si e Fa restano uguali', 'Il basso scende per semitoni: ii – ♭II – I', 'In Do: Dm7 – D♭7 – Cmaj7'],
     examples: [pr('Dm7 – D♭7 – Cmaj7', [['iim7', 'Dm7', [53, 57, 60, 62]], ['♭II7', 'D♭7', [53, 56, 59, 61]], ['Imaj7', 'Cmaj7', [55, 59, 60, 64]]])],
   },
   {
-    id: 'relsub', chapter: 12, title: 'Sostituzioni diatoniche', subtitle: 'Accordi che hanno due note in comune',
+    id: 'relsub', chapter: 13, title: 'Sostituzioni diatoniche', subtitle: 'Accordi che hanno due note in comune',
     def: 'Un accordo può sostituirne un altro della stessa funzione quando condivide almeno due note. È un modo semplice per variare un accompagnamento.',
     formula: 'I ↔ iii ↔ vi · IV ↔ ii · V ↔ vii°',
     points: ['C (Do Mi Sol) ↔ Am (La Do Mi) ↔ Em (Mi Sol Si)', 'F (Fa La Do) ↔ Dm (Re Fa La)', 'G7 ↔ B° (Si Re Fa)'],
@@ -381,39 +451,39 @@ export const HANDBOOK = [
     ],
   },
 
-  // ——— Capitolo 13 · Armonia jazz avanzata
+  // ——— Capitolo 14 · Armonia jazz avanzata
   {
-    id: 'bluesroots', chapter: 13, title: 'Blues Roots', subtitle: 'Le dodici battute con tre accordi',
+    id: 'bluesroots', chapter: 14, title: 'Blues Roots', subtitle: 'Le dodici battute con tre accordi',
     def: 'Il blues base ha dodici battute divise in tre frasi di quattro, e usa solo tre accordi di settima di dominante: I7, IV7 e V7.',
     formula: 'I7 | I7 | I7 | I7 | · IV7 | IV7 | I7 | I7 | · V7 | IV7 | I7 | I7 |',
     points: ['In Do: C7, F7 e G7', 'Prima frase sul I7, seconda sul IV7 che torna al I7, terza con la cadenza V7 – IV7 – I7', 'Gli accordi sono tutti di settima di dominante, anche il I'],
     examples: [formEx('Il blues completo: dodici battute', ['C7', 'C7', 'C7', 'C7', 'F7', 'F7', 'C7', 'C7', 'G7', 'F7', 'C7', 'C7']), pr('I tre accordi: C7 – F7 – G7 – C7', [['I7', 'C7', [55, 58, 60, 64]], ['IV7', 'F7', [53, 57, 60, 63]], ['V7', 'G7', [55, 59, 62, 65]], ['I7', 'C7', [55, 58, 60, 64]]]), pr('Ultime quattro battute: G7 – F7 – C7', [['V7', 'G7', [55, 59, 62, 65]], ['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]]])],
   },
   {
-    id: 'jazzblues', chapter: 13, title: 'Blues jazz', subtitle: 'Dodici battute con le sostituzioni',
+    id: 'jazzblues', chapter: 14, title: 'Blues jazz', subtitle: 'Dodici battute con le sostituzioni',
     def: 'Il blues jazz mantiene le dodici battute ma ricolora il giro con II–V, un diminuito di passaggio e il VI7 ai suoi punti chiave.',
     formula: 'C7 | F7 | C7 | Gm7 C7 | · F7 | F♯°7 | C7 | A7 | · Dm7 | G7 | C7 A7 | Dm7 G7 |',
     points: ['Forma in Do, quattro battute per riga', 'A7 è una dominante secondaria che porta a Dm7', 'Alla battuta 6 il F♯°7 è un diminuito di passaggio tra F7 e C7', 'Il ii–V finale porta alla ripetizione'],
     examples: [formEx('Il blues jazz completo: dodici battute', ['C7', 'F7', 'C7', 'Gm7 C7', 'F7', 'F♯°7', 'C7', 'A7', 'Dm7', 'G7', 'C7 A7', 'Dm7 G7']), pr('Ultime otto battute', [['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]], ['V7/ii', 'A7', [55, 57, 61, 64]], ['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['I7', 'C7', [55, 58, 60, 64]]])],
   },
   {
-    id: 'backdoor', chapter: 13, title: 'Backdoor', subtitle: 'Arrivare alla tonica dalla “porta di servizio”',
+    id: 'backdoor', chapter: 14, title: 'Backdoor', subtitle: 'Arrivare alla tonica dalla “porta di servizio”',
     def: 'La dominante backdoor è il settimo grado abbassato con settima di dominante (♭VII7), che risolve sulla tonica scendendo di tono. Spesso è preceduta dal iv minore.',
     formula: 'ivm7 – ♭VII7 – Imaj7',
     points: ['In Do: Fm7 – B♭7 – Cmaj7', 'Le note guida di B♭7 sono D e A♭', 'La♭ scende su Sol e Re scende su Do'],
     examples: [pr('Fm7 – B♭7 – Cmaj7', [['ivm7', 'Fm7', [53, 56, 60, 63]], ['♭VII7', 'B♭7', [53, 56, 58, 62]], ['Imaj7', 'Cmaj7', CM7]])],
   },
 
-  // ——— Capitolo 14 · Le forme del jazz
+  // ——— Capitolo 15 · Le forme del jazz
   {
-    id: 'forms', chapter: 14, title: 'Forme standard', subtitle: 'Blues, AABA e le altre',
+    id: 'forms', chapter: 15, title: 'Forme standard', subtitle: 'Blues, AABA e le altre',
     def: 'Una forma è un giro di accordi di lunghezza fissa che si ripete a ogni chorus. Le più usate nel jazz sono il blues di dodici battute e le forme di trentadue battute, divise in quattro sezioni da otto.',
     formula: 'Blues = 12 battute · AABA = 32 battute · ABAC = 32 battute',
     points: ['AABA: due sezioni uguali, un ponte diverso e il ritorno di A', 'ABAC: due sezioni simili con finali diversi', 'Ogni lettera vale di solito otto battute'],
     examples: [],
   },
   {
-    id: 'anatole', chapter: 14, title: 'Anatole', subtitle: 'La forma AABA di “I Got Rhythm”',
+    id: 'anatole', chapter: 15, title: 'Anatole', subtitle: 'La forma AABA di “I Got Rhythm”',
     def: 'L’Anatole (rhythm changes) è la forma AABA di trentadue battute più usata nel jazz dopo il blues. Si suona di solito in Si♭. Le sezioni A sono turnaround, il ponte è una catena di dominanti.',
     formula: 'A, prima volta · B♭ G7 | Cm7 F7 | Dm7 G7 | Cm7 F7 | · Fm7 B♭7 | E♭ E°7 | B♭/F G7 | Cm7 F7 | · A, seconda e terza volta · come sopra fino a E♭ E°7, poi Cm7 F7 | B♭ | · B (ponte) · D7 | D7 | G7 | G7 | · C7 | C7 | F7 | F7 |',
     points: ['Sezione A: I – VI7 – iim7 – V7 e poi iiim7 – VI7 – iim7 – V7', 'Battute 5–8: iim7 – V7 verso il IV, diminuito di passaggio e ritorno', 'Ponte: III7 – VI7 – II7 – V7, dominanti che scendono per quinte', 'Seconda e terza A: le ultime due battute sono Cm7 F7 | B♭, così il giro chiude sul I'],
@@ -425,50 +495,50 @@ export const HANDBOOK = [
     ],
   },
   {
-    id: 'minorblues', chapter: 14, title: 'Blues minore', subtitle: 'Le dodici battute in minore',
+    id: 'minorblues', chapter: 15, title: 'Blues minore', subtitle: 'Le dodici battute in minore',
     def: 'Il blues minore ha la stessa struttura del blues di dodici battute, ma con accordi minori sul I e sul IV. Nell’ultima frase ♭VI7 e V7 portano di nuovo all’inizio.',
     formula: 'im7 | im7 | im7 | im7 | · ivm7 | ivm7 | im7 | im7 | · ♭VI7 | V7 | im7 | V7 |',
     points: ['In Do minore: Cm7, Fm7, A♭7 e G7', 'Il V7 della battuta 12 riporta all’inizio del chorus', 'È una forma molto usata anche nel soul e nel rock'],
     examples: [formEx('Il blues minore completo: dodici battute', ['Cm7', 'Cm7', 'Cm7', 'Cm7', 'Fm7', 'Fm7', 'Cm7', 'Cm7', 'A♭7', 'G7', 'Cm7', 'G7'])],
   },
   {
-    id: 'fifthsform', chapter: 14, title: 'Giro delle quinte', subtitle: 'Una catena di II–V maggiore e minore',
+    id: 'fifthsform', chapter: 15, title: 'Giro delle quinte', subtitle: 'Una catena di II–V maggiore e minore',
     def: 'Molti standard si basano su una catena di II–V che scende per quinte, alternando la tonalità maggiore e il suo relativo minore. Si ripete e poi si prosegue con una sezione diversa.',
     formula: 'Cm7 | F7 | B♭Δ | E♭Δ | · Aø7 | D7 | Gm | Gm |',
     points: ['Gradi in Si♭: iim7 – V7 – Imaj7 – IVmaj7', 'Poi viiø7 – III7 – vim: il II–V–I del relativo minore', 'Spesso è la sezione A di una forma AABC di trentadue battute'],
     examples: [formEx('Il giro delle quinte: otto battute', ['Cm7', 'F7', 'B♭Δ', 'E♭Δ', 'Aø7', 'D7', 'Gm', 'Gm'])],
   },
 
-  // ——— Capitolo 15 · Dopo la pratica comune
+  // ——— Capitolo 16 · Dopo la pratica comune
   {
-    id: 'quartal', chapter: 15, title: 'Accordi per quarte', subtitle: 'Impilare quarte invece di terze',
+    id: 'quartal', chapter: 16, title: 'Accordi per quarte', subtitle: 'Impilare quarte invece di terze',
     def: 'Gli accordi quartali sono costruiti sovrapponendo quarte giuste. Non hanno un vero colore maggiore o minore e danno un suono aperto e moderno.',
     formula: 'Quarta + quarta: 1 4 ♭7',
     points: ['Re–Sol–Do è l’esempio più comune', 'Si trovano nel jazz modale e nella musica del Novecento', 'Si spostano per gradi senza cambiare struttura'],
     examples: [ch('Re – Sol – Do', 62, '1 4 ♭7')],
   },
 
-  // ——— Capitolo 16 · Armonia negativa
+  // ——— Capitolo 17 · Armonia negativa
   {
-    id: 'negative', chapter: 16, title: 'Armonia negativa', subtitle: 'Riflettere le note come in uno specchio',
+    id: 'negative', chapter: 17, title: 'Armonia negativa', subtitle: 'Riflettere le note come in uno specchio',
     def: 'Ogni nota viene specchiata rispetto a un asse. Con l’asse di Do (tra Mi♭ e Mi) le note si scambiano a coppie.',
     formula: 'Do↔Sol · Re↔Fa · Mi↔Mi♭ · La↔Si♭ · Si↔La♭ · Do♯↔Fa♯',
     points: ['Do maggiore (Do Mi Sol) → Do minore (Sol Mi♭ Do)', 'G7 → Fm6', 'Una cadenza maggiore diventa minore e sospesa'],
     examples: [pr('C – F – G7 – C → Cm – Gm – Fm6 – Cm', [['i', 'Cm', Cm], ['v', 'Gm', [55, 58, 62]], ['iv6', 'Fm6', [53, 56, 60, 62]], ['i', 'Cm', Cm]])],
   },
 
-  // ——— Capitolo 17 · Arrangiare e accompagnare
+  // ——— Capitolo 18 · Arrangiare e accompagnare
   {
-    id: 'voicings', chapter: 17, title: 'Voicing', subtitle: 'Come disporre le note di un accordo',
+    id: 'voicings', chapter: 18, title: 'Voicing', subtitle: 'Come disporre le note di un accordo',
     def: 'Il voicing è il modo in cui le note di un accordo sono distribuite sullo strumento. Cambiare il voicing cambia il suono senza cambiare l’accordo.',
     formula: 'Shell 1 3 7 · Drop 2: la 2ª nota dall’alto scende di un’ottava',
     points: ['Shell: solo fondamentale, terza e settima', 'Drop 2: voicing aperto, comodo sulla chitarra', 'Collega gli accordi muovendo meno note possibile'],
     examples: [ch('Cmaj7 shell', 60, '1 3 7'), ch('Cmaj7 completo', 60, '1 3 5 7')],
   },
 
-  // ——— Capitolo 18 · Comporre e improvvisare
+  // ——— Capitolo 19 · Comporre e improvvisare
   {
-    id: 'guide', chapter: 18, title: 'Note guida', subtitle: 'Terza e settima raccontano l’armonia',
+    id: 'guide', chapter: 19, title: 'Note guida', subtitle: 'Terza e settima raccontano l’armonia',
     def: 'Le note guida sono la terza e la settima di ogni accordo: da sole definiscono la qualità dell’accordo. Seguirle da un accordo all’altro dà linee melodiche chiare.',
     formula: '3ª e 7ª dell’accordo',
     points: ['Su Dm7 – G7 – Cmaj7 la settima Do scende al Si, poi al Mi', 'Anche Fa (3ª di Dm7) si mantiene fino al Fa di G7', 'Su ogni accordo si improvvisa partendo dalle note guida'],

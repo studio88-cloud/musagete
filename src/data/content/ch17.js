@@ -1,46 +1,47 @@
-import { md, page } from './helpers'
+import { mk, md, page } from './helpers'
 
+const Cm = md(60, [0, 3, 7])
+const Gm = md(55, [0, 3, 7])
+const Fm6 = md(53, [0, 3, 7, 9])
 const C = md(60, [0, 4, 7])
 const F_ = md(60, [5, 9, 12])
-const G = md(55, [0, 4, 7])
-const Am = md(57, [0, 3, 7])
-const Bb = md(58, [0, 4, 7])
+const G7 = md(55, [0, 4, 7, 10])
 
 export default {
   steps: [
-    { id: 1, kind: 'lesson', title: 'I ruoli in un arrangiamento', min: 4 },
-    { id: 2, kind: 'lesson', title: 'Accompagnare con il tuo strumento', min: 5 },
-    { id: 3, kind: 'lesson', title: 'Condurre le voci', min: 4 },
-    { id: 4, kind: 'lesson', title: 'La forma di un brano', min: 4 },
-    { id: 5, kind: 'ear', title: 'Riconosci i giri di accordi', min: 5 },
-    { id: 6, kind: 'build', title: 'Accompagna un giro di accordi', min: 6 },
-    { id: 7, kind: 'apply', title: 'Arrangia una canzone semplice', min: 8 },
+    { id: 1, kind: 'lesson', title: 'L’asse di simmetria', min: 4 },
+    { id: 2, kind: 'lesson', title: 'Il negativo degli accordi', min: 4 },
+    { id: 3, kind: 'lesson', title: 'Una progressione negativa', min: 4 },
+    { id: 4, kind: 'lesson', title: 'Usare l’armonia negativa', min: 4 },
+    { id: 5, kind: 'ear', title: 'Riconosci il negativo', min: 5 },
+    { id: 6, kind: 'build', title: 'Trova il negativo di un accordo', min: 5 },
+    { id: 7, kind: 'apply', title: 'Trasforma una progressione', min: 6 },
     { id: 8, kind: 'quiz', title: 'Quiz finale', min: 5 },
   ],
   lessons: {
     1: {
       pages: [
-        page('Chi fa che cosa', 'In un arrangiamento ogni strumento ha un ruolo. La melodia canta, il basso dà il fondamento, gli accordi riempiono l’armonia e il ritmo tiene il tempo. Se tutti fanno la stessa cosa, il suono si confonde.', 'Melodia · basso · armonia · ritmo', { notes: [] }, 'Ognuno al suo posto!'),
-        page('Lasciare spazio', 'Il segreto di un buon arrangiamento è lasciare spazio. Gli accordi molto fitti nelle note gravi suonano confusi e coprono il basso. Meglio tenere gli accordi nel registro medio e lasciare le note più basse alla linea del basso.', 'Basso in basso, accordi nel mezzo.', { notes: [] }, 'Meno note, più chiarezza!'),
+        page('Uno specchio tra le note', 'L’armonia negativa riflette le note come in uno specchio. Per la tonalità di Do l’asse sta tra il Mi♭ e il Mi, a metà strada tra Do e Sol. Ogni nota va nella posizione opposta rispetto all’asse.', 'Asse di Do: tra Mi♭ e Mi.', { notes: [], play: [60, 67] }, 'Un trucco di simmetria!'),
+        page('Le coppie di note', 'Con l’asse di Do le note si scambiano a coppie: Do ↔ Sol, Re ↔ Fa, Mi ↔ Mi♭, La ↔ Si♭, Si ↔ La♭, Do♯ ↔ Fa♯. Ogni nota ha la sua immagine speculare.', 'Do↔Sol · Re↔Fa · Mi↔Mi♭ · La↔Si♭ · Si↔La♭', { notes: [] }, 'Basta imparare le coppie!'),
+        page('Maggiore e minore si scambiano', 'Riflettendo le note di Do maggiore (Do Mi Sol) si ottengono Sol, Mi♭ e Do: cioè Do minore. Il negativo di un accordo maggiore è dunque minore, e viceversa. La luce si trasforma in ombra.', 'Do maggiore ↔ Do minore', { notes: mk(60, [[0, 1, '1'], [3, 3, '♭3'], [7, 5, '5']]), play: Cm, chord: true }, 'Il negativo di Do è Do minore!'),
       ],
     },
     2: {
       pages: [
-        page('Sulla tastiera', 'Con la tastiera si usano le due mani: la sinistra suona la fondamentale, spesso raddoppiata all’ottava, la destra suona l’accordo. Si possono variare i ritmi: accordi tenuti, ripetuti o spezzati in arpeggio.', 'Sinistra: basso · Destra: accordo', { notes: [] }, 'Due mani, due ruoli!'),
-        page('Sulla chitarra', 'La chitarra accompagna con il battere di plettro (strumming) o con arpeggi. Per lo strumming si mantiene un ritmo costante di giù e su e si accentuano i tempi forti. Con gli arpeggi si suonano le corde dell’accordo una alla volta.', 'Strumming o arpeggio.', { notes: [] }, 'Il ritmo è la tua mano destra!'),
-        page('Sul basso', 'Il basso suona soprattutto la fondamentale di ogni accordo e la quinta, sui tempi forti. Con più esperienza si passa al walking bass, una linea di note per gradi congiunti che collega le fondamentali, come nel jazz.', 'Fondamentale e quinta, poi walking bass.', { notes: [] }, 'Il basso tiene tutto insieme!'),
+        page('Il negativo di una triade', 'Il metodo è sempre lo stesso: si prendono le note dell’accordo, si trasformano con la tabella delle coppie e si legge il nuovo accordo. Il negativo di Fa maggiore (Fa La Do) è Re Si♭ Sol, cioè Sol minore.', 'F (Fa La Do) → Gm (Sol Si♭ Re)', { base: 55, notes: mk(55, [[0, 1, '1'], [3, 3, '♭3'], [7, 5, '5']]), play: Gm, chord: true }, 'Il negativo di Fa è Sol minore!'),
+        page('Il negativo di G7', 'G7 (Sol Si Re Fa) diventa Do La♭ Fa Re, cioè Fa minore con la sesta (Fm6), che ha le stesse note del Dø7. La dominante si trasforma in una sottodominante minore: il “fuoco” del V7 diventa un colore più scuro.', 'G7 → Fm6 (= Dø7)', { base: 65, notes: mk(65, [[0, 1, '1'], [3, 3, '♭3'], [7, 5, '5'], [9, 6, '6']]), play: Fm6, chord: true }, 'Dalla tensione al mistero!'),
       ],
     },
     3: {
       pages: [
-        page('Muoversi il meno possibile', 'Condurre le voci significa passare da un accordo all’altro muovendo ogni nota il meno possibile. Da Do (Do Mi Sol) a Fa (Do Fa La) il Do resta fermo, il Mi sale al Fa e il Sol sale al La: poco movimento, suono fluido.', 'Note comuni ferme, le altre per grado.', { notes: [], play: [C, md(60, [0, 5, 9])], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: 'IV', sym: 'F' }] }, 'Il Do non si muove!'),
-        page('Il basso come guida', 'Il basso può guidare il movimento: se scende o sale per gradi, l’armonia scorre in modo naturale. Si usano i rivolti proprio per questo: C – G/B – Am ha un basso Do – Si – La molto cantabile.', 'Basso per gradi, accordi di conseguenza.', { notes: [], play: [C, md(59, [0, 3, 8]), Am], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: 'V6', sym: 'G/B' }, { fn: 'vi', sym: 'Am' }] }, 'Senti come scorre?'),
+        page('I – IV – V7 – I specchiato', 'Prendiamo la cadenza Do – Fa – Sol7 – Do e trasformiamo ogni accordo: Cm, Gm, Fm6, Cm. La progressione originale è luminosa e piena di spinta, quella negativa è scura e sospesa.', 'C – F – G7 – C → Cm – Gm – Fm6 – Cm', { notes: [], play: [C, F_, G7, C], progression: true, chords: [{ fn: 'I', sym: 'C' }, { fn: 'IV', sym: 'F' }, { fn: 'V7', sym: 'G7' }, { fn: 'I', sym: 'C' }] }, 'Prima l’originale!'),
+        page('E ora il negativo', 'Ecco la versione specchiata. Il centro resta Do, ma il colore è minore e la funzione si ribalta: la dominante di prima è ora Fm6, una sottodominante minore.', 'Cm – Gm – Fm6 – Cm', { notes: [], play: [Cm, Gm, Fm6, Cm], progression: true, chords: [{ fn: 'i', sym: 'Cm' }, { fn: 'v', sym: 'Gm' }, { fn: 'iv6', sym: 'Fm6' }, { fn: 'i', sym: 'Cm' }] }, 'Lo stesso percorso, in ombra!'),
       ],
     },
     4: {
       pages: [
-        page('Le sezioni', 'Un brano si divide in sezioni: l’introduzione, la strofa, il ritornello, il ponte e la conclusione. La strofa racconta, il ritornello è la parte più memorabile e si ripete uguale, il ponte offre un contrasto prima dell’ultimo ritornello.', 'Intro · strofa · ritornello · ponte · fine', { notes: [] }, 'Una storia in quattro tappe!'),
-        page('Costruire l’intensità', 'Un arrangiamento cresce in intensità: si parte con pochi strumenti e si aggiungono man mano più voci e più forza fino al ritornello. Togliere strumenti subito prima è un modo efficace per far risaltare il ritorno.', 'Cresci, poi togli, poi esplodi.', { notes: [] }, 'La dinamica racconta!'),
+        page('Come si usa', 'L’armonia negativa non è un metodo rigido, ma uno strumento per trovare accordi insoliti che suonano bene. Si prende una progressione che conosci, la si riflette e si usa il risultato come variante, oppure si mescolano accordi originali e negativi.', 'Un trucco per trovare suoni nuovi.', { notes: [] }, 'Sperimenta!'),
+        page('Un po’ di cautela', 'Il negativo di una melodia si ottiene riflettendo anche le note, ma il risultato può suonare lontano dall’originale. Molti musicisti usano questa idea per armonizzare in modo creativo: l’orecchio ha sempre l’ultima parola.', 'L’orecchio decide.', { notes: [] }, 'Se suona bene, va bene!'),
       ],
     },
   },
@@ -48,21 +49,21 @@ export default {
     5: {
       kind: 'ear',
       questions: [
-        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, F_, md(55, [0, 4, 7]), C], options: ['I – V – vi – IV', 'I – IV – V – I', 'I – vi – IV – V', 'I – ♭VII – IV – I'], answer: 1, explanation: 'Do – Fa – Sol – Do: I – IV – V – I.' },
-        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, Am, F_, G], options: ['I – IV – V – I', 'I – V – vi – IV', 'I – vi – IV – V', 'I – ♭VII – IV – I'], answer: 2, explanation: 'Do – La minore – Fa – Sol: I – vi – IV – V.' },
-        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, G, Am, F_], options: ['I – vi – IV – V', 'I – IV – V – I', 'I – ♭VII – IV – I', 'I – V – vi – IV'], answer: 3, explanation: 'Do – Sol – La minore – Fa: I – V – vi – IV.' },
-        { prompt: 'Ascolta: che giro di accordi senti?', kind: 'progression', play: [C, Bb, F_, C], options: ['I – ♭VII – IV – I', 'I – V – vi – IV', 'I – IV – V – I', 'I – vi – IV – V'], answer: 0, explanation: 'Do – Si♭ – Fa – Do: I – ♭VII – IV – I.' },
+        { prompt: 'Questo è il negativo di Do maggiore. Qual è?', kind: 'chord', play: Cm, options: ['Do minore', 'Sol maggiore', 'Fa minore', 'Mi minore'], answer: 0, explanation: 'Do Mi♭ Sol: riflettendo Do Mi Sol si ottiene Do minore.' },
+        { prompt: 'Questo è il negativo di G7. Qual è?', kind: 'chord', play: Fm6, options: ['Re minore settima', 'Fm6', 'CΔ', 'Bø7'], answer: 1, explanation: 'Fa La♭ Do Re: Fm6, equivalente a Dø7.' },
+        { prompt: 'Ascolta: quale progressione senti?', kind: 'progression', play: [Cm, Gm, Fm6, Cm], options: ['Cadenza in Do maggiore', 'Il negativo di I–IV–V7–I', 'Un blues', 'Un giro di Do minore classico'], answer: 1, explanation: 'Cm – Gm – Fm6 – Cm è il negativo di C – F – G7 – C.' },
+        { prompt: 'Questo è il negativo di Fa maggiore. Qual è?', kind: 'chord', play: Gm, options: ['Sol minore', 'Re minore', 'Sol maggiore', 'La minore'], answer: 0, explanation: 'Fa La Do si trasforma in Re Si♭ Sol: Sol minore.' },
       ],
     },
     8: {
       kind: 'quiz',
       passMark: 0.8,
       questions: [
-        { prompt: 'Qual è il ruolo principale del basso?', options: ['Cantare la melodia', 'Dare il fondamento armonico e ritmico', 'Suonare solo accordi', 'Riempire gli spazi vuoti'], answer: 1, explanation: 'Il basso suona le fondamentali e tiene insieme armonia e ritmo.' },
-        { prompt: 'Che cosa significa condurre le voci?', options: ['Cantare più forte', 'Muovere il meno possibile le note tra accordi', 'Cambiare tonalità spesso', 'Suonare sempre in rivolto'], answer: 1, explanation: 'Le note comuni restano ferme e le altre si muovono per grado.' },
-        { prompt: 'Passando da Do a Fa, quale nota resta ferma?', options: ['Mi', 'Sol', 'Do', 'Nessuna'], answer: 2, explanation: 'Il Do è in comune: Do Mi Sol e Do Fa La.' },
-        { prompt: 'Qual è la sezione più memorabile e ripetuta?', options: ['La strofa', 'Il ponte', 'Il ritornello', 'L’introduzione'], answer: 2, explanation: 'Il ritornello torna uguale ed è quello che resta in mente.' },
-        { prompt: 'Quali note suona di solito un bassista sui tempi forti?', options: ['Fondamentale e quinta', 'Terza e settima', 'Nona e tredicesima', 'Solo la quarta'], answer: 0, explanation: 'Fondamentale e quinta sono le note più stabili.' },
+        { prompt: 'Dove passa l’asse di simmetria per la tonalità di Do?', options: ['Tra Do e Re', 'Tra Mi♭ e Mi', 'Tra Fa e Sol', 'Tra Sol e La'], answer: 1, explanation: 'È a metà strada tra Do e Sol: tra Mi♭ e Mi.' },
+        { prompt: 'Che nota diventa il Re nell’armonia negativa di Do?', options: ['Fa', 'La', 'Si♭', 'Mi'], answer: 0, explanation: 'Re ↔ Fa.' },
+        { prompt: 'Qual è il negativo di Do maggiore?', options: ['Sol maggiore', 'Do minore', 'Fa minore', 'La minore'], answer: 1, explanation: 'Do Mi Sol → Sol Mi♭ Do: Do minore.' },
+        { prompt: 'Qual è il negativo di G7?', options: ['Fm6', 'Cm', 'D7', 'B♭Δ'], answer: 0, explanation: 'Sol Si Re Fa → Do La♭ Fa Re: Fm6.' },
+        { prompt: 'Il negativo di un accordo maggiore è...', options: ['maggiore', 'minore', 'eccedente', 'sospeso'], answer: 1, explanation: 'Maggiore e minore si scambiano.' },
       ],
     },
   },
