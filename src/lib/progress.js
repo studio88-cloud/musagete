@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { CHAPTERS } from '../data/chapters'
+import { migrate } from './migrate'
+
+migrate() // sposta i progressi salvati prima che qualunque schermata li legga
 
 const KEY = 'musagete:progress'
 
