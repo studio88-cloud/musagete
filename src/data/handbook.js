@@ -332,14 +332,27 @@ export const HANDBOOK = [
     def: 'Le estensioni sono note che si aggiungono sopra la settima, continuando a impilare terze. Sono le note della scala un’ottava sopra: 9 = 2, 11 = 4, 13 = 6.',
     formula: '9 = 2 (+ ottava) · 11 = 4 (+ ottava) · 13 = 6 (+ ottava)',
     points: ['Cmaj9 = 1 3 5 7 9', 'Su un accordo maggiore l’11 giusto stona con la terza: si usa ♯11', 'Spesso si omette la quinta'],
-    examples: [ch('Do maggiore nona', 60, '1 3 5 7 9'), ch('Do nona di dominante', 60, '1 3 5 ♭7 9')],
+    examples: [
+      ch('Do maggiore nona (CΔ9)', 60, '1 3 5 7 9'),
+      ch('Do nona di dominante (C9)', 60, '1 3 5 ♭7 9'),
+      ch('Do minore nona (Cm9)', 60, '1 ♭3 5 ♭7 9'),
+      ch('Do minore undicesima (Cm11)', 60, '1 ♭3 5 ♭7 9 11'),
+      ch('Do tredicesima di dominante (C13)', 60, '1 3 ♭7 13'),
+      ch('Do maggiore settima ♯11 (CΔ♯11)', 60, '1 3 5 7 ♯11'),
+    ],
   },
   {
     id: 'altered', chapter: 11, title: 'Dominante alterata', subtitle: 'Alterare nona e quinta sul V7',
     def: 'Sulla settima di dominante si possono alterare nona e quinta (♭9, ♯9, ♯11, ♭13) per aumentare la tensione prima di risolvere.',
     formula: '7 + ♭9 · ♯9 · ♯11 · ♭13',
     points: ['G7♭9 → Cm: la ♭9 si risolve sulla quinta', 'G7alt è una famiglia di accordi con più alterazioni', 'La scala alterata (settimo modo del minore melodico) le contiene tutte'],
-    examples: [ch('Sol settima ♭9', 55, '1 3 5 ♭7 ♭9')],
+    examples: [
+      ch('Do settima ♭9 (C7♭9)', 60, '1 3 5 ♭7 ♭9'),
+      ch('Do settima ♯9 (C7♯9)', 60, '1 3 5 ♭7 ♯9'),
+      ch('Do settima ♯11 (C7♯11)', 60, '1 3 ♭7 ♯11'),
+      ch('Do settima ♭13 (C7♭13)', 60, '1 3 ♭7 ♭13'),
+      ch('Do settima alterata (C7alt)', 60, '1 3 ♭7 ♭9 ♯11 ♭13'),
+    ],
   },
 
   // ——— Capitolo 12 · Sostituzioni
