@@ -24,7 +24,11 @@ export function Example({ ex, instrument }) {
   useEffect(() => () => stopPlaying(), [])
   const base = ex.base ?? 60
   const shown = ex.notes && ex.notes.length ? fold(ex.notes, base) : []
-  const hl = highlightMap(shown, (pc) => IT_NAMES[WHITE.indexOf(pc)] ?? '', { octave: ex.octaveNote })
+  // le scale si chiudono con la tonica in ottava (un pallino in più, non una nota nuova)
+  const isScale = !ex.chord && !ex.progression && !ex.form && !ex.melody && shown.length >= 5 && shown.every((n) => n.midi >= base && n.midi < base + 12)
+  const root = shown.find((n) => n.deg === 1)
+  const withOct = isScale && root && ex.octaveNote !== false ? [...shown, { ...root, midi: root.midi + 12 }] : shown
+  const hl = highlightMap(withOct, (pc) => IT_NAMES[WHITE.indexOf(pc)] ?? '', { octave: ex.octaveNote ?? isScale })
 
   const listen = () => {
     if (playing) {
@@ -63,7 +67,7 @@ export function Example({ ex, instrument }) {
           ))}
         </div>
       )}
-      {shown.length > 0 && (instrument === 'keyboard' ? <LessonKeys notes={shown} base={base} /> : <Fretboard instrument={instrument} highlights={hl} mode="degrees" firstPosition />)}
+      {shown.length > 0 && (instrument === 'keyboard' ? <LessonKeys notes={withOct} base={base} /> : <Fretboard instrument={instrument} highlights={hl} mode="degrees" firstPosition />)}
       <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
         {playing ? 'Ferma' : 'Ascolta'}
       </button>
