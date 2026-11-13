@@ -12,53 +12,101 @@ const THICKNESS = {
 const LABELS = { guitar: 'chitarra', bass: 'basso' }
 
 const X0 = 26 // capotasto
-const FIRST_FRETS = 4 // prima posizione: corde a vuoto e primi 4 tasti
-const FIRST_FRET_W = 89
+const POS_COLS = 4 // una posizione = 4 tasti
+const POS_FRET_W = 89
 const WIDTH = 390
 const TOP = 40
 const GAP = 27
 const R = 13 // raggio dei pallini
-const ROMAN = { 3: 'III', 5: 'V', 7: 'VII', 9: 'IX', 12: 'XII' }
+const ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII' }
+const INLAY_FRETS = [3, 5, 7, 9, 12]
 
 // corda a vuoto: a sinistra del capotasto; altrimenti il centro dello spazio tra due tasti
 const OPEN_X = 13.5
 
-// highlights: Map pitch class -> nota; mode: 'degrees' | 'notes'
-export default function Fretboard({ instrument, highlights, mode, firstPosition = false }) {
-  const FRETS = firstPosition ? FIRST_FRETS : 12
-  const FRET_W = firstPosition ? FIRST_FRET_W : 28.8
-  const fretX = (n) => X0 + n * FRET_W
-  const noteX = (n) => (n === 0 ? OPEN_X : fretX(n) - FRET_W / 2)
-  const INLAYS = firstPosition ? [3] : [3, 5, 7, 9, 12]
+// Una sola posizione da dare all'allievo, a partire dalla tonica più grave (sulla chitarra e sul basso: la corda più bassa
+// su cui la tonica sta nei primi 4 tasti, es. il Do al 3° tasto della corda di La). Ogni nota compare una volta sola.
+function pickPosition(instrument, highlights) {
   const tuning = STRINGS[instrument]
+  const entries = [...highlights.entries()] // [pc, nota]
+  const root = entries.find(([, n]) => n.deg === 1) || entries[0]
+  const rootPc = root[0]
+  // corda più grave su cui la tonica è nei primi 4 tasti (0 = corda a vuoto)
+  let rs = tuning.length - 1
+  let rf = 0
+  for (let s = tuning.length - 1; s >= 0; s--) {
+    const fr = (((rootPc - tuning[s]) % 12) + 12) % 12
+    if (fr <= 4) {
+      rs = s
+      rf = fr
+      break
+    }
+  }
+  const rootMidi = tuning[rs] + rf
+  const nut = rf <= 2 // finestra dal capotasto: corde a vuoto + tasti 1-4
+  const base = nut ? 1 : rf - 1
+  const inWin = (fr) => (nut ? fr >= 0 && fr <= POS_COLS : fr >= base && fr < base + POS_COLS)
+  const dots = []
+  entries.forEach(([pc, note]) => {
+    let target = rootMidi
+    while (((target % 12) + 12) % 12 !== pc) target++
+    let best = null
+    const consider = (win) => {
+      tuning.forEach((open, s) => {
+        for (let fr = 0; fr <= 12; fr++) {
+          if (!win(fr) || (open + fr) % 12 !== pc) continue
+          const cost = Math.abs(open + fr - target) * 10 + Math.abs(fr - rf) + (s === rs && fr === rf ? -100 : 0)
+          if (!best || cost < best.cost) best = { s, fr, cost }
+        }
+      })
+    }
+    consider(inWin)
+    if (!best) consider(() => true)
+    dots.push({ key: `${best.s}-${best.fr}`, s: best.s, f: best.fr, note })
+  })
+  return { nut, base, dots }
+}
+
+// highlights: Map pitch class -> nota; mode: 'degrees' | 'notes'
+// firstPosition: mostra una sola posizione (4 tasti) invece di tutto il manico
+export default function Fretboard({ instrument, highlights, mode, firstPosition = false }) {
+  const tuning = STRINGS[instrument]
+  const pos = firstPosition ? pickPosition(instrument, highlights) : null
+  const COLS = pos ? POS_COLS : 12
+  const FRET_W = pos ? POS_FRET_W : 28.8
+  const nut = pos ? pos.nut : true
+  const base = pos ? pos.base : 1 // primo tasto mostrato (le colonne vanno da base a base + COLS - 1)
+  const fretX = (n) => X0 + n * FRET_W // n = numero di colonna (0 = bordo sinistro)
+  const noteX = (f) => (f === 0 && nut ? OPEN_X : fretX(f - base + 1) - FRET_W / 2)
   const lastY = TOP + (tuning.length - 1) * GAP
   const height = lastY + 28
   const midY = TOP + ((tuning.length - 1) * GAP) / 2
+  const shown = INLAY_FRETS.filter((n) => n >= base && n < base + COLS)
+  const labels = pos && !nut && !shown.includes(base) ? [base, ...shown] : shown
 
-  const dots = []
-  tuning.forEach((open, s) => {
-    for (let f = 0; f <= FRETS; f++) {
-      const note = highlights.get((open + f) % 12)
-      if (note) dots.push({ key: `${s}-${f}`, x: noteX(f), y: TOP + s * GAP, note })
-    }
-  })
+  let dots = []
+  if (pos) {
+    dots = pos.dots.map((d) => ({ key: d.key, x: noteX(d.f), y: TOP + d.s * GAP, note: d.note }))
+  } else {
+    tuning.forEach((open, s) => {
+      for (let f = 0; f <= 12; f++) {
+        const note = highlights.get((open + f) % 12)
+        if (note) dots.push({ key: `${s}-${f}`, x: noteX(f), y: TOP + s * GAP, note })
+      }
+    })
+  }
 
   const names = [...highlights.values()].map((n) => n.name).join(', ')
 
   return (
-    <svg
-      className="fb"
-      viewBox={`0 0 ${WIDTH} ${height}`}
-      role="img"
-      aria-label={`Manico di ${LABELS[instrument]}, note: ${names}`}
-    >
-      {INLAYS.map((n) => (
+    <svg className="fb" viewBox={`0 0 ${WIDTH} ${height}`} role="img" aria-label={`Manico di ${LABELS[instrument]}, note: ${names}`}>
+      {labels.map((n) => (
         <text key={`n${n}`} className="fb-num" x={noteX(n)} y={14} textAnchor="middle">
           {ROMAN[n]}
         </text>
       ))}
 
-      {INLAYS.map((n) =>
+      {shown.map((n) =>
         n === 12 ? (
           <g key="i12" fill="#f5f3ff">
             <circle cx={noteX(n)} cy={midY - 7} r="4.5" />
@@ -69,23 +117,19 @@ export default function Fretboard({ instrument, highlights, mode, firstPosition 
         ),
       )}
 
-      {Array.from({ length: FRETS }, (_, i) => i + 1).map((n) => (
+      {Array.from({ length: COLS }, (_, i) => i + 1).map((n) => (
         <line key={`f${n}`} x1={fretX(n)} x2={fretX(n)} y1={TOP - 8} y2={lastY + 8} stroke="#e2b659" strokeWidth="2.5" />
       ))}
 
       {tuning.map((_, s) => (
-        <line
-          key={`s${s}`}
-          x1={X0}
-          x2={WIDTH - 6}
-          y1={TOP + s * GAP}
-          y2={TOP + s * GAP}
-          stroke="#8d97a3"
-          strokeWidth={THICKNESS[instrument][s]}
-        />
+        <line key={`s${s}`} x1={X0} x2={WIDTH - 6} y1={TOP + s * GAP} y2={TOP + s * GAP} stroke="#8d97a3" strokeWidth={THICKNESS[instrument][s]} />
       ))}
 
-      <rect x={X0 - 3} y={TOP - 10} width="6" height={lastY - TOP + 20} rx="2" fill="#e2b659" />
+      {nut ? (
+        <rect x={X0 - 3} y={TOP - 10} width="6" height={lastY - TOP + 20} rx="2" fill="#e2b659" />
+      ) : (
+        <line x1={X0} x2={X0} y1={TOP - 8} y2={lastY + 8} stroke="#e2b659" strokeWidth="2.5" />
+      )}
 
       {dots.map(({ key, x, y, note }) => {
         const c = DEGREE_COLORS[note.deg]
