@@ -14,7 +14,7 @@ export default {
     { id: 4, kind: 'lesson', title: 'Le sostituzioni in pratica', min: 4 },
     { id: 5, kind: 'ear', title: 'Riconosci la sostituzione', min: 5 },
     { id: 6, kind: 'build', title: 'Sostituisci gli accordi sullo strumento', min: 5 },
-    { id: 7, kind: 'apply', title: 'Reharmonizza un giro', min: 6 },
+    { id: 7, kind: 'apply', title: 'Riarmonizza un giro', min: 6 },
     { id: 8, kind: 'quiz', title: 'Quiz finale', min: 5 },
   ],
   lessons: {
@@ -48,9 +48,9 @@ export default {
       kind: 'ear',
       questions: [
         { prompt: 'Ascolta: che cadenza finale senti?', kind: 'progression', play: [Db7, CM7], options: ['V7 – I', '♭II7 – I', 'IV – I', 'ii – I'], answer: 1, explanation: 'D♭7 al posto di G7: sostituzione tritonale, con basso che scende per semitono.' },
-        { prompt: 'Ascolta: che cosa c’è al posto del V?', kind: 'progression', play: [Dm7, Db7, CM7], options: ['G7', 'D♭7', 'A7', 'F7'], answer: 1, explanation: 'Il basso Re – Re♭ – Do rivela D♭7.' },
-        { prompt: 'Ascolta: su quale accordo risolve questo diminuito?', kind: 'progression', play: [md(59, [0, 3, 6, 9]), md(60, [0, 4, 7])], options: ['Do maggiore', 'Fa maggiore', 'Re minore', 'La minore'], answer: 0, explanation: 'B°7 ≈ G7♭9: risolve su Do.' },
-        { prompt: 'Ascolta: che accordo senti?', kind: 'chord', play: Db7, options: ['D♭7', 'Re minore settima', 'CΔ', 'Bø7'], answer: 0, explanation: 'Re♭ Fa La♭ Do♭: è D♭7, il sostituto tritonale di G7.' },
+        { prompt: 'Ascolta: come si muove il basso nell’ultima cadenza?', kind: 'progression', play: [Dm7, Db7, CM7], options: ['Scende per semitono fino alla tonica', 'Sale di quarta', 'Resta fermo', 'Sale per semitono'], answer: 0, explanation: 'Il basso scende Re – Re♭ – Do: è il segno della sostituzione tritonale.' },
+        { prompt: 'Ascolta: dove risolve il diminuito rispetto alla sua fondamentale?', kind: 'progression', play: [md(59, [0, 3, 6, 9]), md(60, [0, 4, 7])], options: ['Un semitono sopra', 'Un tono sopra', 'Una quarta sopra', 'Un semitono sotto'], answer: 0, explanation: 'B°7 ≈ G7♭9: la fondamentale sale di semitono e risolve sulla tonica.' },
+        { prompt: 'Ascolta: questo II–V–I usa la dominante normale o una sostituzione?', kind: 'progression', play: [Dm7, G7, CM7], options: ['Dominante normale (V7)', 'Sostituzione tritonale', 'Diminuito di passaggio', 'Sostituzione per terze'], answer: 0, explanation: 'Il basso sale di quarta da Re a Sol e poi scende di quinta: è il V7 normale, senza il basso che scende per semitono.' },
       ],
     },
     8: {

@@ -101,7 +101,7 @@ const CH = {
     chord('G9', 'V', 'G', '1 3 5 ♭7 9', 'Sol nona'),
     chord('Cmaj9', 'I', 'C', '1 3 5 7 9', 'Do maggiore nona'),
   ])],
-  12: [prog('Reharmonizza il giro con una sostituzione di tritono', [
+  12: [prog('Riarmonizza il giro con una sostituzione di tritono', [
     chord('C', 'I', 'C', '1 3 5', 'Do maggiore'),
     chord('Am', 'vi', 'A', '1 ♭3 5', 'La minore'),
     chord('Dm', 'ii', 'D', '1 ♭3 5', 'Re minore'),

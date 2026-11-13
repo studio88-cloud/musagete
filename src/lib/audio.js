@@ -30,9 +30,9 @@ function getCtx() {
   return ctx
 }
 
-// Di quanti semitoni si abbassano gli esempi: il basso suona due ottave sotto la tastiera, la chitarra una (la loro gamma reale)
+// Di quanti semitoni si abbassano gli esempi: il basso suona due ottave sotto la tastiera, la chitarra suona all'altezza scritta
 export function instrumentShift(instrument) {
-  return instrument === 'bass' ? -24 : instrument === 'guitar' ? -12 : 0
+  return instrument === 'bass' ? -24 : instrument === 'guitar' ? 0 : 0
 }
 
 // Quando l'app torna in primo piano il contesto audio può essere rimasto bloccato (Safari lo mette in "interrupted"):
@@ -103,7 +103,7 @@ function nearestSample(instrument, midi) {
     const d = Math.abs(k - midi)
     if (d <= maxD && (best === null || d < Math.abs(best - midi))) best = k
   }
-  return best === null ? null : { base: best, buf: set[best], gain: SAMPLE_GAIN[instrument]?.[best] ?? 1, attack: instrument === 'guitar' && best <= 50 ? 0.035 : 0.006 }
+  return best === null ? null : { base: best, buf: set[best], gain: SAMPLE_GAIN[instrument]?.[best] ?? 1 }
 }
 
 function sampleTone(c, out, smp, midi, start, dur, vol) {
@@ -115,7 +115,7 @@ function sampleTone(c, out, smp, midi, start, dur, vol) {
   const release = Math.min(0.35, dur)
   // attacco di 6 ms: evita il "click" all'inizio del campione
   g.gain.setValueAtTime(0.0001, start)
-  g.gain.linearRampToValueAtTime(level, start + (smp.attack ?? 0.006))
+  g.gain.linearRampToValueAtTime(level, start + 0.006)
   g.gain.setValueAtTime(level, start + Math.max(dur - release, 0.05))
   g.gain.linearRampToValueAtTime(0.0001, start + dur + 0.1)
   src.connect(g)
