@@ -103,7 +103,7 @@ function nearestSample(instrument, midi) {
     const d = Math.abs(k - midi)
     if (d <= maxD && (best === null || d < Math.abs(best - midi))) best = k
   }
-  return best === null ? null : { base: best, buf: set[best], gain: SAMPLE_GAIN[instrument]?.[best] ?? 1 }
+  return best === null ? null : { base: best, buf: set[best], gain: SAMPLE_GAIN[instrument]?.[best] ?? 1, attack: instrument === 'guitar' && best <= 50 ? 0.035 : 0.006 }
 }
 
 function sampleTone(c, out, smp, midi, start, dur, vol) {
@@ -115,7 +115,7 @@ function sampleTone(c, out, smp, midi, start, dur, vol) {
   const release = Math.min(0.35, dur)
   // attacco di 6 ms: evita il "click" all'inizio del campione
   g.gain.setValueAtTime(0.0001, start)
-  g.gain.linearRampToValueAtTime(level, start + 0.006)
+  g.gain.linearRampToValueAtTime(level, start + (smp.attack ?? 0.006))
   g.gain.setValueAtTime(level, start + Math.max(dur - release, 0.05))
   g.gain.linearRampToValueAtTime(0.0001, start + dur + 0.1)
   src.connect(g)
