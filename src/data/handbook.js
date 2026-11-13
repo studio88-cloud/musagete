@@ -312,7 +312,11 @@ export const HANDBOOK = [
     def: 'Sono accordi cromatici costruiti sul ♭6 della scala, in cui la sesta aumentata tra ♭6 e ♯4 si allarga verso l’ottava della dominante.',
     formula: 'Italiana ♭6 1 ♯4 · Tedesca ♭6 1 ♭3 ♯4 · Francese ♭6 1 2 ♯4',
     points: ['In Do minore la sesta aumentata è La♭ – Fa♯', 'Le due note si aprono verso Sol–Sol', 'La tedesca suona come una dominante, ma risolve in modo diverso'],
-    examples: [pr('Italiana: A♭+6 – G', [['It+6', 'A♭ C F♯', [56, 60, 66]], ['V', 'G', [55, 62, 67]]])],
+    examples: [
+      pr('Italiana: A♭+6 – G', [['It+6', 'A♭ C F♯', [56, 60, 66]], ['V', 'G', [55, 62, 67]]]),
+      pr('Tedesca: A♭+6 – G', [['Ger+6', 'A♭ C E♭ F♯', [56, 60, 63, 66]], ['V', 'G', [55, 62, 67]]]),
+      pr('Francese: A♭+6 – G', [['Fr+6', 'A♭ C D F♯', [56, 60, 62, 66]], ['V', 'G', [55, 62, 67]]]),
+    ],
   },
   {
     id: 'dimpass', chapter: 10, title: 'Diminuito di passaggio', subtitle: 'Collegare due accordi con una settima diminuita',

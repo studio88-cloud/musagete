@@ -2258,6 +2258,8 @@
   "handbook.symmetric.example3.label": "Do diminuita (semitono – tono)",
   "handbook.neapolitan.example1.label": "Fm – D♭/F – G7 – Cm",
   "handbook.augsixth.example1.label": "Italiana: A♭+6 – G",
+  "handbook.augsixth.example2.label": "Tedesca: A♭+6 – G",
+  "handbook.augsixth.example3.label": "Francese: A♭+6 – G",
   "handbook.dimpass.example1.label": "C – C♯° – Dm",
   "handbook.extensions.example1.label": "Do maggiore nona",
   "handbook.extensions.example2.label": "Do nona di dominante",
