@@ -14,6 +14,7 @@ import ChapterSteps from './screens/ChapterSteps'
 import Lesson from './screens/Lesson'
 import Quiz from './screens/Quiz'
 import Apply from './screens/Apply'
+import Practice from './screens/Practice'
 import { applyFor } from './data/apply'
 import Build from './screens/Build'
 import Placement from './screens/Placement'
@@ -137,7 +138,9 @@ export default function App() {
       setOpenStep(null)
     }
     content =
-      openStep.kind === 'apply' && applyFor(num) ? (
+      openStep.kind === 'practice' ? (
+        <Practice chapter={num} instrument={instrument} onExit={() => setOpenStep(null)} />
+      ) : openStep.kind === 'apply' && applyFor(num) ? (
         <Apply
           chapter={num}
           step={openStep}

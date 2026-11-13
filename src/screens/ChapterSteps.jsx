@@ -9,6 +9,7 @@ import iconScore from '../assets/icons/icn_spartito.png'
 import { KIND_LABEL, stepsFor } from '../data/steps'
 import { buildFor } from '../data/build'
 import { applyFor } from '../data/apply'
+import { practiceFor } from '../data/practice'
 
 // ---- icone del grafico (src/assets/icons) ----
 const KIND_ICON = {
@@ -110,6 +111,20 @@ export default function ChapterSteps({ chapter, title, done, onToggle, onOpenSte
           )
         })}
       </ol>
+
+      {practiceFor(chapter) && (
+        <button
+          type="button"
+          className="step prac-card"
+          aria-label="In pratica, facoltativo, consigli per suonare quello che hai imparato"
+          onClick={() => onOpenStep({ id: 'practice', kind: 'practice', title: 'In pratica' })}
+        >
+          <span className="step-text">
+            <span className="step-title">In pratica</span>
+            <span className="step-sub">Facoltativo • consigli per suonare ciò che hai imparato</span>
+          </span>
+        </button>
+      )}
     </section>
   )
 }

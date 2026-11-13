@@ -10,17 +10,17 @@ const SEZ_A = ['B♭ G7', 'Cm7 F7', 'Dm7 G7', 'Cm7 F7', 'Fm7 B♭7', 'E♭ E°7'
 const SEZ_A_FINE = [...SEZ_A.slice(0, 6), 'Cm7 F7', 'B♭'] // seconda e terza A
 const PONTE = ['D7', 'D7', 'G7', 'G7', 'C7', 'C7', 'F7', 'F7']
 
-const nt = (midi, deg, label) => ({ midi, deg, label })
+export const nt = (midi, deg, label) => ({ midi, deg, label })
 
 // Scala o accordo da una tonica bianca e da una formula ("1 ♭3 5"); base = tonica
-const sc = (label, root, formula, opts = {}) => {
+export const sc = (label, root, formula, opts = {}) => {
   const notes = parseFormula(formula).map((f) => nt(root + f.semi, f.deg, f.label))
   const play = opts.chord ? notes.map((x) => x.midi) : [...notes.map((x) => x.midi), ...(opts.octave === false ? [] : [root + 12])]
   return { label, base: root, notes, play, chord: Boolean(opts.chord), note: opts.note }
 }
-const ch = (label, root, formula, note) => sc(label, root, formula, { chord: true, note })
+export const ch = (label, root, formula, note) => sc(label, root, formula, { chord: true, note })
 // Progressione: accordi con funzione, sigla e altezze
-const pr = (label, list, note) => ({
+export const pr = (label, list, note) => ({
   label,
   notes: [],
   play: list.map((c) => c[2]),

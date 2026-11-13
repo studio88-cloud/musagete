@@ -19,7 +19,7 @@ function fold(notes, base) {
     .filter((n) => (seen.has(n.midi) ? false : seen.add(n.midi)))
 }
 
-function Example({ ex, instrument }) {
+export function Example({ ex, instrument }) {
   const [playing, setPlaying] = useState(false)
   useEffect(() => () => stopPlaying(), [])
   const base = ex.base ?? 60
@@ -37,7 +37,8 @@ function Example({ ex, instrument }) {
     if (ex.progression) {
       playNotes(ex.play.map((c) => c.map((m) => m + shift)), { kind: 'progression', arpeggio: instrument !== 'keyboard' && !ex.form, weights: ex.weights, instrument, onEnd: () => setPlaying(false) })
     } else {
-      const midis = ex.play.map((m) => m + shift).sort((a, b) => a - b)
+      const midis = ex.play.map((m) => m + shift)
+      if (!ex.melody) midis.sort((a, b) => a - b) // una melodia si suona nell'ordine scritto
       playNotes(midis, { kind: ex.chord ? 'chord' : 'scale', arpeggio: instrument !== 'keyboard', instrument, onEnd: () => setPlaying(false) })
     }
   }
