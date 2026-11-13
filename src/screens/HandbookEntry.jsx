@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Fretboard from '../components/Fretboard'
 import LessonKeys from '../components/LessonKeys'
 import CircleOfFifths from '../components/CircleOfFifths'
-import { IT_NAMES } from '../lib/music'
+import { IT_NAMES, highlightMap } from '../lib/music'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
 import { splitLines } from '../lib/text'
 import { CHAPTERS } from '../data/chapters'
@@ -22,7 +22,7 @@ function Example({ ex, instrument }) {
   useEffect(() => () => stopPlaying(), [])
   const base = ex.base ?? 60
   const shown = ex.notes && ex.notes.length ? fold(ex.notes, base) : []
-  const hl = new Map(shown.map((n) => [n.midi % 12, { deg: n.deg, label: n.label, name: IT_NAMES[WHITE.indexOf(n.midi % 12)] ?? '' }]))
+  const hl = highlightMap(shown, (pc) => IT_NAMES[WHITE.indexOf(pc)] ?? '')
 
   const listen = () => {
     if (playing) {

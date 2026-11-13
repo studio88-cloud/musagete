@@ -49,7 +49,8 @@ function pickPosition(instrument, highlights) {
   const dots = []
   entries.forEach(([pc, note]) => {
     let target = rootMidi
-    while (((target % 12) + 12) % 12 !== pc) target++
+    if (note.rel !== undefined) target = rootMidi + note.rel
+    else while (((target % 12) + 12) % 12 !== pc) target++
     let best = null
     const consider = (win) => {
       tuning.forEach((open, s) => {

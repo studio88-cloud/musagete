@@ -4,7 +4,7 @@ import Fretboard from '../components/Fretboard'
 import LessonKeys from '../components/LessonKeys'
 import ReadStaff from '../components/ReadStaff'
 import pollyImg from '../images/polly-sit.webp'
-import { IT_NAMES } from '../lib/music'
+import { IT_NAMES, highlightMap } from '../lib/music'
 import { lessonFor } from '../data/lessons'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
 import { splitLines } from '../lib/text'
@@ -25,9 +25,8 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
   const page = lesson.pages[i]
   const total = lesson.pages.length
   const last = i === total - 1
-  const highlights = new Map(
-    (page.notes || []).map((n) => [n.midi % 12, { deg: n.deg, label: n.label, name: IT_NAMES[[0, 2, 4, 5, 7, 9, 11].indexOf(n.midi % 12)] ?? '' }]),
-  )
+  const highlights = highlightMap(page.notes || [], (pc) => IT_NAMES[[0, 2, 4, 5, 7, 9, 11].indexOf(pc)] ?? '')
+
 
   useEffect(() => () => stopPlaying(), [])
   useEffect(() => {

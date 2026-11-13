@@ -21,7 +21,7 @@ export default {
     1: {
       pages: [
         page('Gli accordi in minore', 'In minore il II–V–I usa un semidiminuito sul ii. In Do minore: Dø7, G7 e Cm7. Il ii è semidiminuito perché la scala minore naturale ha il ♭5 sul secondo grado.', 'iim7♭5 – V7 – im7', { base: 62, notes: mk(62, [[0, 1, '1'], [3, 3, '♭3'], [6, 5, '♭5'], [10, 7, '♭7']]), play: md(62, [0, 3, 6, 10]), chord: true }, 'Il Dø7 apre il giro!'),
-        page('Il V7 con ♭9', 'Nel minore la dominante ha di solito la nona abbassata, G7♭9, per avvicinarsi al colore del Do minore. Il suono è più scuro e teso del V7 maggiore. Spesso si usa anche la scala alterata sul V.', 'V7♭9', { base: 55, notes: mk(55, [[0, 1, '1'], [4, 3, '3'], [7, 5, '5'], [10, 7, '♭7'], [12, 2, '♭9']]), play: md(55, [0, 4, 7, 10, 13]), chord: true }, 'La ♭9 è il La♭!'),
+        page('Il V7 con ♭9', 'Nel minore la dominante ha di solito la nona abbassata, G7♭9, per avvicinarsi al colore del Do minore. Il suono è più scuro e teso del V7 maggiore. Spesso si usa anche la scala alterata sul V.', 'V7♭9', { base: 55, notes: mk(55, [[0, 1, '1'], [4, 3, '3'], [7, 5, '5'], [10, 7, '♭7'], [13, 2, '♭9']]), play: md(55, [0, 4, 7, 10, 13]), chord: true }, 'La ♭9 è il La♭!'),
         page('Il giro completo', 'Ascolta il giro completo: Dø7 – G7♭9 – Cm7. Il colore è drammatico e viene usato in moltissimi standard jazz, come “Autumn Leaves”.', 'Dø7 – G7♭9 – Cm7', { notes: [], play: [md(62, [0, 3, 6, 10]), md(55, [0, 4, 7, 10, 13]), Cm7], progression: true, chords: [{ fn: 'iim7♭5', sym: 'Dø7' }, { fn: 'V7♭9', sym: 'G7♭9' }, { fn: 'im7', sym: 'Cm7' }] }, 'Un classico!'),
       ],
     },

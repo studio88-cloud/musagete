@@ -13,9 +13,13 @@ const noteName = (midi) => `${IT_NAMES[WHITE_PCS.indexOf(midi % 12)]}${Math.floo
 
 export default function LessonKeys({ notes, base = 60 }) {
   const by = new Map(notes.map((n) => [n.midi, n]))
+  // se ci sono note oltre l'ottava (9, 11, 13) la tastiera sale fino al primo tasto bianco che le contiene
+  let top = base + 12
+  const hi = Math.max(...notes.map((n) => n.midi), 0)
+  while (top < hi || !isWhite(top)) top++
   const white = []
   const black = []
-  for (let m = base; m <= base + 12; m++) {
+  for (let m = base; m <= top; m++) {
     if (isWhite(m)) white.push({ midi: m, x: white.length * W })
     else black.push({ midi: m, x: (white.length - 1) * W + W - BW / 2 })
   }
@@ -39,10 +43,10 @@ export default function LessonKeys({ notes, base = 60 }) {
       className="lkeys"
       viewBox={`0 0 ${total} ${H + 22}`}
       role="img"
-      aria-label={`Tastiera da ${noteName(base)} a ${noteName(base + 12)} con evidenziate: ${notes.map((n) => n.label).join(', ')}`}
+      aria-label={`Tastiera da ${noteName(base)} a ${noteName(top)} con evidenziate: ${notes.map((n) => n.label).join(', ')}`}
     >
       <text x="2" y="12" fontSize="13" fontWeight="700" fill="#C28AE3">{noteName(base)}</text>
-      <text x={total - 2} y="12" fontSize="13" fontWeight="700" fill="#C28AE3" textAnchor="end">{noteName(base + 12)}</text>
+      <text x={total - 2} y="12" fontSize="13" fontWeight="700" fill="#C28AE3" textAnchor="end">{noteName(top)}</text>
       <g transform="translate(0 20)">
         {white.map((k) => (
           <rect key={k.midi} x={k.x + 1} y="0" width={W - 2} height={H} rx="4" fill={by.has(k.midi) ? '#CDB171' : '#f5f3ff'} />

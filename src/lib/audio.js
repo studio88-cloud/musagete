@@ -113,7 +113,9 @@ function sampleTone(c, out, smp, midi, start, dur, vol) {
   const g = c.createGain()
   const level = vol * 1.8 * (smp.gain ?? 1)
   const release = Math.min(0.35, dur)
-  g.gain.setValueAtTime(level, start)
+  // attacco di 6 ms: evita il "click" all'inizio del campione
+  g.gain.setValueAtTime(0.0001, start)
+  g.gain.linearRampToValueAtTime(level, start + 0.006)
   g.gain.setValueAtTime(level, start + Math.max(dur - release, 0.05))
   g.gain.linearRampToValueAtTime(0.0001, start + dur + 0.1)
   src.connect(g)
@@ -227,8 +229,16 @@ function playNow(midis, { kind = 'chord', arpeggio = false, instrument = 'keyboa
     return
   }
   const master = c.createGain()
-  master.gain.value = 0.5
-  master.connect(c.destination)
+  master.gain.value = 0.4
+  // limitatore: se più note sovrapposte superano il massimo, le contiene invece di farle saturare (scoppiettii)
+  const limiter = c.createDynamicsCompressor()
+  limiter.threshold.value = -10
+  limiter.knee.value = 6
+  limiter.ratio.value = 12
+  limiter.attack.value = 0.003
+  limiter.release.value = 0.15
+  master.connect(limiter)
+  limiter.connect(c.destination)
 
   const events = [] // { midi, at, dur, vol }
   let total = 0

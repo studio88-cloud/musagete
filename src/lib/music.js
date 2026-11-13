@@ -63,3 +63,16 @@ export function spellNotes(root, formula) {
 export function baseMidi(root) {
   return 60 + (root.pc > 6 ? root.pc - 12 : root.pc)
 }
+
+// Evidenziazioni per il manico: pitch class -> nota, con `rel` = semitoni sopra la tonica
+// (così 9, 11 e 13 restano un'ottava sopra e non vengono ripiegate)
+export function highlightMap(notes, nameOf) {
+  const rootNote = notes.find((n) => n.deg === 1) || notes[0]
+  const m = new Map()
+  notes.forEach((n) => {
+    const pc = n.midi % 12
+    if (m.has(pc)) return
+    m.set(pc, { deg: n.deg, label: n.label, name: nameOf(pc), rel: n.midi - rootNote.midi })
+  })
+  return m
+}

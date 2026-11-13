@@ -330,7 +330,7 @@ export const HANDBOOK = [
   {
     id: 'extensions', chapter: 11, title: 'Estensioni', subtitle: 'Nona, undicesima, tredicesima',
     def: 'Le estensioni sono note che si aggiungono sopra la settima, continuando a impilare terze. Sono le note della scala un’ottava sopra: 9 = 2, 11 = 4, 13 = 6.',
-    formula: '9 = 2 · 11 = 4 · 13 = 6',
+    formula: '9 = 2 (+ ottava) · 11 = 4 (+ ottava) · 13 = 6 (+ ottava)',
     points: ['Cmaj9 = 1 3 5 7 9', 'Su un accordo maggiore l’11 giusto stona con la terza: si usa ♯11', 'Spesso si omette la quinta'],
     examples: [ch('Do maggiore nona', 60, '1 3 5 7 9'), ch('Do nona di dominante', 60, '1 3 5 ♭7 9')],
   },
