@@ -89,12 +89,12 @@ function pickPosition(instrument, highlights) {
   } else if (!n) {
     b = Math.min(base, ...frets)
   }
-  const cols = Math.min(Math.max(POS_COLS, maxFret - b + 1), 8)
+  const cols = Math.min(Math.max(POS_COLS, maxFret - b + 1), scalePlaced ? 10 : 8) // le scale in fila possono arrivare a 10 tasti
   return { nut: n, base: b, dots, cols }
 }
 
 // Scale: dalla tonica alla settima (e ottava) in fila. Ogni nota all'altezza esatta, sulla stessa corda
-// o su quella più acuta della precedente, con la minima estensione sul manico (al massimo 6 tasti).
+// o su quella più acuta della precedente, con la minima estensione sul manico (al massimo 8 tasti).
 function placeScale(tuning, entries, rootMidi, rs, rf) {
   const notes = entries
     .filter(([, n]) => n.rel !== undefined)
@@ -118,7 +118,7 @@ function placeScale(tuning, entries, rootMidi, rs, rf) {
       const lo = Math.min(...fr.filter((f) => f > 0), 99)
       const hi = Math.max(...fr)
       const span = fr.includes(0) ? hi : hi - lo
-      if (span > 6) return
+      if (span > 8) return
       let cost = span * 10 + cur.reduce((t, c) => t + Math.abs(c.fr - rf), 0)
       if (rf > 0) cost += fr.filter((f) => f === 0).length * 15 // si evitano le corde a vuoto, che spezzano la fila
       for (let i = 1; i < cur.length; i++) if (cur[i].s !== cur[i - 1].s) cost += Math.abs(cur[i].fr - cur[i - 1].fr) * 3 // al cambio di corda si resta vicini
