@@ -12,10 +12,11 @@ export default {
     { id: 2, kind: 'lesson', title: 'I turnaround', min: 4 },
     { id: 3, kind: 'lesson', title: 'II–V verso altre tonalità', min: 4 },
     { id: 4, kind: 'lesson', title: 'Il blues jazz', min: 5 },
-    { id: 5, kind: 'ear', title: 'Riconosci le progressioni jazz', min: 5 },
-    { id: 6, kind: 'build', title: 'Suona un II–V–I minore', min: 5 },
-    { id: 7, kind: 'apply', title: 'Suona un blues in Fa', min: 8 },
-    { id: 8, kind: 'quiz', title: 'Quiz finale', min: 5 },
+    { id: 5, kind: 'lesson', title: 'La dominante backdoor', min: 4 },
+    { id: 6, kind: 'ear', title: 'Riconosci le progressioni jazz', min: 5 },
+    { id: 7, kind: 'build', title: 'Suona un II–V–I minore', min: 5 },
+    { id: 8, kind: 'apply', title: 'Suona un blues in Fa', min: 8 },
+    { id: 9, kind: 'quiz', title: 'Quiz finale', min: 5 },
   ],
   lessons: {
     1: {
@@ -43,9 +44,16 @@ export default {
         page('Il blues jazz', 'Nella versione jazz si aggiungono accordi di passaggio: un II–V verso il IV alla battuta 4, un diminuito di passaggio alla battuta 6 (B°7, che collega il IV7 al I7 con il basso che sale per semitoni), il VI7 alla battuta 8 e il II–V finale. Qui sotto la forma in Fa. Gli ultimi due accordi (Gm7 C7) formano il turnaround.', 'Blues jazz in Fa · F7 | B♭7 | F7 | Cm7 F7 | · B♭7 | B°7 | F7 | D7 | · Gm7 | C7 | F7 D7 | Gm7 C7 |', { notes: [] }, 'Più colore, stessa forma!'),
       ],
     },
+    5: {
+      pages: [
+        page('La porta di servizio', 'Di solito il V7 risolve sul I scendendo di quinta: G7 – CΔ. La dominante backdoor arriva invece dal settimo grado abbassato, ♭VII7, e risolve sul I scendendo di un tono. In Do: B♭7 – CΔ. Le due note guida di B♭7 si muovono per grado: La♭ scende su Sol e Re scende su Do.', '♭VII7 → I (B♭7 → CΔ)', { notes: [], play: [md(53, [0, 3, 5, 9]), CM7], progression: true, chords: [{ fn: '♭VII7', sym: 'B♭7' }, { fn: 'Imaj7', sym: 'CΔ' }] }, 'Si entra dalla porta di servizio!'),
+        page('Il percorso tipico', 'La backdoor è di solito preceduta dal iv minore: ivm7 – ♭VII7 – Imaj7. In Do: Fm7 – B♭7 – CΔ. Il Fm7 è preso in prestito dal Do minore e prepara il ♭VII7, che suona come la dominante di Mi♭ ma, a sorpresa, porta a Do. È un II–V alternativo: al posto di Dm7 – G7 – CΔ.', 'ivm7 – ♭VII7 – Imaj7', { notes: [], play: [md(53, [0, 3, 7, 10]), md(53, [0, 3, 5, 9]), CM7], progression: true, chords: [{ fn: 'ivm7', sym: 'Fm7' }, { fn: '♭VII7', sym: 'B♭7' }, { fn: 'Imaj7', sym: 'CΔ' }] }, 'Un II–V dal colore diverso!'),
+        page('Quando usarla', 'La backdoor dà una risoluzione morbida, senza la tensione della dominante normale. Si usa alla fine di un giro per tornare alla tonica, o al posto del V7 in un turnaround. Sul B♭7 si può suonare la scala misolidia di Si♭, oppure la lidia ♭7, più brillante.', 'Backdoor = ivm7 – ♭VII7 – I, risoluzione morbida', { notes: [] }, 'Provala al posto del V7!'),
+      ],
+    },
   },
   quizzes: {
-    5: {
+    6: {
       kind: 'ear',
       questions: [
         { prompt: 'Ascolta: che progressione senti?', kind: 'progression', play: [md(62, [0, 3, 6, 10]), md(55, [0, 4, 7, 10, 13]), Cm7], options: ['II–V–I maggiore', 'II–V–I minore', 'Cadenza plagale', 'Cadenza sospesa'], answer: 1, explanation: 'Il semidiminuito e la ♭9 indicano un II–V–I minore.' },
@@ -54,7 +62,7 @@ export default {
         { prompt: 'Ascolta: dove portano questi due accordi?', kind: 'progression', play: [md(55, [0, 3, 7, 10]), md(60, [0, 4, 7, 10])], options: ['A FΔ', 'A CΔ', 'A GΔ', 'A Dm7'], answer: 0, explanation: 'Gm7 – C7 è il II–V di Fa maggiore.' },
       ],
     },
-    8: {
+    9: {
       kind: 'quiz',
       passMark: 0.8,
       questions: [

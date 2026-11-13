@@ -377,10 +377,17 @@ export const HANDBOOK = [
 
   // ——— Capitolo 13 · Armonia jazz avanzata
   {
+    id: 'bluesroots', chapter: 13, title: 'Blues Roots', subtitle: 'Le dodici battute con tre accordi',
+    def: 'Il blues base ha dodici battute divise in tre frasi di quattro, e usa solo tre accordi di settima di dominante: I7, IV7 e V7.',
+    formula: 'I7 | I7 | I7 | I7 | · IV7 | IV7 | I7 | I7 | · V7 | IV7 | I7 | I7 |',
+    points: ['In Do: C7, F7 e G7', 'Prima frase sul I7, seconda sul IV7 che torna al I7, terza con la cadenza V7 – IV7 – I7', 'Gli accordi sono tutti di settima di dominante, anche il I'],
+    examples: [pr('I tre accordi: C7 – F7 – G7 – C7', [['I7', 'C7', [55, 58, 60, 64]], ['IV7', 'F7', [53, 57, 60, 63]], ['V7', 'G7', [55, 59, 62, 65]], ['I7', 'C7', [55, 58, 60, 64]]]), pr('Ultime quattro battute: G7 – F7 – C7', [['V7', 'G7', [55, 59, 62, 65]], ['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]]])],
+  },
+  {
     id: 'jazzblues', chapter: 13, title: 'Blues jazz', subtitle: 'Dodici battute con le sostituzioni',
-    def: 'Il blues jazz mantiene le dodici battute ma ricolora il giro con settime e con ii–V ai suoi punti chiave.',
-    formula: 'I7 | IV7 | I7 | I7 | IV7 | IV7 | I7 | VI7 | iim7 | V7 | I7 | V7',
-    points: ['In Do: C7 F7 C7 C7 · F7 F7 C7 A7 · Dm7 G7 C7 G7', 'A7 è una dominante secondaria che porta a Dm7', 'Il ii–V finale porta alla ripetizione'],
+    def: 'Il blues jazz mantiene le dodici battute ma ricolora il giro con II–V, un diminuito di passaggio e il VI7 ai suoi punti chiave.',
+    formula: 'C7 | F7 | C7 | Gm7 C7 | · F7 | F♯°7 | C7 | A7 | · Dm7 | G7 | C7 A7 | Dm7 G7 |',
+    points: ['Forma in Do, quattro battute per riga', 'A7 è una dominante secondaria che porta a Dm7', 'Alla battuta 6 il F♯°7 è un diminuito di passaggio tra F7 e C7', 'Il ii–V finale porta alla ripetizione'],
     examples: [pr('Ultime otto battute', [['IV7', 'F7', [53, 57, 60, 63]], ['I7', 'C7', [55, 58, 60, 64]], ['V7/ii', 'A7', [55, 57, 61, 64]], ['iim7', 'Dm7', Dm7], ['V7', 'G7', G7], ['I7', 'C7', [55, 58, 60, 64]]])],
   },
   {
