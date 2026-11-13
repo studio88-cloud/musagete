@@ -553,7 +553,7 @@ export const HANDBOOK = [
     examples: [
       sc('Do maggiore', 60, '1 2 3 4 5 6 7'),
       sc('Il suo specchio: Do minore naturale', 60, '1 2 ♭3 4 5 ♭6 ♭7'),
-      { label: 'Do maggiore specchiato nota per nota', base: 55, notes: [nt(67, 5, '5'), nt(65, 4, '4'), nt(63, 3, '♭3'), nt(62, 2, '2'), nt(60, 1, '1'), nt(58, 7, '♭7'), nt(56, 6, '♭6')], play: [67, 65, 63, 62, 60, 58, 56], chord: false, melody: true },
+      { label: 'Do maggiore specchiato nota per nota', base: 60, notes: [nt(60, 1, '1'), nt(62, 2, '2'), nt(63, 3, '♭3'), nt(65, 4, '4'), nt(67, 5, '5'), nt(68, 6, '♭6'), nt(70, 7, '♭7')], play: [67, 65, 63, 62, 60, 58, 56], chord: false, melody: true },
     ],
   },
   {

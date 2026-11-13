@@ -89,7 +89,8 @@ function pickPosition(instrument, highlights) {
   } else if (!n) {
     b = Math.min(base, ...frets)
   }
-  const cols = Math.min(Math.max(POS_COLS, maxFret - b + 1), scalePlaced ? 10 : 8) // le scale in fila possono arrivare a 10 tasti
+  // le scale in fila hanno un tasto in più dopo l'ultima nota e possono arrivare a 10 tasti
+  const cols = scalePlaced ? Math.min(Math.max(POS_COLS, maxFret - b + 2), 10) : Math.min(Math.max(POS_COLS, maxFret - b + 1), 8)
   return { nut: n, base: b, dots, cols }
 }
 
@@ -122,6 +123,16 @@ function placeScale(tuning, entries, rootMidi, rs, rf) {
       let cost = span * 10 + cur.reduce((t, c) => t + Math.abs(c.fr - rf), 0)
       if (rf > 0) cost += fr.filter((f) => f === 0).length * 15 // si evitano le corde a vuoto, che spezzano la fila
       for (let i = 1; i < cur.length; i++) if (cur[i].s !== cur[i - 1].s) cost += Math.abs(cur[i].fr - cur[i - 1].fr) * 3 // al cambio di corda si resta vicini
+      // la forma classica: tre note per corda nelle scale di sette note, due nelle pentatoniche (l'ultima corda prende il resto)
+      const ideal = notes.length >= 7 ? 3 : 2
+      let run = 1
+      for (let i = 1; i <= cur.length; i++) {
+        if (i < cur.length && cur[i].s === cur[i - 1].s) run++
+        else {
+          if (i < cur.length) cost += Math.abs(run - ideal) * 20
+          run = 1
+        }
+      }
       if (!best || cost < best.cost) best = { cost, picks: cur.map((c) => ({ ...c })) }
       return
     }
