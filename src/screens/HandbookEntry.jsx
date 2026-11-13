@@ -47,7 +47,7 @@ function Example({ ex, instrument }) {
         <div className="lchords" role="list" aria-label="Accordi">
           {ex.chords.map((c, k) => (
             <span key={k} className="lchord" role="listitem">
-              <b>{c.fn}</b>
+              {c.fn && c.fn !== c.sym && <b>{c.fn}</b>}
               <i>{c.sym}</i>
             </span>
           ))}

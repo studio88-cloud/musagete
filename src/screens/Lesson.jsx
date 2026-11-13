@@ -91,7 +91,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
           <div className="lchords" role="list" aria-label="Accordi della progressione">
             {page.chords.map((c, k) => (
               <span key={k} className="lchord" role="listitem">
-                <b>{c.fn}</b>
+                {c.fn && c.fn !== c.sym && <b>{c.fn}</b>}
                 <i>{c.sym}</i>
               </span>
             ))}
