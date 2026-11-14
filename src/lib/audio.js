@@ -30,6 +30,52 @@ function getCtx() {
   return ctx
 }
 
+// iPhone/iPad: il contesto audio nasce "sospeso" e si sblocca solo dentro un tocco dell'utente; inoltre l'interruttore
+// laterale del silenzioso azzera la Web Audio a meno che la pagina non dichiari di essere "playback".
+// Qui si fa tutto al primo tocco (e a ogni tocco finché il contesto non è davvero in funzione).
+let silentEl = null
+function markPlayback() {
+  try {
+    if (navigator.audioSession) navigator.audioSession.type = 'playback' // iOS 17+
+  } catch {
+    // non supportato
+  }
+  // iOS più vecchi: un <audio> silenzioso in riproduzione sposta la sessione su "playback" (suona anche col silenzioso attivo)
+  try {
+    if (navigator.audioSession) return
+    if (!silentEl) {
+      const wav = 'data:audio/wav;base64,UklGRmQGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUAGAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA'
+      silentEl = new Audio(wav)
+      silentEl.setAttribute('playsinline', '')
+      silentEl.loop = true
+      silentEl.volume = 0.01
+    }
+    silentEl.play().catch(() => {})
+  } catch {
+    // niente
+  }
+}
+function unlockAudio() {
+  const c = getCtx()
+  if (!c) return
+  markPlayback()
+  try {
+    const b = c.createBuffer(1, 1, 22050)
+    const src = c.createBufferSource()
+    src.buffer = b
+    src.connect(c.destination)
+    src.start(0)
+  } catch {
+    // niente
+  }
+  if (c.state === 'running') {
+    ;['touchstart', 'touchend', 'pointerdown', 'click', 'keydown'].forEach((ev) => document.removeEventListener(ev, unlockAudio, true))
+  }
+}
+if (typeof document !== 'undefined') {
+  ;['touchstart', 'touchend', 'pointerdown', 'click', 'keydown'].forEach((ev) => document.addEventListener(ev, unlockAudio, true))
+}
+
 // Di quanti semitoni si abbassano gli esempi: il basso suona due ottave sotto la tastiera, la chitarra suona all'altezza scritta
 export function instrumentShift(instrument) {
   return instrument === 'bass' ? -24 : instrument === 'guitar' ? 0 : 0
@@ -41,11 +87,15 @@ let wasHidden = false
 function resetContext() {
   const old = ctx
   ctx = null
+  if (typeof document !== 'undefined') {
+    ;['touchstart', 'touchend', 'pointerdown', 'click', 'keydown'].forEach((ev) => document.addEventListener(ev, unlockAudio, true))
+  }
   if (old) old.close().catch(() => {})
 }
 if (typeof document !== 'undefined') {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
+      silentEl?.pause()
       wasHidden = true
       stopPlaying()
     } else if (wasHidden) {
@@ -209,6 +259,8 @@ export function stopPlaying() {
 // arpeggio: chitarra e basso non suonano mai le note insieme, ma una dopo l'altra
 export function playNotes(midis, opts = {}) {
   stopPlaying()
+  getCtx() // dentro il tocco: così iOS lo sblocca anche se i campioni arrivano dopo
+  markPlayback()
   const instrument = opts.instrument || 'keyboard'
   // se i campioni dello strumento sono ancora in arrivo si aspetta (al massimo 3 secondi) invece di suonare il suono sintetico
   if (SAMPLE_NOTES[instrument] && !ready[instrument]) {
