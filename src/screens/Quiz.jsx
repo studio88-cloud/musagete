@@ -92,7 +92,7 @@ export function Results({ step, data, result, onRetry, onDone, retryLabel = 'Rip
 }
 
 export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onAnswer, onDone, onExit, instrument = 'keyboard' }) {
-  const data = dataProp || quizFor(chapter, step.id)
+  const [data, setData] = useState(() => dataProp || quizFor(chapter, step.id))
   const total = data.questions.length
   const [i, setI] = useState(0)
   const [sel, setSel] = useState(null)
@@ -160,6 +160,7 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
     setChecked(false)
     setCorrect(0)
     setResult(null)
+    if (!dataProp) setData(quizFor(chapter, step.id)) // al nuovo tentativo si pescano altre domande
     startRef.current = Date.now()
   }
 

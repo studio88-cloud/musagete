@@ -1,4 +1,5 @@
 import { CONTENT } from './content'
+import { drawQuestions } from './quizBank'
 
 // Esercizi e quiz, per capitolo e numero di passo.
 // play: note (MIDI) da far ascoltare; answer: indice della risposta giusta;
@@ -154,8 +155,13 @@ export const PLACEMENT = {
   ],
 }
 
+// I quiz finali (kind 'quiz') pescano ogni volta domande diverse dalla banca del capitolo;
+// gli esercizi d'ascolto restano fissi.
+const drawn = (chapter, data) =>
+  data && data.kind === 'quiz' ? { ...data, questions: drawQuestions(chapter, data.questions, data.questions.length) } : data
+
 export function quizFor(chapter, stepId) {
-  if (chapter === 0) return CH0[stepId] || null
-  if (chapter >= 2) return CONTENT[chapter]?.quizzes?.[stepId] || null
-  return (chapter === 1 && CH1[stepId]) || null
+  if (chapter === 0) return drawn(0, CH0[stepId] || null)
+  if (chapter >= 2) return drawn(chapter, CONTENT[chapter]?.quizzes?.[stepId] || null)
+  return drawn(1, (chapter === 1 && CH1[stepId]) || null)
 }
