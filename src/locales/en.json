@@ -125,8 +125,6 @@
  "Tono – Tono – Semitono – Tono – Tono – Tono – Semitono": "Tone – Tone – Semitone – Tone – Tone – Tone – Semitone",
  "Questa formula vale per ogni tonalità!": "This formula works for every key!",
  "I gradi della scala": "The scale degrees",
- "Ogni nota della scala ha un numero, il grado. Il primo grado è la tonica, il quinto la dominante. Ragionare per gradi permette di capire la musica in qualsiasi tonalità, senza dipendere dai nomi delle note.": "Every note of the scale has a number, the degree. The first degree is the tonic, the fifth the dominant. Thinking in degrees lets you understand music in any key, without depending on note names.",
- "1 = tonica · 5 = dominante": "1 = tonic · 5 = dominant",
  "I gradi sono il tuo linguaggio!": "Degrees are your language!",
  "La stessa formula, un’altra tonalità": "The same formula, another key",
  "Cambiando la nota di partenza cambiano i nomi, non i gradi. Da Sol la scala è Sol La Si Do Re Mi Fa♯ Sol: serve il Fa♯ per mettere i semitoni tra il 3° e il 4° grado e tra il 7° e l’8°.": "Changing the starting note changes the names, not the degrees. From G the scale is G A B C D E F♯ G: you need the F♯ to place the semitones between the 3rd and 4th degrees and between the 7th and 8th.",
@@ -4162,5 +4160,7 @@
  "Lezione": "Lesson",
  "Esercizio": "Exercise",
  "Pratica": "Practice",
- "Test": "Test"
+ "Test": "Test",
+ "Ogni nota della scala ha un numero, il grado. Il primo grado è la tonica, il quarto la sottodominante, il quinto la dominante. Ragionare per gradi permette di capire la musica in qualsiasi tonalità, senza dipendere dai nomi delle note.": "Every note of the scale has a number, the degree. The first degree is the tonic, the fourth the subdominant, the fifth the dominant. Thinking in degrees lets you understand music in any key, without depending on note names.",
+ "1 = tonica · 4 = sottodominante · 5 = dominante": "1 = tonic · 4 = subdominant · 5 = dominant"
 }

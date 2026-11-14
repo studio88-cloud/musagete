@@ -72,9 +72,9 @@ const CH1 = {
       },
       {
         heading: 'I gradi della scala',
-        body: 'Ogni nota della scala ha un numero, il grado. Il primo grado \u00e8 la tonica, il quinto la dominante. Ragionare per gradi permette di capire la musica in qualsiasi tonalit\u00e0, senza dipendere dai nomi delle note.',
-        remember: '1 = tonica \u00b7 5 = dominante',
-        notes: [n(60, 1, '1'), n(64, 3, '3'), n(67, 5, '5')],
+        body: 'Ogni nota della scala ha un numero, il grado. Il primo grado \u00e8 la tonica, il quarto la sottodominante, il quinto la dominante. Ragionare per gradi permette di capire la musica in qualsiasi tonalit\u00e0, senza dipendere dai nomi delle note.',
+        remember: '1 = tonica \u00b7 4 = sottodominante \u00b7 5 = dominante',
+        notes: [n(60, 1, '1'), n(64, 3, '3'), n(65, 4, '4'), n(67, 5, '5')],
         polly: 'I gradi sono il tuo linguaggio!',
       },
       {
