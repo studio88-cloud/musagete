@@ -1,4 +1,5 @@
 import { DEGREE_COLORS, LETTER_PC } from '../lib/music'
+import { t } from '../lib/i18n'
 
 // Doppio pentagramma (violino sopra, basso sotto) con le note dell'accordo o della scala.
 // Il disegno è in altezza reale (suono reale), uguale per tastiera, chitarra e basso.
@@ -128,7 +129,7 @@ export default function Staff({ notes, base, kind }) {
       className="staff"
       viewBox={`0 0 ${W} ${HEIGHT}`}
       role="img"
-      aria-label={`Spartito: ${notes.map((n) => n.name).join(', ')}`}
+      aria-label={t('Spartito: {v}', { v: notes.map((n) => n.name).join(', ') })}
     >
       <g stroke="#8a7cb0" strokeWidth="1">
         {[...trebleLines, ...bassLines].map((y) => (

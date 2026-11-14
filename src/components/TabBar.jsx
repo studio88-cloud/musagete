@@ -6,6 +6,7 @@ import strumentoOn from '../assets/icons/nav_strumento_active.svg'
 import strumentoOff from '../assets/icons/nav_strumento_normal.svg'
 import profiloOn from '../assets/icons/nav_profilo_active.svg'
 import profiloOff from '../assets/icons/nav_profilo_normal.svg'
+import { t, tc } from '../lib/i18n'
 
 const TABS = [
   { id: 'path', label: 'Percorso', on: percorsoOn, off: percorsoOff },
@@ -16,17 +17,17 @@ const TABS = [
 
 export default function TabBar({ active, onChange }) {
   return (
-    <nav className="tabbar" aria-label="Navigazione principale">
-      {TABS.map((t) => (
+    <nav className="tabbar" aria-label={t('Navigazione principale')}>
+      {TABS.map((tab) => (
         <button
-          key={t.id}
+          key={tab.id}
           type="button"
-          className={`tab${t.id === active ? ' is-active' : ''}`}
-          aria-current={t.id === active ? 'page' : undefined}
-          onClick={() => onChange(t.id)}
+          className={`tab${tab.id === active ? ' is-active' : ''}`}
+          aria-current={tab.id === active ? 'page' : undefined}
+          onClick={() => onChange(tab.id)}
         >
-          <img className="tab-icon" src={t.id === active ? t.on : t.off} alt="" />
-          <span>{t.label}</span>
+          <img className="tab-icon" src={tab.id === active ? tab.on : tab.off} alt="" />
+          <span>{tc('tab', tab.label)}</span>
         </button>
       ))}
     </nav>

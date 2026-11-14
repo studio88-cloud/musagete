@@ -1,3 +1,4 @@
+import { t, tr } from '../lib/i18n'
 export const INSTRUMENTS = [
   { id: 'keyboard', label: 'Tastiera' },
   { id: 'guitar', label: 'Chitarra' },
@@ -7,8 +8,7 @@ export const INSTRUMENTS = [
 export default function InstrumentMenu({ value, onChange }) {
   return (
     <div className="instrument">
-      <label htmlFor="instrument-select" className="sr-only">
-        Strumento
+      <label htmlFor="instrument-select" className="sr-only">{t('Strumento')}
       </label>
       <select
         id="instrument-select"
@@ -17,7 +17,7 @@ export default function InstrumentMenu({ value, onChange }) {
       >
         {INSTRUMENTS.map((i) => (
           <option key={i.id} value={i.id}>
-            {i.label}
+            {tr(i.label)}
           </option>
         ))}
       </select>

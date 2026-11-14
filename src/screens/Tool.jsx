@@ -10,6 +10,7 @@ import { SCALE_GROUPS, findScale } from '../data/scales'
 import { baseMidi, DEGREE_COLORS, spellNotes, TONICS, tonicName } from '../lib/music'
 import { scrollXFor } from '../lib/keys'
 import { playNotes, stopPlaying } from '../lib/audio'
+import { loc, t, tr } from '../lib/i18n'
 
 const KEY = 'musagete:tool'
 const DEFAULTS = { tonic: 'C', kind: 'chord', type: 'maj', mode: 'degrees', legend: true, staff: true }
@@ -57,7 +58,7 @@ function Row({ selected, onClick, children }) {
 
 function TonicPanel({ value, kind, onPick }) {
   return (
-    <div className="panel panel-tonic" role="listbox" aria-label="Tonica">
+    <div className="panel panel-tonic" role="listbox" aria-label={t('Tonica')}>
       {TONICS.map((t) => (
         <Row key={t.id} selected={t.id === value} onClick={() => onPick(t.id)}>
           {tonicName(t, kind)}
@@ -80,7 +81,7 @@ const norm = (t) =>
 function TypePanel({ kind, type, tab, onTab, onPick }) {
   const [query, setQuery] = useState('')
   const needle = norm(query.trim())
-  const source = tab === 'chord' ? CHORD_GROUPS : SCALE_GROUPS
+  const source = loc(tab === 'chord' ? CHORD_GROUPS : SCALE_GROUPS)
   const groups = source
     .map((g) => ({ ...g, items: needle ? g.items.filter((it) => norm(it.name).includes(needle)) : g.items }))
     .filter((g) => g.items.length > 0)
@@ -91,24 +92,22 @@ function TypePanel({ kind, type, tab, onTab, onPick }) {
   }
 
   return (
-    <div className="panel panel-type" role="listbox" aria-label="Tipo">
+    <div className="panel panel-type" role="listbox" aria-label={t('Tipo')}>
       <div className="seg seg-small" role="group">
-        <button type="button" className={tab === 'chord' ? 'is-on' : ''} onClick={() => changeTab('chord')}>
-          Accordi
+        <button type="button" className={tab === 'chord' ? 'is-on' : ''} onClick={() => changeTab('chord')}>{t('Accordi')}
         </button>
-        <button type="button" className={tab === 'scale' ? 'is-on' : ''} onClick={() => changeTab('scale')}>
-          Scale
+        <button type="button" className={tab === 'scale' ? 'is-on' : ''} onClick={() => changeTab('scale')}>{t('Scale')}
         </button>
       </div>
       <input
         type="search"
         className="pick-search"
-        placeholder={tab === 'chord' ? 'Cerca un accordo' : 'Cerca una scala'}
-        aria-label={tab === 'chord' ? 'Cerca un accordo' : 'Cerca una scala'}
+        placeholder={tab === 'chord' ? t('Cerca un accordo') : t('Cerca una scala')}
+        aria-label={tab === 'chord' ? t('Cerca un accordo') : t('Cerca una scala')}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      {groups.length === 0 && <p className="pick-empty">Nessun risultato per “{query}”</p>}
+      {groups.length === 0 && <p className="pick-empty">{t('Nessun risultato per “{query}”', { query })}</p>}
       {groups.map((g) => (
         <div key={g.title}>
           <h3 className="pick-title">{g.title}</h3>
@@ -187,22 +186,20 @@ export default function Tool({ instrument }) {
           <span className="pill-arrow">{menu === 'tonic' ? '▴' : '▾'}</span>
         </button>
         <button type="button" className="pill pill-type" onClick={() => toggleMenu('type')} aria-haspopup="listbox" aria-expanded={menu === 'type'}>
-          <span className={`pill-text${def.name.length > 10 ? ' is-long' : ''}`}>{def.name}</span>
+          <span className={`pill-text${def.name.length > 10 ? ' is-long' : ''}`}>{tr(def.name)}</span>
           <span className="pill-arrow">{menu === 'type' ? '▴' : '▾'}</span>
         </button>
-        <button type="button" className="play" onClick={togglePlay} aria-label={playing ? 'Ferma' : 'Ascolta'}>
+        <button type="button" className="play" onClick={togglePlay} aria-label={playing ? t('Ferma') : t('Ascolta')}>
           <PlayIcon playing={playing} />
         </button>
       </div>
 
       <p className="tool-notes">{notes.map((n) => n.name.toUpperCase()).join(' — ')}</p>
 
-      <div className="seg" role="group" aria-label="Cosa mostrare nei pallini">
-        <button type="button" className={st.mode === 'degrees' ? 'is-on' : ''} onClick={() => update({ mode: 'degrees' })}>
-          Gradi
+      <div className="seg" role="group" aria-label={t('Cosa mostrare nei pallini')}>
+        <button type="button" className={st.mode === 'degrees' ? 'is-on' : ''} onClick={() => update({ mode: 'degrees' })}>{t('Gradi')}
         </button>
-        <button type="button" className={st.mode === 'notes' ? 'is-on' : ''} onClick={() => update({ mode: 'notes' })}>
-          Note
+        <button type="button" className={st.mode === 'notes' ? 'is-on' : ''} onClick={() => update({ mode: 'notes' })}>{t('Note')}
         </button>
       </div>
 
@@ -217,7 +214,7 @@ export default function Tool({ instrument }) {
 
       <div className="legend staff-card">
         <button type="button" className="legend-head" onClick={() => update({ staff: !st.staff })} aria-expanded={st.staff}>
-          <span>SPARTITO</span>
+          <span>{t('SPARTITO')}</span>
           <span aria-hidden="true">{st.staff ? '▴' : '▾'}</span>
         </button>
         {st.staff && (
@@ -231,7 +228,7 @@ export default function Tool({ instrument }) {
 
       <div className="legend">
         <button type="button" className="legend-head" onClick={() => update({ legend: !st.legend })} aria-expanded={st.legend}>
-          <span>LEGENDA GRADI</span>
+          <span>{t('LEGENDA GRADI')}</span>
           <span aria-hidden="true">{st.legend ? '▴' : '▾'}</span>
         </button>
         {st.legend && (
@@ -241,7 +238,7 @@ export default function Tool({ instrument }) {
                 <span className="dot dot-small" style={{ background: DEGREE_COLORS[deg].bg, color: DEGREE_COLORS[deg].ink }}>
                   {deg}
                 </span>
-                {label}
+                {tr(label)}
               </li>
             ))}
           </ul>
@@ -251,7 +248,7 @@ export default function Tool({ instrument }) {
       <div className="report-wrap">
         <ReportButton
           variant="link"
-          context={`Strumento: ${tonicName(root, st.kind)} ${def.name}, ${INSTRUMENT_LABELS[instrument]}`}
+          context={t('Strumento: {kind} {name}, {instrument}', { kind: tonicName(root, st.kind), name: tr(def.name), instrument: tr(INSTRUMENT_LABELS[instrument]) })}
         />
       </div>
 

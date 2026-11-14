@@ -1,7 +1,13 @@
 // Motore delle note: grafia corretta (Mi♭, Do♯...), gradi e colori.
 
 export const LETTER_PC = [0, 2, 4, 5, 7, 9, 11] // C D E F G A B
-export const IT_NAMES = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si']
+const SOLFEGE = ['Do', 'Re', 'Mi', 'Fa', 'Sol', 'La', 'Si']
+const LETTERS = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
+// Nomi delle note in uso: solfeggio o lettere. L'array si aggiorna sul posto, così chi lo usa vede sempre quelli giusti.
+export const IT_NAMES = [...SOLFEGE]
+export const setNoteStyle = (style) => (style === 'letters' ? LETTERS : SOLFEGE).forEach((n, i) => (IT_NAMES[i] = n))
+// converte un nome o una breve serie di note scritte in solfeggio (Do, Fa♯, Si♭…) nello stile in uso
+export const nn = (s) => s.replace(/\b(Do|Re|Mi|Fa|Sol|La|Si)(?![A-Za-zÀ-ÿ])/g, (m) => IT_NAMES[SOLFEGE.indexOf(m)])
 
 // Le 17 toniche del menu (nome con lettere, come nel mockup)
 export const TONICS = [

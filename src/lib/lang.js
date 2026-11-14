@@ -33,6 +33,16 @@ const write = (key, value) => {
   }
 }
 
+// anteprima: aggiungendo ?lang=en all'indirizzo si vede una lingua anche se non è ancora attiva per tutti
+export const previewLang = () => {
+  try {
+    const v = new URLSearchParams(window.location.search).get('lang')
+    return LANGUAGES.some((l) => l.id === v) ? v : null
+  } catch {
+    return null
+  }
+}
+
 export const savedLang = () => {
   const v = read(LANG_KEY)
   return LANGUAGES.some((l) => l.id === v && l.ready) ? v : null
@@ -48,8 +58,8 @@ export const resolveNoteStyle = (style, lang) =>
   style === 'solfege' || style === 'letters' ? style : SOLFEGE_LANGS.includes(lang) ? 'solfege' : 'letters'
 
 export function useLang() {
-  const [lang, setLangState] = useState(() => savedLang() || deviceLang())
-  const [chosen, setChosen] = useState(() => Boolean(savedLang()))
+  const [lang, setLangState] = useState(() => previewLang() || savedLang() || deviceLang())
+  const [chosen, setChosen] = useState(() => Boolean(previewLang() || savedLang()))
   const [noteStyle, setNoteStyleState] = useState(() => {
     const v = read(NOTES_KEY)
     return NOTE_STYLES.includes(v) ? v : 'auto'

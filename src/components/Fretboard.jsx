@@ -1,4 +1,5 @@
 import { DEGREE_COLORS } from '../lib/music'
+import { t } from '../lib/i18n'
 
 // Accordatura standard, dalla corda più acuta (in alto) alla più grave (in basso). Note MIDI.
 const STRINGS = {
@@ -179,7 +180,7 @@ export default function Fretboard({ instrument, highlights, mode, firstPosition 
   const names = [...highlights.values()].map((n) => n.name).join(', ')
 
   return (
-    <svg className="fb" viewBox={`0 0 ${WIDTH} ${height}`} role="img" aria-label={`Manico di ${LABELS[instrument]}, note: ${names}`}>
+    <svg className="fb" viewBox={`0 0 ${WIDTH} ${height}`} role="img" aria-label={t('Manico di {instrument}, note: {names}', { instrument: t(LABELS[instrument]), names })}>
       {labels.map((n) => (
         <text key={`n${n}`} className="fb-num" x={noteX(n)} y={14} textAnchor="middle">
           {ROMAN[n]}

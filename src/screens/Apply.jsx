@@ -5,6 +5,7 @@ import ReadStaff from '../components/ReadStaff'
 import { Results } from './Quiz'
 import { applyFor, midiOfStep } from '../data/apply'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
+import { loc, t, tr } from '../lib/i18n'
 
 const XP_PER_ANSWER = 10
 
@@ -15,12 +16,12 @@ function BackArrow() {
     </svg>
   )
 }
-const joinIt = (a) => (a.length > 1 ? `${a.slice(0, -1).join(', ')} e ${a[a.length - 1]}` : a[0])
+const joinIt = (a) => (a.length > 1 ? t('{list} e {last}', { list: a.slice(0, -1).join(', '), last: a[a.length - 1] }) : a[0])
 const shiftFor = instrumentShift
 
 // Modello C · Applica (provvisorio): C1 percorri una progressione, C2 armonizza una melodia
 export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer, onDone, onExit }) {
-  const list = applyFor(chapter)
+  const list = loc(applyFor(chapter))
   const [n, setN] = useState(0) // esercizio
   const [c, setC] = useState(0) // accordo corrente (C1)
   const [selected, setSelected] = useState([])
@@ -55,7 +56,7 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
       seconds,
       xp: corr * XP_PER_ANSWER,
       passed: true,
-      sub: q.kind === 'harm' ? `Hai scelto l’accordo giusto in ${corr} battute su ${tot}.` : q.scale ? `Hai suonato subito la scala giusta in ${corr} casi su ${tot}.` : `Hai suonato subito l’accordo giusto in ${corr} casi su ${tot}.`,
+      sub: q.kind === 'harm' ? t('Hai scelto l’accordo giusto in {corr} battute su {tot}.', { corr, tot }) : q.scale ? t('Hai suonato subito la scala giusta in {corr} casi su {tot}.', { corr, tot }) : t('Hai suonato subito l’accordo giusto in {corr} casi su {tot}.', { corr, tot }),
     })
   }
   const nextExercise = (corr, tot) => {
@@ -88,14 +89,14 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
 
   const header = (progress, label) => (
     <header className="steps-head">
-      <button type="button" className="steps-icbtn" aria-label="Esci" onClick={() => setAskExit(true)}>
+      <button type="button" className="steps-icbtn" aria-label={t('Esci')} onClick={() => setAskExit(true)}>
         <BackArrow />
       </button>
       <div className="steps-titlebox">
         <h1 className="steps-title">{`${step.id}. ${step.title}`}</h1>
         <div className="steps-progress">
           <span className="steps-count">{label}</span>
-          <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)} aria-label="Avanzamento">
+          <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)} aria-label={t('Avanzamento')}>
             <div className="steps-bar-fill" style={{ width: `${progress * 100}%` }} />
           </div>
         </div>
@@ -156,26 +157,26 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
       setResult(null)
       setAttempted(false)
     }
-    const detail = joinIt(ch.expected.map((e) => `${q.scale ? `grado ${e.label}` : e.role} (${e.name})`))
+    const detail = joinIt(ch.expected.map((e) => `${q.scale ? t('grado {label}', { label: e.label }) : tr(e.role)} (${e.name})`))
     const fb = result?.ok
-      ? `Ottimo! ${ch.name}: ${detail}.${ch.why ? ` ${ch.why}` : ''}`
+      ? t('Ottimo! {name}: {detail}.{v}', { name: ch.name, detail, v: ch.why ? ` ${ch.why}` : '' })
       : result && !result.bassOk
-        ? `Le note ci sono, ma la più bassa deve essere ${ch.expected.find((e) => e.pc === ch.bassPc).name}.`
+        ? t('Le note ci sono, ma la più bassa deve essere {name}.', { name: ch.expected.find((e) => e.pc === ch.bassPc).name })
         : result
-          ? `Non proprio. ${ch.name}: ${detail}.${ch.why ? ` ${ch.why}` : ''}`
+          ? t('Non proprio. {name}: {detail}.{v}', { name: ch.name, detail, v: ch.why ? ` ${ch.why}` : '' })
           : ''
 
     return (
       <section className="lesson" aria-label={`${step.id}. ${step.title}`}>
-        {header((c + (result ? 1 : 0)) / q.chords.length, `${q.scale ? 'Scala' : 'Accordo'} ${c + 1} di ${q.chords.length}`)}
+        {header((c + (result ? 1 : 0)) / q.chords.length, t('{kind} {n} di {total}', { kind: q.scale ? t('Scala') : t('Accordo'), n: c + 1, total: q.chords.length }))}
         <article className="lesson-card bld apl">
           <h2 className="bld-q">{q.prompt}</h2>
 
-          <div className="apl-row" role="list" aria-label={q.scale ? 'Scale' : 'Progressione'}>
+          <div className="apl-row" role="list" aria-label={q.scale ? t('Scale') : t('Progressione')}>
             {q.chords.map((x, k) => {
               const st = k < c || (k === c && result?.ok) ? (done[k] === false ? 'miss' : 'done') : k === c ? 'now' : 'todo'
               return (
-                <span key={k} className={`apl-chip is-${st}`} role="listitem" aria-current={k === c ? 'step' : undefined} aria-label={x.fn ? `${x.sym}, ${x.fn} grado` : x.sym}>
+                <span key={k} className={`apl-chip is-${st}`} role="listitem" aria-current={k === c ? 'step' : undefined} aria-label={x.fn ? t('{sym}, {fn} grado', { sym: x.sym, fn: x.fn }) : x.sym}>
                   {x.sym}
                 </span>
               )
@@ -188,14 +189,13 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
 
           <div className="apl-meta">
             <div className="apl-count">
-              <span className="apl-pill" aria-live="polite">{`${pcs.size}/${need} Note`}</span>
-              <span className="apl-hint">{`Tocca ${need} note`}</span>
+              <span className="apl-pill" aria-live="polite">{t('{size}/{need} Note', { size: pcs.size, need })}</span>
+              <span className="apl-hint">{t('Tocca {need} note', { need })}</span>
             </div>
-            <button type="button" className="apl-btn" onClick={() => { stopPlaying(); setSelected([]); setResult(null) }} disabled={selected.length === 0}>
-              Azzera
+            <button type="button" className="apl-btn" onClick={() => { stopPlaying(); setSelected([]); setResult(null) }} disabled={selected.length === 0}>{t('Azzera')}
             </button>
             <button type="button" className="apl-btn" onClick={() => (q.scale ? listen([ch.midis], true) : listen(q.chords.map((x) => x.midis)))}>
-              {playing ? 'Ferma' : 'Ascolta'}
+              {playing ? t('Ferma') : t('Ascolta')}
             </button>
           </div>
 
@@ -206,20 +206,18 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
           )}
 
           {!result ? (
-            <button type="button" className="btn btn-primary quiz-check" disabled={!ready} onClick={check}>
-              Verifica
+            <button type="button" className="btn btn-primary quiz-check" disabled={!ready} onClick={check}>{t('Verifica')}
             </button>
           ) : result.ok ? (
             <button ref={btnRef} type="button" className="btn btn-primary quiz-check" onClick={next}>
-              {last ? 'Vedi il risultato' : q.scale ? 'Scala successiva' : 'Accordo successivo'}
+              {last ? t('Vedi il risultato') : q.scale ? t('Scala successiva') : t('Accordo successivo')}
             </button>
           ) : (
             <div className="sheet-btns bld-btns">
-              <button ref={btnRef} type="button" className="btn btn-primary" onClick={retry}>
-                Riprova
+              <button ref={btnRef} type="button" className="btn btn-primary" onClick={retry}>{t('Riprova')}
               </button>
               <button type="button" className="btn btn-secondary" onClick={next}>
-                {last ? 'Vedi il risultato' : 'Continua'}
+                {last ? t('Vedi il risultato') : t('Continua')}
               </button>
             </div>
           )}
@@ -270,21 +268,21 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
   }
   const fb = result
     ? result.ok
-      ? `Ottimo! ${q.why.join(' ')}`
-      : `Non proprio. ${q.answer.map((a, i) => `Battuta ${i + 1}: ${q.options[a].name}. ${q.why[i]}`).join(' ')}`
+      ? t('Ottimo! {v}', { v: q.why.join(' ') })
+      : t('Non proprio. {v}', { v: q.answer.map((a, i) => t('Battuta {n}: {name}. {why}', { n: i + 1, name: q.options[a].name, why: q.why[i] })).join(' ') })
     : ''
 
   return (
     <section className="lesson" aria-label={`${step.id}. ${step.title}`}>
-      {header(result ? 1 : choices.filter((x) => x != null).length / bars, `${bars} battute`)}
+      {header(result ? 1 : choices.filter((x) => x != null).length / bars, t('{bars} battute', { bars }))}
       <article className="lesson-card bld apl">
         <h2 className="bld-q">{q.prompt}</h2>
-        <ReadStaff items={q.melody} label={`Melodia: ${q.melody.map((m) => m.label).join(', ')}`} />
+        <ReadStaff items={q.melody} label={t('Melodia: {v}', { v: q.melody.map((m) => m.label).join(', ') })} />
         <div className="apl-bars">
           {q.answer.map((_, bar) => (
             <div key={bar} className="apl-bar">
-              <span className="apl-barlbl">{`Battuta ${bar + 1} · ${q.melody[bar * 2].label}, ${q.melody[bar * 2 + 1].label}`}</span>
-              <div className="apl-opts" role="radiogroup" aria-label={`Accordo per la battuta ${bar + 1}`}>
+              <span className="apl-barlbl">{t('Battuta {v} · {label}, {label2}', { v: bar + 1, label: q.melody[bar * 2].label, label2: q.melody[bar * 2 + 1].label })}</span>
+              <div className="apl-opts" role="radiogroup" aria-label={t('Accordo per la battuta {n}', { n: bar + 1 })}>
                 {q.options.map((o, k) => {
                   const on = choices[bar] === k
                   const st = result ? (on ? (result.per[bar] ? ' is-ok' : ' is-bad') : q.answer[bar] === k && !result.per[bar] ? ' is-want' : '') : on ? ' is-on' : ''
@@ -302,10 +300,9 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
 
         <div className="bld-tools">
           <button type="button" className="bld-link" onClick={listenMelody} disabled={choices.every((x) => x == null)}>
-            {playing ? 'Ferma' : 'Ascolta'}
+            {playing ? t('Ferma') : t('Ascolta')}
           </button>
-          <button type="button" className="bld-link" onClick={() => { stopPlaying(); setChoices([]); setResult(null) }} disabled={choices.length === 0 || Boolean(result)}>
-            Azzera
+          <button type="button" className="bld-link" onClick={() => { stopPlaying(); setChoices([]); setResult(null) }} disabled={choices.length === 0 || Boolean(result)}>{t('Azzera')}
           </button>
         </div>
 
@@ -316,12 +313,10 @@ export default function Apply({ chapter, step, instrument = 'keyboard', onAnswer
         )}
 
         {!result ? (
-          <button type="button" className="btn btn-primary quiz-check" disabled={!full} onClick={check}>
-            Verifica
+          <button type="button" className="btn btn-primary quiz-check" disabled={!full} onClick={check}>{t('Verifica')}
           </button>
         ) : (
-          <button ref={btnRef} type="button" className="btn btn-primary quiz-check" onClick={() => nextExercise(correct, total)}>
-            Vedi il risultato
+          <button ref={btnRef} type="button" className="btn btn-primary quiz-check" onClick={() => nextExercise(correct, total)}>{t('Vedi il risultato')}
           </button>
         )}
       </article>

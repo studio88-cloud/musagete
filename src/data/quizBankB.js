@@ -1,4 +1,5 @@
 // Banca di domande dei quiz finali, capitoli 10–19 (vedi quizBankA.js).
+import { t, tr } from '../lib/i18n'
 import { gen, Q, rnd, names, spell, sol, letterOf, noteWrongs, ROOTS, MAJOR_KEYS, MINOR_KEYS } from './quizGen'
 
 // sesta napoletana: ♭II maggiore (♭2 4 ♭6), nella tonalità minore o maggiore
@@ -7,33 +8,33 @@ const napolitan = () => {
   const sp = names(k, '♭2 4 ♭6')
   const ans = sp.join(' – ')
   const alt = (i) => { const c = [...sp]; c[i] = rnd(noteWrongs(c[i]).slice(0, 3)); return c.join(' – ') }
-  return Q(`In ${sol(k)} maggiore, da quali note è formata la sesta napoletana?`, ans, [alt(0), alt(1), alt(2), alt(0)], `La sesta napoletana è il ♭II maggiore (♭2 – 4 – ♭6): in ${sol(k)} è ${ans}, di solito in primo rivolto.`)
+  return Q(t('In {key} maggiore, da quali note è formata la sesta napoletana?', { key: sol(k) }), ans, [alt(0), alt(1), alt(2), alt(0)], t('La sesta napoletana è il ♭II maggiore (♭2 – 4 – ♭6): in {key} è {answer}, di solito in primo rivolto.', { key: sol(k), answer: ans }))
 }
 const germanSixth = () => {
   const k = rnd(['C', 'G', 'D', 'F', 'B♭', 'A', 'E', 'E♭'])
   const sp = names(k, '♭6 1 ♭3 ♯4')
   const ans = sp.join(' – ')
   const alt = (i) => { const c = [...sp]; c[i] = rnd(noteWrongs(c[i]).slice(0, 3)); return c.join(' – ') }
-  return Q(`In ${sol(k)}, da quali note è formata la sesta tedesca (♭6 – 1 – ♭3 – ♯4)?`, ans, [alt(0), alt(1), alt(2), alt(3)], `La sesta tedesca contiene ♭6, 1, ♭3 e ♯4: in ${sol(k)} sono ${ans}.`)
+  return Q(t('In {key}, da quali note è formata la sesta tedesca (♭6 – 1 – ♭3 – ♯4)?', { key: sol(k) }), ans, [alt(0), alt(1), alt(2), alt(3)], t('La sesta tedesca contiene ♭6, 1, ♭3 e ♯4: in {key} sono {answer}.', { key: sol(k), answer: ans }))
 }
 const italianSixth = () => {
   const k = rnd(['C', 'G', 'D', 'F', 'B♭', 'A', 'E'])
   const sp = names(k, '♭6 1 ♯4')
   const ans = sp.join(' – ')
   const alt = (i) => { const c = [...sp]; c[i] = rnd(noteWrongs(c[i]).slice(0, 3)); return c.join(' – ') }
-  return Q(`In ${sol(k)}, da quali note è formata la sesta italiana (♭6 – 1 – ♯4)?`, ans, [alt(0), alt(1), alt(2), alt(1)], `La sesta italiana ha solo tre note: ♭6, 1 e ♯4. In ${sol(k)}: ${ans}.`)
+  return Q(t('In {key}, da quali note è formata la sesta italiana (♭6 – 1 – ♯4)?', { key: sol(k) }), ans, [alt(0), alt(1), alt(2), alt(1)], t('La sesta italiana ha solo tre note: ♭6, 1 e ♯4. In {key}: {answer}.', { key: sol(k), answer: ans }))
 }
 // II–V in tonalità maggiore e II–V–I minore
 const iiV = () => {
   const k = rnd(MAJOR_KEYS)
   const L = (i) => letterOf(names(k, '1 2 3 4 5 6 7')[i])
-  return Q(`Qual è il II–V di ${sol(k)} maggiore?`, `${L(1)}m7 – ${L(4)}7`, [`${L(1)}7 – ${L(4)}m7`, `${L(3)}m7 – ${L(4)}7`, `${L(1)}m7 – ${L(3)}7`], `Il II–V porta al I: ${L(1)}m7 – ${L(4)}7 → ${L(0)}Δ.`)
+  return Q(t('Qual è il II–V di {key} maggiore?', { key: sol(k) }), `${L(1)}m7 – ${L(4)}7`, [`${L(1)}7 – ${L(4)}m7`, `${L(3)}m7 – ${L(4)}7`, `${L(1)}m7 – ${L(3)}7`], t('Il II–V porta al I: {ii}m7 – {v}7 → {i}Δ.', { ii: L(1), v: L(4), i: L(0) }))
 }
 const minorIiVI = () => {
   const k = rnd(MINOR_KEYS)
   const L = (i) => letterOf(names(k, '1 2 ♭3 4 5 ♭6 ♭7')[i])
   const ans = `${L(1)}ø7 – ${L(4)}7 – ${L(0)}m7`
-  return Q(`Qual è il II–V–I in ${sol(k)} minore?`, ans, [`${L(1)}m7 – ${L(4)}7 – ${L(0)}m7`, `${L(1)}ø7 – ${L(4)}m7 – ${L(0)}m7`, `${L(1)}ø7 – ${L(4)}7 – ${L(0)}Δ`, `${L(1)}7 – ${L(4)}7 – ${L(0)}m7`], `In minore il II è semidiminuito: ${ans}.`)
+  return Q(t('Qual è il II–V–I in {key} minore?', { key: sol(k) }), ans, [`${L(1)}m7 – ${L(4)}7 – ${L(0)}m7`, `${L(1)}ø7 – ${L(4)}m7 – ${L(0)}m7`, `${L(1)}ø7 – ${L(4)}7 – ${L(0)}Δ`, `${L(1)}7 – ${L(4)}7 – ${L(0)}m7`], t('In minore il II è semidiminuito: {answer}.', { answer: ans }))
 }
 
 export const BANK_B = {

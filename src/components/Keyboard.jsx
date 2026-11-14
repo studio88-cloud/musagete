@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { BLACK_H, BLACK_W, KEYS, TOTAL_W, WHITE_H, WHITE_W } from '../lib/keys'
 import { DEGREE_COLORS } from '../lib/music'
+import { IT_NAMES } from '../lib/music'
 
 function Dot({ note, mode }) {
   const c = DEGREE_COLORS[note.deg]
@@ -37,7 +38,7 @@ export default function Keyboard({ highlights, mode, scrollReq, onView }) {
       <div className="kb" style={{ width: TOTAL_W, height: WHITE_H + 24 }}>
         {KEYS.filter((k) => k.midi % 12 === 0).map((k) => (
           <span key={`l${k.midi}`} className="kb-label" style={{ left: k.x + 4 }}>
-            Do{Math.floor(k.midi / 12) - 1}
+            {IT_NAMES[0]}{Math.floor(k.midi / 12) - 1}
           </span>
         ))}
         {KEYS.filter((k) => k.white).map((k) => {

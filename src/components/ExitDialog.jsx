@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import iconWarn from '../assets/icons/icn_avviso.svg'
+import { t } from '../lib/i18n'
 
 // Finestra di conferma all'uscita da una lezione o da un esercizio.
 // Il tocco fuori dalla finestra e il tasto Esc equivalgono a "Continua".
@@ -43,15 +44,12 @@ export default function ExitDialog({ onStay, onLeave }) {
         onClick={(e) => e.stopPropagation()}
       >
         <img className="dlg-icon" src={iconWarn} alt="" width="52" height="52" />
-        <h2 id="dlg-title" className="dlg-title">Vuoi davvero uscire?</h2>
-        <p id="dlg-text" className="dlg-text">
-          I progressi di questa sessione non verranno salvati se esci ora.
+        <h2 id="dlg-title" className="dlg-title">{t('Vuoi davvero uscire?')}</h2>
+        <p id="dlg-text" className="dlg-text">{t('I progressi di questa sessione non verranno salvati se esci ora.')}
         </p>
-        <button ref={stayRef} type="button" className="btn btn-primary" onClick={onStay}>
-          Continua la lezione
+        <button ref={stayRef} type="button" className="btn btn-primary" onClick={onStay}>{t('Continua la lezione')}
         </button>
-        <button type="button" className="btn btn-secondary dlg-leave" onClick={onLeave}>
-          Esci e perdi i progressi
+        <button type="button" className="btn btn-secondary dlg-leave" onClick={onLeave}>{t('Esci e perdi i progressi')}
         </button>
       </div>
     </div>

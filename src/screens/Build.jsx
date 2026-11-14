@@ -4,6 +4,7 @@ import BuildInstrument from '../components/BuildInstrument'
 import { Results } from './Quiz'
 import { buildFor } from '../data/build'
 import { playNotes, stopPlaying } from '../lib/audio'
+import { loc, t, tr } from '../lib/i18n'
 
 const XP_PER_ANSWER = 10
 
@@ -17,7 +18,7 @@ function BackArrow() {
 
 // Modello A · Costruisci: l'utente tocca le note sullo strumento
 export default function Build({ chapter, step, instrument = 'keyboard', onAnswer, onDone, onExit }) {
-  const list = buildFor(chapter)
+  const list = loc(buildFor(chapter))
   const total = list.length
   const [i, setI] = useState(0)
   const [selected, setSelected] = useState([]) // [{ id, midi }]
@@ -107,7 +108,7 @@ export default function Build({ chapter, step, instrument = 'keyboard', onAnswer
       seconds,
       xp: correct * XP_PER_ANSWER,
       passed: true,
-      sub: `Hai trovato subito le note giuste in ${correct} esercizi su ${total}.`,
+      sub: t('Hai trovato subito le note giuste in {correct} esercizi su {total}.', { correct, total }),
     })
   }
 
@@ -117,28 +118,28 @@ export default function Build({ chapter, step, instrument = 'keyboard', onAnswer
 
   const names = q.expected.map((e) => e.name).join(', ')
   // fino a 5 note si dice il ruolo di ciascuna (fondamentale, terza…), per le scale si elencano i nomi
-  const joinIt = (a) => (a.length > 1 ? `${a.slice(0, -1).join(', ')} e ${a[a.length - 1]}` : a[0])
-  const detail = q.expected.length <= 5 ? joinIt(q.expected.map((e) => `${e.role} (${e.name})`)) : names
+  const joinIt = (a) => (a.length > 1 ? t('{list} e {last}', { list: a.slice(0, -1).join(', '), last: a[a.length - 1] }) : a[0])
+  const detail = q.expected.length <= 5 ? joinIt(q.expected.map((e) => `${tr(e.role)} (${e.name})`)) : names
   const feedback = result?.ok
-    ? `Ottimo! ${q.name}: ${detail}.${q.why ? ` ${q.why}` : ''}`
+    ? t('Ottimo! {name}: {detail}.{v}', { name: q.name, detail, v: q.why ? ` ${q.why}` : '' })
     : result && !result.bassOk
-      ? `Le note ci sono, ma il basso non è giusto: la nota più bassa deve essere ${q.expected.find((e) => e.pc === q.bassPc).name}.`
+      ? t('Le note ci sono, ma il basso non è giusto: la nota più bassa deve essere {name}.', { name: q.expected.find((e) => e.pc === q.bassPc).name })
       : result
-        ? `Non proprio. ${q.name}: ${detail}.${q.why ? ` ${q.why}` : ''}`
+        ? t('Non proprio. {name}: {detail}.{v}', { name: q.name, detail, v: q.why ? ` ${q.why}` : '' })
         : ''
   const helpPc = help && !result ? q.expected[0].pc : null
 
   return (
     <section className="lesson" aria-label={`${step.id}. ${step.title}`}>
       <header className="steps-head">
-        <button type="button" className="steps-icbtn" aria-label="Esci" onClick={() => setAskExit(true)}>
+        <button type="button" className="steps-icbtn" aria-label={t('Esci')} onClick={() => setAskExit(true)}>
           <BackArrow />
         </button>
         <div className="steps-titlebox">
           <h1 className="steps-title">{`${step.id}. ${step.title}`}</h1>
           <div className="steps-progress">
-            <span className="steps-count">{`Esercizio ${i + 1} di ${total}`}</span>
-            <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label="Avanzamento">
+            <span className="steps-count">{t('Esercizio {n} di {total}', { n: i + 1, total })}</span>
+            <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label={t('Avanzamento')}>
               <div className="steps-bar-fill" style={{ width: `${((i + 1) / total) * 100}%` }} />
             </div>
           </div>
@@ -147,23 +148,21 @@ export default function Build({ chapter, step, instrument = 'keyboard', onAnswer
 
       <article className="lesson-card bld">
         <h2 className="bld-q">{q.prompt}</h2>
-        <p className="bld-sub">{`Tocca ${need} ${need === 1 ? 'nota' : 'note'}`}</p>
-        <p className={`bld-count${over ? ' is-over' : ''}`} aria-live="polite">{`${count}/${need} Note`}</p>
+        <p className="bld-sub">{need === 1 ? t('Tocca {need} nota', { need }) : t('Tocca {need} note', { need })}</p>
+        <p className={`bld-count${over ? ' is-over' : ''}`} aria-live="polite">{t('{count}/{need} Note', { count, need })}</p>
 
         <div className="bld-panel">
           <BuildInstrument instrument={instrument} selected={selected} onTap={tap} result={result} helpPc={helpPc} />
         </div>
 
         <div className="bld-tools">
-          <button type="button" className="bld-link" onClick={reset} disabled={selected.length === 0}>
-            Azzera
+          <button type="button" className="bld-link" onClick={reset} disabled={selected.length === 0}>{t('Azzera')}
           </button>
-          <button type="button" className="bld-link" onClick={() => setHelp(true)} disabled={help || Boolean(result)}>
-            Aiuto
+          <button type="button" className="bld-link" onClick={() => setHelp(true)} disabled={help || Boolean(result)}>{t('Aiuto')}
           </button>
         </div>
 
-        {help && !result && <p className="bld-help" role="status">{`Aiuto: parti da ${q.expected[0].name}${q.expected[0].role ? `, la ${q.expected[0].role}` : ''}.`}</p>}
+        {help && !result && <p className="bld-help" role="status">{t('Aiuto: parti da {name}{v}.', { name: q.expected[0].name, v: q.expected[0].role ? t(', la {role}', { role: tr(q.expected[0].role) }) : '' })}</p>}
 
         {result && (
           <div ref={fbRef} className={`bld-fb ${result.ok ? 'is-ok' : 'is-bad'}`} role="status" aria-live="polite">
@@ -172,20 +171,18 @@ export default function Build({ chapter, step, instrument = 'keyboard', onAnswer
         )}
 
         {!result ? (
-          <button type="button" className="btn btn-primary quiz-check" disabled={!ready} onClick={check}>
-            Verifica
+          <button type="button" className="btn btn-primary quiz-check" disabled={!ready} onClick={check}>{t('Verifica')}
           </button>
         ) : result.ok ? (
           <button ref={sheetBtn} type="button" className="btn btn-primary quiz-check" onClick={next}>
-            {i + 1 < total ? 'Continua' : 'Vedi il risultato'}
+            {i + 1 < total ? t('Continua') : t('Vedi il risultato')}
           </button>
         ) : (
           <div className="sheet-btns bld-btns">
-            <button ref={sheetBtn} type="button" className="btn btn-primary" onClick={retry}>
-              Riprova
+            <button ref={sheetBtn} type="button" className="btn btn-primary" onClick={retry}>{t('Riprova')}
             </button>
             <button type="button" className="btn btn-secondary" onClick={next}>
-              {i + 1 < total ? 'Continua' : 'Vedi il risultato'}
+              {i + 1 < total ? t('Continua') : t('Vedi il risultato')}
             </button>
           </div>
         )}

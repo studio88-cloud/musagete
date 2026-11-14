@@ -2,6 +2,7 @@ import StageNode from '../components/StageNode'
 import { CHAPTERS, INTRO } from '../data/chapters'
 import { chapterStatus } from '../lib/progress'
 import pollyCelebrate from '../images/polly-celebrate.webp' // la Polly festante di fine quiz
+import { loc, t, tr } from '../lib/i18n'
 
 const ROW = 210 // altezza di ogni tappa, in px
 const TOP = 24
@@ -11,8 +12,8 @@ const HALF = 44 // metà del diametro della tappa
 
 export default function Path({ completed, onOpen }) {
   const items = [
-    { kind: 'intro', ...INTRO },
-    ...CHAPTERS.map((c) => ({ kind: 'chapter', id: c.n, number: c.n, title: c.title })),
+    { kind: 'intro', ...loc(INTRO) },
+    ...loc(CHAPTERS).map((c) => ({ kind: 'chapter', id: c.n, number: c.n, title: c.title })),
   ]
   const finished = CHAPTERS.every((c) => completed.includes(c.n)) // percorso completato: Polly festeggia in fondo
   const height = TOP + items.length * ROW + 24
@@ -48,7 +49,7 @@ export default function Path({ completed, onOpen }) {
           onOpen={() => onOpen(item)}
         />
       ))}
-      {finished && <img className="path-polly" style={{ top: TOP + (items.length - 1) * ROW + 30 }} src={pollyCelebrate} alt="Polly festeggia: hai completato il percorso!" />}
+      {finished && <img className="path-polly" style={{ top: TOP + (items.length - 1) * ROW + 30 }} src={pollyCelebrate} alt={t('Polly festeggia: hai completato il percorso!')} />}
     </div>
   )
 }

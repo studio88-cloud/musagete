@@ -10,6 +10,7 @@ import { HANDBOOK } from '../data/handbook'
 import { chapterStatus, firstOpen } from '../lib/progress'
 import ReportButton from '../components/ReportButton'
 import { fileToAvatar, loadPhoto, savePhoto } from '../lib/photo'
+import { loc, t, tr } from '../lib/i18n'
 
 const NAME_KEY = 'musagete:name'
 const DEFAULT_NAME = 'Allievo'
@@ -60,7 +61,7 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
   }
 
   const current = firstOpen(completed)
-  const currentTitle = CHAPTERS.find((c) => c.n === current)?.title
+  const currentTitle = loc(CHAPTERS).find((c) => c.n === current)?.title
   const unlockedChapters = completed.length + (current ? 1 : 0)
   const unlockedHandbook = HANDBOOK.filter(
     (e) => chapterStatus(e.chapter, completed) !== 'locked',
@@ -68,9 +69,9 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
 
   return (
     <section className="profile">
-      <button type="button" className="avatar-btn" aria-label="Cambia la foto del profilo" onClick={() => fileRef.current?.click()}>
+      <button type="button" className="avatar-btn" aria-label={t('Cambia la foto del profilo')} onClick={() => fileRef.current?.click()}>
         <span className="avatar">
-          <img src={photo || avatarImg} alt={photo ? 'La tua foto' : 'Avatar di Polly'} />
+          <img src={photo || avatarImg} alt={photo ? t('La tua foto') : t('Avatar di Polly')} />
         </span>
         <span className="avatar-badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,11 +82,10 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
       </button>
       <input ref={fileRef} type="file" accept="image/*" hidden onChange={pickPhoto} />
       {photo && (
-        <button type="button" className="pf-link" onClick={resetPhoto}>
-          Torna a Polly
+        <button type="button" className="pf-link" onClick={resetPhoto}>{t('Torna a Polly')}
         </button>
       )}
-      {photoError && <p className="pf-photo-error">Non riesco a usare questa immagine. Prova con un’altra foto.</p>}
+      {photoError && <p className="pf-photo-error">{t('Non riesco a usare questa immagine. Prova con un’altra foto.')}</p>}
 
       {editing ? (
         <>
@@ -95,22 +95,22 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
             defaultValue={name}
             maxLength={24}
             enterKeyHint="done"
-            aria-label="Il tuo nome"
+            aria-label={t('Il tuo nome')}
             onBlur={(e) => saveName(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') e.currentTarget.blur()
             }}
           />
-          <p className="pf-name-hint">Massimo 24 caratteri. Premi Invio per salvare.</p>
+          <p className="pf-name-hint">{t('Massimo 24 caratteri. Premi Invio per salvare.')}</p>
         </>
       ) : (
-        <button type="button" className="pf-name" onClick={() => setEditing(true)} title="Tocca per modificare">
-          {name}
+        <button type="button" className="pf-name" onClick={() => setEditing(true)} title={t('Tocca per modificare')}>
+          {name === DEFAULT_NAME ? t(DEFAULT_NAME) : name}
         </button>
       )}
 
       <p className="pf-level">
-        {current ? `Sei al capitolo ${current}` : 'Hai completato tutti i capitoli'}
+        {current ? t('Sei al capitolo {current}', { current }) : t('Hai completato tutti i capitoli')}
         {currentTitle && <span>{currentTitle}</span>}
       </p>
 
@@ -118,31 +118,31 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
         <div className="pf-stat">
           <img src={accIcon} alt="" />
           <span className="pf-stat-value is-ok">{formatAccuracy(stats)}</span>
-          <span className="pf-stat-label">Precisione</span>
+          <span className="pf-stat-label">{t('Precisione')}</span>
         </div>
         <div className="pf-stat">
           <img src={timeIcon} alt="" />
           <span className="pf-stat-value is-time">{formatTime(stats.seconds)}</span>
-          <span className="pf-stat-label">Tempo</span>
+          <span className="pf-stat-label">{t('Tempo')}</span>
         </div>
         <div className="pf-stat">
           <img src={xpIcon} alt="" />
           <span className="pf-stat-value is-xp">{formatXp(stats.xp)}</span>
-          <span className="pf-stat-label">XP</span>
+          <span className="pf-stat-label">{t('XP')}</span>
         </div>
       </div>
 
-      {stats.answered === 0 && <p className="pf-hint">Fai il tuo primo quiz e qui compariranno i tuoi progressi</p>}
+      {stats.answered === 0 && <p className="pf-hint">{t('Fai il tuo primo quiz e qui compariranno i tuoi progressi')}</p>}
 
       <div className="pf-mini">
         <div className="pf-mini-card">
-          <span className="pf-mini-label">Voci Prontuario</span>
+          <span className="pf-mini-label">{t('Voci Prontuario')}</span>
           <span className="pf-mini-value">
             {unlockedHandbook} / {HANDBOOK.length}
           </span>
         </div>
         <div className="pf-mini-card">
-          <span className="pf-mini-label">Capitoli sbloccati</span>
+          <span className="pf-mini-label">{t('Capitoli sbloccati')}</span>
           <span className="pf-mini-value">
             {unlockedChapters} / {CHAPTERS.length}
           </span>
@@ -153,10 +153,10 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
         <img src={backpack} alt="" />
         <div>
           <span className="pf-intro-title">
-            {intro ? 'Prima di partire completato' : 'Prima di partire'}
+            {intro ? t('Prima di partire completato') : t('Prima di partire')}
           </span>
           <span className="pf-intro-sub">
-            {intro ? 'Hai completato il modulo facoltativo' : 'Modulo facoltativo, ancora da fare'}
+            {intro ? t('Hai completato il modulo facoltativo') : t('Modulo facoltativo, ancora da fare')}
           </span>
         </div>
       </div>
@@ -166,16 +166,14 @@ export default function Profile({ completed, intro, stats, onCompleteNext, onTog
       </div>
 
       <div className="pf-beta">
-        <p className="muted">Strumenti di prova (solo beta). Tocca il nome per cambiarlo.</p>
+        <p className="muted">{t('Strumenti di prova (solo beta). Tocca il nome per cambiarlo.')}</p>
         <div className="stub-actions">
-          <button type="button" className="btn btn-primary" onClick={onCompleteNext}>
-            Completa il prossimo capitolo
+          <button type="button" className="btn btn-primary" onClick={onCompleteNext}>{t('Completa il prossimo capitolo')}
           </button>
           <button type="button" className="btn btn-secondary" onClick={onToggleIntro}>
-            {intro ? 'Segna "Prima di partire" da fare' : 'Segna "Prima di partire" completato'}
+            {intro ? t('Segna "Prima di partire" da fare') : t('Segna "Prima di partire" completato')}
           </button>
-          <button type="button" className="btn btn-secondary" onClick={onReset}>
-            Azzera i progressi
+          <button type="button" className="btn btn-secondary" onClick={onReset}>{t('Azzera i progressi')}
           </button>
         </div>
       </div>

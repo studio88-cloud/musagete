@@ -18,6 +18,7 @@ import Practice from './screens/Practice'
 import LanguagePicker from './screens/LanguagePicker'
 import Settings from './screens/Settings'
 import { useLang } from './lib/lang'
+import { setNoteStyle } from './lib/music'
 import { applyFor } from './data/apply'
 import Build from './screens/Build'
 import Placement from './screens/Placement'
@@ -28,6 +29,7 @@ import { firstOpen, useProgress } from './lib/progress'
 import { useStepProgress } from './lib/stepProgress'
 import { useStats } from './lib/stats'
 import { preloadSamples } from './lib/audio'
+import { loc, setLocale, t } from './lib/i18n'
 import './screens.css'
 
 const STORAGE_KEY = 'musagete:instrument'
@@ -44,6 +46,8 @@ function loadInstrument() {
 
 export default function App() {
   const langState = useLang()
+  setLocale(langState.lang) // prima del disegno: testi e nomi delle note per la lingua scelta
+  setNoteStyle(langState.notes)
   const [screen, setScreen] = useState(() => (langState.chosen ? 'welcome' : 'language'))
   const [settings, setSettings] = useState(false)
   const [tab, setTab] = useState('path')
@@ -136,7 +140,7 @@ export default function App() {
         onContinue={() => {
           const failed = placeResult === 'fail'
           setPlaceResult(null)
-          if (failed) setOpenItem({ kind: 'intro', ...INTRO })
+          if (failed) setOpenItem({ kind: 'intro', ...loc(INTRO) })
         }}
       />
     )
@@ -144,8 +148,8 @@ export default function App() {
     content = (
       <Quiz
         chapter={0}
-        step={{ title: 'Test iniziale' }}
-        data={PLACEMENT}
+        step={{ title: t('Test iniziale') }}
+        data={loc(PLACEMENT)}
         instrument={instrument}
         skipResults
         onAnswer={addAnswer}
@@ -225,8 +229,8 @@ export default function App() {
         title={openItem.number ? `${openItem.number} ${openItem.title}` : openItem.title}
         text={
           isChapter
-            ? 'In costruzione. Qui comparirà la lista dei passi del capitolo.'
-            : 'In costruzione. Qui comparirà la scheda del prontuario.'
+            ? t('In costruzione. Qui comparirà la lista dei passi del capitolo.')
+            : t('In costruzione. Qui comparirà la scheda del prontuario.')
         }
         onBack={() => setOpenItem(null)}
       />
@@ -268,10 +272,12 @@ export default function App() {
     <div className="app">
       <div className="rotate-lock" role="alert">
         <span aria-hidden="true">⟳</span>
-        <p>Gira il telefono in verticale per usare Musagete</p>
+        <p>{t('Gira il telefono in verticale per usare Musagete')}</p>
       </div>
       <TopBar instrument={instrument} onInstrumentChange={setInstrument} onSettings={() => setSettings(true)} />
-      <main className="screen">{content}</main>
+      <main className="screen" key={`${langState.lang}-${langState.notes}`}>
+        {content}
+      </main>
       <TabBar active={tab} onChange={changeTab} />
     </div>
   )

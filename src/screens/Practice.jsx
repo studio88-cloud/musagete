@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Example } from './HandbookEntry'
 import { practiceFor } from '../data/practice'
 import { CHAPTERS } from '../data/chapters'
+import { loc, t, tr } from '../lib/i18n'
 
 const KEY = 'musagete:practice'
 const load = () => {
@@ -21,8 +22,8 @@ const save = (v) => {
 
 // "In pratica": cosa suonare, come esercitarsi, errori comuni e obiettivi di un capitolo.
 export default function Practice({ chapter, instrument = 'keyboard', onExit }) {
-  const data = practiceFor(chapter)
-  const title = CHAPTERS.find((c) => c.n === chapter)?.title ?? ''
+  const data = loc(practiceFor(chapter))
+  const title = loc(CHAPTERS).find((c) => c.n === chapter)?.title ?? ''
   const [checked, setChecked] = useState(() => load()[chapter] ?? [])
   useEffect(() => {
     window.scrollTo({ top: 0 })
@@ -39,15 +40,15 @@ export default function Practice({ chapter, instrument = 'keyboard', onExit }) {
   return (
     <section className="hbe prac">
       <button type="button" className="ic-back" onClick={onExit}>
-        ‹ Capitolo {chapter}
+        {t('‹ Capitolo {n}', { n: chapter })}
       </button>
-      <h2 className="ic-title">In pratica</h2>
-      <p className="hbe-sub">{`Capitolo ${chapter} · ${title}`}</p>
+      <h2 className="ic-title">{t('In pratica')}</h2>
+      <p className="hbe-sub">{t('Capitolo {chapter} · {title}', { chapter, title })}</p>
 
       <article className="lesson-card">
         <p className="lesson-body">{data.intro}</p>
 
-        <h3 className="prac-h">Suona</h3>
+        <h3 className="prac-h">{t('Suona')}</h3>
         {data.play.map((p) => (
           <div key={p.title} className="prac-item">
             <h4 className="prac-t">{p.title}</h4>
@@ -61,22 +62,22 @@ export default function Practice({ chapter, instrument = 'keyboard', onExit }) {
         <p className="lesson-body">{data.phrase.text}</p>
         {data.phrase.example && <Example ex={data.phrase.example} instrument={instrument} />}
 
-        <h3 className="prac-h">Come esercitarsi</h3>
+        <h3 className="prac-h">{t('Come esercitarsi')}</h3>
         <ol className="prac-list">
           {data.how.map((x) => (
             <li key={x}>{x}</li>
           ))}
         </ol>
 
-        <h3 className="prac-h">Errori comuni</h3>
+        <h3 className="prac-h">{t('Errori comuni')}</h3>
         <ul className="hbe-points">
           {data.mistakes.map((x) => (
             <li key={x}>{x}</li>
           ))}
         </ul>
 
-        <h3 className="prac-h">I tuoi obiettivi</h3>
-        <p className="prac-note">Spunta quello che ti riesce. Resta salvato su questo dispositivo.</p>
+        <h3 className="prac-h">{t('I tuoi obiettivi')}</h3>
+        <p className="prac-note">{t('Spunta quello che ti riesce. Resta salvato su questo dispositivo.')}</p>
         <ul className="prac-goals">
           {data.goals.map((g, i) => (
             <li key={g}>

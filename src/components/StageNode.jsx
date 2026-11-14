@@ -4,6 +4,7 @@ import attuale from '../assets/icons/tappa_attuale_progress.svg'
 import zaino from '../assets/icons/tappa_speciale_zaino.svg'
 import pollyThink from '../images/polly-think.webp'
 import pollyThinkSx from '../images/polly-think-sx.webp' // versione per le tappe a sinistra (disegnata a specchio, con la chiave dritta)
+import { t, tr } from '../lib/i18n'
 
 const RING_RADIUS = 53
 const RING_LENGTH = 2 * Math.PI * RING_RADIUS
@@ -24,7 +25,7 @@ export default function StageNode({ kind, number, title, status, progress = 0, l
         className={`stage-btn is-${state}`}
         disabled={locked}
         onClick={onOpen}
-        aria-label={`${label}, ${STATUS_TEXT[state]}`}
+        aria-label={`${label}, ${tr(STATUS_TEXT[state])}`}
       >
         {state === 'locked' && <img className="stage-img" src={bloccata} alt="" />}
         {state === 'done' && <img className="stage-img" src={completata} alt="" />}
@@ -55,7 +56,7 @@ export default function StageNode({ kind, number, title, status, progress = 0, l
         )}
       </button>
       <p className={`stage-title is-${state}`}>{label}</p>
-      {isIntro && <span className="stage-tag">Facoltativo</span>}
+      {isIntro && <span className="stage-tag">{t('Facoltativo')}</span>}
     </div>
   )
 }

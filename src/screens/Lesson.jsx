@@ -8,6 +8,7 @@ import { IT_NAMES, highlightMap } from '../lib/music'
 import { lessonFor } from '../data/lessons'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
 import { splitLines } from '../lib/text'
+import { loc, t, tr } from '../lib/i18n'
 
 function BackArrow() {
   return (
@@ -18,7 +19,7 @@ function BackArrow() {
 }
 
 export default function Lesson({ chapter, step, instrument = 'keyboard', onFinish, onExit }) {
-  const lesson = lessonFor(chapter, step.id)
+  const lesson = loc(lessonFor(chapter, step.id))
   const [i, setI] = useState(0)
   const [askExit, setAskExit] = useState(false)
   const [playing, setPlaying] = useState(false)
@@ -61,14 +62,14 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
   return (
     <section className="lesson" aria-label={`${step.id}. ${step.title}`}>
       <header className="steps-head">
-        <button type="button" className="steps-icbtn" aria-label="Esci dalla lezione" onClick={() => setAskExit(true)}>
+        <button type="button" className="steps-icbtn" aria-label={t('Esci dalla lezione')} onClick={() => setAskExit(true)}>
           <BackArrow />
         </button>
         <div className="steps-titlebox">
           <h1 className="steps-title">{`${step.id}. ${step.title}`}</h1>
           <div className="steps-progress">
-            <span className="steps-count">{`Passo ${i + 1} di ${total}`}</span>
-            <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label="Avanzamento della lezione">
+            <span className="steps-count">{t('Passo {n} di {total}', { n: i + 1, total })}</span>
+            <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label={t('Avanzamento della lezione')}>
               <div className="steps-bar-fill" style={{ width: `${((i + 1) / total) * 100}%` }} />
             </div>
           </div>
@@ -80,14 +81,14 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
         <p className="lesson-body">{page.body}</p>
 
         <div className="lesson-remember">
-          <strong>Da ricordare</strong>
+          <strong>{t('Da ricordare')}</strong>
           {splitLines(page.remember).map((l) => (
             <span key={l} className={`lr-line${l.includes("|") ? " is-bars" : ""}`}>{l}</span>
           ))}
         </div>
 
         {page.chords && (
-          <div className="lchords" role="list" aria-label="Accordi della progressione">
+          <div className="lchords" role="list" aria-label={t('Accordi della progressione')}>
             {page.chords.map((c, k) => (
               <span key={k} className="lchord" role="listitem">
                 {c.fn && c.fn !== c.sym && <b>{c.fn}</b>}
@@ -98,13 +99,13 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
         )}
         {page.staff && (
           <>
-            <h3 className="lesson-sub">Sul pentagramma</h3>
-            <ReadStaff items={page.staff.items} timeSig={page.staff.timeSig} endBar={page.staff.endBar} label={`Pentagramma: ${page.staff.items.map((n) => n.label).join(', ')}`} />
+            <h3 className="lesson-sub">{t('Sul pentagramma')}</h3>
+            <ReadStaff items={page.staff.items} timeSig={page.staff.timeSig} endBar={page.staff.endBar} label={t('Pentagramma: {v}', { v: page.staff.items.map((n) => n.label).join(', ') })} />
           </>
         )}
         {!page.staff && page.notes && page.notes.length > 0 && (
           <>
-            <h3 className="lesson-sub">{instrument === 'keyboard' ? 'Sulla tastiera' : 'Sul manico'}</h3>
+            <h3 className="lesson-sub">{instrument === 'keyboard' ? t('Sulla tastiera') : t('Sul manico')}</h3>
             {instrument === 'keyboard' ? (
               <LessonKeys notes={page.notes} base={page.base} />
             ) : (
@@ -114,7 +115,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
         )}
         {(page.play || (page.notes && page.notes.length > 0)) && (
           <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
-            {playing ? 'Ferma' : 'Ascolta'}
+            {playing ? t('Ferma') : t('Ascolta')}
           </button>
         )}
 
@@ -126,7 +127,7 @@ export default function Lesson({ chapter, step, instrument = 'keyboard', onFinis
 
       <div className="lesson-foot">
         <button type="button" className="btn btn-primary" onClick={() => (last ? onFinish() : setI(i + 1))}>
-          {last ? 'Ho finito la lezione' : 'Ho capito, procedi'}
+          {last ? t('Ho finito la lezione') : t('Ho capito, procedi')}
         </button>
       </div>
 

@@ -7,6 +7,7 @@ import { IT_NAMES, highlightMap } from '../lib/music'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
 import { splitLines } from '../lib/text'
 import { CHAPTERS } from '../data/chapters'
+import { loc, t, tr } from '../lib/i18n'
 
 const WHITE = [0, 2, 4, 5, 7, 9, 11]
 
@@ -52,14 +53,14 @@ export function Example({ ex, instrument }) {
     <div className="hbe-ex">
       <h3 className="lesson-sub">{ex.label}</h3>
       {ex.rows && (
-        <div className="hbe-form" role="list" aria-label="Struttura">
+        <div className="hbe-form" role="list" aria-label={t('Struttura')}>
           {ex.rows.map((r, k) => (
             <div key={k} className="hbe-form-row" role="listitem">{r}</div>
           ))}
         </div>
       )}
       {ex.chords && ex.chords.length > 0 && (
-        <div className="lchords" role="list" aria-label="Accordi">
+        <div className="lchords" role="list" aria-label={t('Accordi')}>
           {ex.chords.map((c, k) => (
             <span key={k} className="lchord" role="listitem">
               {c.fn && c.fn !== c.sym && <b>{c.fn}</b>}
@@ -70,7 +71,7 @@ export function Example({ ex, instrument }) {
       )}
       {shown.length > 0 && (instrument === 'keyboard' ? <LessonKeys notes={withOct} base={base} /> : <Fretboard instrument={instrument} highlights={hl} mode="degrees" firstPosition />)}
       <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
-        {playing ? 'Ferma' : 'Ascolta'}
+        {playing ? t('Ferma') : t('Ascolta')}
       </button>
     </div>
   )
@@ -80,11 +81,10 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [entry.id])
-  const chapter = CHAPTERS.find((c) => c.n === entry.chapter)
+  const chapter = loc(CHAPTERS).find((c) => c.n === entry.chapter)
   return (
     <section className="hbe">
-      <button type="button" className="ic-back" onClick={onBack}>
-        ‹ Prontuario
+      <button type="button" className="ic-back" onClick={onBack}>{t('‹ Prontuario')}
       </button>
       <h2 className="ic-title">{entry.title}</h2>
       <p className="hbe-sub">{entry.subtitle}</p>
@@ -94,7 +94,7 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
         {entry.id === 'negmirror' && <NegativeAxis instrument={instrument} />}
         {entry.formula && (
           <div className="lesson-remember">
-            <strong>{entry.formulaTable ? entry.formulaTable.title : 'Formula'}</strong>
+            <strong>{entry.formulaTable ? entry.formulaTable.title : t('Formula')}</strong>
             {entry.formulaTable ? (
               <>
                 {entry.formulaTable.tones ? (
@@ -181,7 +181,7 @@ export default function HandbookEntry({ entry, instrument = 'keyboard', onBack }
         {entry.examples.map((ex) => (
           <Example key={ex.label} ex={ex} instrument={instrument} />
         ))}
-        {chapter && <p className="hbe-chapter">Capitolo {chapter.n} · {chapter.title}</p>}
+        {chapter && <p className="hbe-chapter">{t('Capitolo {n} · {title}', { n: chapter.n, title: chapter.title })}</p>}
       </article>
     </section>
   )

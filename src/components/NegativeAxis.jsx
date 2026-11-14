@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
+import { t } from '../lib/i18n'
+import { nn } from '../lib/music'
 
 // Le dodici toniche, con il semitono sopra Do (0) che serve a scegliere come scrivere le altre note
 const TONICS = [
@@ -34,7 +36,7 @@ export default function NegativeAxis({ instrument = 'keyboard' }) {
   useEffect(() => () => stopPlaying(), [])
 
   const names = NAMES[STYLE[tonic]]
-  const name = (i) => names[(tonic + i) % 12]
+  const name = (i) => nn(names[(tonic + i) % 12])
   const sel = PAIRS[pair]
   const [ax1, ay1] = pos(3.5, 148)
   const [ax2, ay2] = pos(9.5, 148)
@@ -58,19 +60,19 @@ export default function NegativeAxis({ instrument = 'keyboard' }) {
 
   return (
     <div className="neg">
-      <p className="neg-label">Scegli la tonica</p>
-      <div className="neg-tonics" role="group" aria-label="Tonica">
+      <p className="neg-label">{t('Scegli la tonica')}</p>
+      <div className="neg-tonics" role="group" aria-label={t('Tonica')}>
         {TONICS.map(([n, pc]) => (
           <button key={n} type="button" className={`neg-tonic${tonic === pc ? ' is-on' : ''}`} aria-pressed={tonic === pc} onClick={() => { stopPlaying(); setPlaying(false); setTonic(pc) }}>
-            {n}
+            {nn(n)}
           </button>
         ))}
       </div>
 
-      <svg className="neg-svg" viewBox="0 0 320 320" role="group" aria-label={`Specchio intorno all’asse di ${names[tonic]}`}>
+      <svg className="neg-svg" viewBox="0 0 320 320" role="group" aria-label={t('Specchio intorno all’asse di {tonic}', { tonic: nn(names[tonic]) })}>
         <line x1={ax1} y1={ay1} x2={ax2} y2={ay2} className="neg-axis" />
-        <text x={ax1} y={ay1 + 4} textAnchor="middle" className="neg-axis-t">asse</text>
-        <text x={ax2} y={ay2 + 4} textAnchor="middle" className="neg-axis-t">asse</text>
+        <text x={ax1} y={ay1 + 4} textAnchor="middle" className="neg-axis-t">{t('asse')}</text>
+        <text x={ax2} y={ay2 + 4} textAnchor="middle" className="neg-axis-t">{t('asse')}</text>
         {PAIRS.map(([a, b], p) => {
           const [x1, y1] = pos(a)
           const [x2, y2] = pos(b)
@@ -81,7 +83,7 @@ export default function NegativeAxis({ instrument = 'keyboard' }) {
           const p = pairOf(i)
           const on = p === pair
           return (
-            <g key={i} onClick={() => choosePair(p)} style={{ cursor: 'pointer' }} role="button" tabIndex={0} aria-label={`${name(i)}, grado ${DEG[i]}, si specchia in ${name(PAIRS[p].find((x) => x !== i))}`} aria-pressed={on} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && choosePair(p)} opacity={on ? 1 : 0.55}>
+            <g key={i} onClick={() => choosePair(p)} style={{ cursor: 'pointer' }} role="button" tabIndex={0} aria-label={t('{i}, grado {i2}, si specchia in {i3}', { i: name(i), i2: DEG[i], i3: name(PAIRS[p].find((x) => x !== i)) })} aria-pressed={on} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && choosePair(p)} opacity={on ? 1 : 0.55}>
               <circle cx={x} cy={y} r="22" fill={COLORS[p]} stroke={i === 0 ? '#f5f3ff' : '#1b1428'} strokeWidth={i === 0 ? 3.5 : 2} />
               <text x={x} y={y - 1} textAnchor="middle" className="neg-note">{name(i)}</text>
               <text x={x} y={y + 11} textAnchor="middle" className="neg-deg">{DEG[i]}</text>
@@ -90,10 +92,10 @@ export default function NegativeAxis({ instrument = 'keyboard' }) {
         })}
       </svg>
       <p className="neg-axis-info">
-        Asse: tra <b>{name(3)}</b> e <b>{name(4)}</b> (e dalla parte opposta, tra <b>{name(9)}</b> e <b>{name(10)}</b>). La forma non cambia mai: con ogni tonica cambiano solo i nomi.
+        {t('Asse: tra {a} e {b} (e dalla parte opposta, tra {c} e {d}). La forma non cambia mai: con ogni tonica cambiano solo i nomi.', { a: name(3), b: name(4), c: name(9), d: name(10) })}
       </p>
 
-      <div className="neg-pairs" role="list" aria-label="Le sei coppie">
+      <div className="neg-pairs" role="list" aria-label={t('Le sei coppie')}>
         {PAIRS.map(([a, b], p) => (
           <button key={p} type="button" role="listitem" className={`neg-pair${p === pair ? ' is-on' : ''}`} aria-pressed={p === pair} onClick={() => choosePair(p)}>
             <span className="neg-dot" style={{ background: COLORS[p] }} />
@@ -103,7 +105,7 @@ export default function NegativeAxis({ instrument = 'keyboard' }) {
         ))}
       </div>
       <button type="button" className="btn btn-secondary lesson-listen" onClick={listen}>
-        {playing ? 'Ferma' : `Ascolta ${name(sel[0])} e ${name(sel[1])}`}
+        {playing ? t('Ferma') : t('Ascolta {a} e {b}', { a: name(sel[0]), b: name(sel[1]) })}
       </button>
     </div>
   )

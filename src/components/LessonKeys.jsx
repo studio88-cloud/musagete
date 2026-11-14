@@ -1,4 +1,5 @@
 import { DEGREE_COLORS, IT_NAMES } from '../lib/music'
+import { t } from '../lib/i18n'
 
 // Tastiera di una ottava (da `base` a `base + 12`) che si adatta alla larghezza dello schermo.
 // `base` deve essere un tasto bianco. notes: [{ midi, deg, label }]
@@ -46,7 +47,7 @@ export default function LessonKeys({ notes, base = 60 }) {
       className="lkeys"
       viewBox={`0 0 ${total} ${H + 22}`}
       role="img"
-      aria-label={`Tastiera da ${noteName(start)} a ${noteName(top)} con evidenziate: ${notes.map((n) => n.label).join(', ')}`}
+      aria-label={t('Tastiera da {start} a {top} con evidenziate: {v}', { start: noteName(start), top: noteName(top), v: notes.map((n) => n.label).join(', ') })}
     >
       <text x="2" y="12" fontSize="13" fontWeight="700" fill="#C28AE3">{noteName(start)}</text>
       <text x={total - 2} y="12" fontSize="13" fontWeight="700" fill="#C28AE3" textAnchor="end">{noteName(top)}</text>

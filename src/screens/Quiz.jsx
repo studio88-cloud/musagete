@@ -10,6 +10,7 @@ import pollySad from '../images/polly-sad.webp'
 import pollyCelebrate from '../images/polly-celebrate.webp'
 import { quizFor } from '../data/quizzes'
 import { playNotes, stopPlaying, instrumentShift } from '../lib/audio'
+import { loc, t, tr } from '../lib/i18n'
 
 const XP_PER_ANSWER = 10
 
@@ -35,16 +36,16 @@ export function Results({ step, data, result, onRetry, onDone, retryLabel = 'Rip
   const pct = Math.round((result.correct / result.total) * 100)
   const passed = result.passed
   const isQuiz = data.kind === 'quiz'
-  const title = passed ? (isQuiz ? 'Quiz superato!' : 'Esercizio completato!') : 'Non ancora!'
+  const title = passed ? (isQuiz ? t('Quiz superato!') : t('Esercizio completato!')) : t('Non ancora!')
   const sub = result.sub
     ? result.sub
     : passed
-    ? `Hai risposto correttamente a ${result.correct} domande su ${result.total}.`
-    : `Servono almeno ${Math.round(data.passMark * 100)}% di risposte giuste. Ripassa le lezioni e riprova.`
+    ? t('Hai risposto correttamente a {correct} domande su {total}.', { correct: result.correct, total: result.total })
+    : t('Servono almeno {v}% di risposte giuste. Ripassa le lezioni e riprova.', { v: Math.round(data.passMark * 100) })
   return (
-    <section className="lesson" aria-label="Risultato">
+    <section className="lesson" aria-label={t('Risultato')}>
       <header className="steps-head">
-        <button type="button" className="steps-icbtn" aria-label="Chiudi" onClick={() => onDone(passed)}>
+        <button type="button" className="steps-icbtn" aria-label={t('Chiudi')} onClick={() => onDone(passed)}>
           <CloseX />
         </button>
         <div className="steps-titlebox">
@@ -57,32 +58,30 @@ export function Results({ step, data, result, onRetry, onDone, retryLabel = 'Rip
         <dl className="res-stats">
           <div>
             <img src={iconAccuracy} alt="" height="46" />
-            <dt>Precisione</dt>
+            <dt>{t('Precisione')}</dt>
             <dd>{pct}%</dd>
           </div>
           <div>
             <img src={iconTime} alt="" height="46" />
-            <dt>Tempo</dt>
+            <dt>{t('Tempo')}</dt>
             <dd>{fmtTime(result.seconds)}</dd>
           </div>
           <div>
             <img src={iconXp} alt="" height="46" />
-            <dt>XP</dt>
+            <dt>{t('XP')}</dt>
             <dd>{`+${result.xp}`}</dd>
           </div>
         </dl>
         <img className="res-polly" src={passed ? pollyCelebrate : pollySad} alt="" />
         {passed ? (
-          <button type="button" className="btn btn-primary" onClick={() => onDone(true)}>
-            Torna ai passi del capitolo
+          <button type="button" className="btn btn-primary" onClick={() => onDone(true)}>{t('Torna ai passi del capitolo')}
           </button>
         ) : (
           <>
             <button type="button" className="btn btn-primary" onClick={onRetry}>
-              {retryLabel}
+              {tr(retryLabel)}
             </button>
-            <button type="button" className="btn btn-secondary res-second" onClick={() => onDone(false)}>
-              Torna ai passi del capitolo
+            <button type="button" className="btn btn-secondary res-second" onClick={() => onDone(false)}>{t('Torna ai passi del capitolo')}
             </button>
           </>
         )}
@@ -92,7 +91,7 @@ export function Results({ step, data, result, onRetry, onDone, retryLabel = 'Rip
 }
 
 export default function Quiz({ chapter, step, data: dataProp, skipResults = false, onAnswer, onDone, onExit, instrument = 'keyboard' }) {
-  const [data, setData] = useState(() => dataProp || quizFor(chapter, step.id))
+  const [data, setData] = useState(() => loc(dataProp || quizFor(chapter, step.id)))
   const total = data.questions.length
   const [i, setI] = useState(0)
   const [sel, setSel] = useState(null)
@@ -160,27 +159,27 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
     setChecked(false)
     setCorrect(0)
     setResult(null)
-    if (!dataProp) setData(quizFor(chapter, step.id)) // al nuovo tentativo si pescano altre domande
+    if (!dataProp) setData(loc(quizFor(chapter, step.id))) // al nuovo tentativo si pescano altre domande
     startRef.current = Date.now()
   }
 
   if (result) return <Results step={step} data={data} result={result} onRetry={retry} onDone={onDone} />
 
   const feedback = ok
-    ? `Esatto! ${q.explanation}`
-    : `Purtroppo no. La risposta giusta è: ${q.options[q.answer]}. ${(q.hints && q.hints[sel]) || q.explanation}`
+    ? t('Esatto! {explanation}', { explanation: q.explanation })
+    : t('Purtroppo no. La risposta giusta è: {answer}. {explanation}', { answer: q.options[q.answer], explanation: (q.hints && q.hints[sel]) || q.explanation })
 
   return (
     <section className="lesson" aria-label={`${step.id ? `${step.id}. ` : ''}${step.title}`}>
       <header className="steps-head">
-        <button type="button" className="steps-icbtn" aria-label="Esci" onClick={() => setAskExit(true)}>
+        <button type="button" className="steps-icbtn" aria-label={t('Esci')} onClick={() => setAskExit(true)}>
           <BackArrow />
         </button>
         <div className="steps-titlebox">
           <h1 className="steps-title">{`${step.id ? `${step.id}. ` : ''}${step.title}`}</h1>
           <div className="steps-progress">
-            <span className="steps-count">{`Domanda ${i + 1} di ${total}`}</span>
-            <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label="Avanzamento">
+            <span className="steps-count">{t('Domanda {n} di {total}', { n: i + 1, total })}</span>
+            <div className="steps-bar" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={i + 1} aria-label={t('Avanzamento')}>
               <div className="steps-bar-fill" style={{ width: `${((i + 1) / total) * 100}%` }} />
             </div>
           </div>
@@ -191,10 +190,10 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
         <h2 className="quiz-q">{q.prompt}</h2>
         {q.play && (
           <button type="button" className="btn btn-secondary quiz-listen" onClick={listen}>
-            {playing ? 'Ferma' : 'Ascolta'}
+            {playing ? t('Ferma') : t('Ascolta')}
           </button>
         )}
-        <div className="opts" role="radiogroup" aria-label="Risposte">
+        <div className="opts" role="radiogroup" aria-label={t('Risposte')}>
           {q.options.map((text, k) => {
             const isRight = checked && k === q.answer
             const isWrong = checked && k === sel && k !== q.answer
@@ -209,15 +208,14 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
                 onClick={() => setSel(k)}
               >
                 <span>{text}</span>
-                {isRight && <img src={iconCheck} alt="Giusta" width="34" height="34" />}
-                {isWrong && <img src={iconX} alt="Sbagliata" width="30" height="30" />}
+                {isRight && <img src={iconCheck} alt={t('Giusta')} width="34" height="34" />}
+                {isWrong && <img src={iconX} alt={t('Sbagliata')} width="30" height="30" />}
                 {!checked && sel === k && <span className="opt-dot" aria-hidden="true" />}
               </button>
             )
           })}
         </div>
-        <button type="button" className="btn btn-primary quiz-check" disabled={sel === null || checked} onClick={check}>
-          Verifica
+        <button type="button" className="btn btn-primary quiz-check" disabled={sel === null || checked} onClick={check}>{t('Verifica')}
         </button>
       </article>
 
@@ -230,7 +228,7 @@ export default function Quiz({ chapter, step, data: dataProp, skipResults = fals
               <p className="sheet-bubble">{feedback}</p>
             </div>
             <button ref={sheetBtn} type="button" className="btn btn-primary" onClick={next}>
-              {i + 1 < total ? 'Continua' : 'Vedi il risultato'}
+              {i + 1 < total ? t('Continua') : t('Vedi il risultato')}
             </button>
           </div>
         </>

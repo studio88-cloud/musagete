@@ -3,6 +3,7 @@ import lock from '../assets/icons/icn_lucchetto.svg'
 import { HANDBOOK } from '../data/handbook'
 import { CHAPTERS } from '../data/chapters'
 import { chapterStatus } from '../lib/progress'
+import { loc, t, tr } from '../lib/i18n'
 
 function Chevron() {
   return (
@@ -14,9 +15,9 @@ function Chevron() {
 
 export default function Handbook({ completed, onOpen }) {
   // le voci sono raggruppate per capitolo, nell'ordine dei capitoli
-  const groups = CHAPTERS.map((c) => ({ c, items: HANDBOOK.filter((e) => e.chapter === c.n) })).filter((g) => g.items.length)
+  const groups = loc(CHAPTERS).map((c) => ({ c, items: loc(HANDBOOK).filter((e) => e.chapter === c.n) })).filter((g) => g.items.length)
   return (
-    <section className="handbook" aria-label="Prontuario">
+    <section className="handbook" aria-label={t('Prontuario')}>
       {groups.map(({ c, items }) => (
         <div key={c.n} className="hb-group">
           <h2 className="hb-chap">{c.n}. {c.title}</h2>
@@ -29,7 +30,7 @@ export default function Handbook({ completed, onOpen }) {
                 type="button"
                 className={`hb-card${unlocked ? '' : ' is-locked'}`}
                 disabled={!unlocked}
-                aria-label={unlocked ? entry.title : `${entry.title}, bloccato: si sblocca con il capitolo ${entry.chapter}`}
+                aria-label={unlocked ? entry.title : t('{title}, bloccato: si sblocca con il capitolo {chapter}', { title: entry.title, chapter: entry.chapter })}
                 onClick={() => onOpen(entry)}
               >
                 <img className="hb-star" src={unlocked ? star : lock} alt="" />

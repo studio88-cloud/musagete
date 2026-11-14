@@ -1,4 +1,5 @@
-import { DEGREE_COLORS } from '../lib/music'
+import { DEGREE_COLORS, IT_NAMES, nn } from '../lib/music'
+import { t, tr } from '../lib/i18n'
 
 // Strumento da toccare per gli esercizi "Costruisci".
 // selected: [{ id, midi }] · onTap({ id, midi })
@@ -7,7 +8,8 @@ import { DEGREE_COLORS } from '../lib/music'
 
 const PC_NAMES = ['Do', 'Do♯', 'Re', 'Re♯', 'Mi', 'Fa', 'Fa♯', 'Sol', 'Sol♯', 'La', 'La♯', 'Si']
 const octaveOf = (midi) => Math.floor(midi / 12) - 1
-const nameOf = (midi) => `${PC_NAMES[midi % 12]}${octaveOf(midi)}`
+const nameOf = (midi) => `${nn(PC_NAMES[midi % 12])}${octaveOf(midi)}`
+const stringName = (ins, s) => { const n = STRING_NAMES[ins][s]; return n === 'Mi acuto' || n === 'Mi grave' ? t(n) : nn(n) }
 
 function Dot({ x, y, expected, r = 13 }) {
   const c = DEGREE_COLORS[expected.deg]
@@ -80,7 +82,7 @@ function Keys({ selected, onTap, result, helpPc }) {
         key={k.midi}
         role="button"
         tabIndex={result ? -1 : 0}
-        aria-label={`${nameOf(k.midi)}${sel.has(k.midi) ? ', selezionata' : ''}`}
+        aria-label={`${nameOf(k.midi)}${sel.has(k.midi) ? t(', selezionata') : ''}`}
         aria-pressed={sel.has(k.midi)}
         onClick={() => !result && onTap({ id: `k${k.midi}`, midi: k.midi })}
         onKeyDown={(e) => !result && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onTap({ id: `k${k.midi}`, midi: k.midi }))}
@@ -96,9 +98,9 @@ function Keys({ selected, onTap, result, helpPc }) {
   return (
     <>
     <div className="bi-scroll">
-    <svg className="bi bi-wide" viewBox={`0 0 ${total} ${KH + 22}`} role="group" aria-label={`Tastiera da Do4 a Do${4 + OCT}, scorrevole`}>
+    <svg className="bi bi-wide" viewBox={`0 0 ${total} ${KH + 22}`} role="group" aria-label={t('Tastiera da {a} a {b}, scorrevole', { a: `${IT_NAMES[0]}4`, b: `${IT_NAMES[0]}${4 + OCT}` })}>
       {white.filter((k) => k.midi % 12 === 0).map((k) => (
-        <text key={`l${k.midi}`} x={k.x + 3} y="12" className="bi-lbl">{`Do${octaveOf(k.midi)}`}</text>
+        <text key={`l${k.midi}`} x={k.x + 3} y="12" className="bi-lbl">{`${IT_NAMES[0]}${octaveOf(k.midi)}`}</text>
       ))}
       <g transform="translate(0 20)">
         {white.map((k) => keyEl(k, false))}
@@ -112,7 +114,7 @@ function Keys({ selected, onTap, result, helpPc }) {
       </g>
     </svg>
     </div>
-    <p className="bi-hint" aria-hidden="true">← Scorri la tastiera per le altre note →</p>
+    <p className="bi-hint" aria-hidden="true">{t('← Scorri la tastiera per le altre note →')}</p>
     </>
   )
 }
@@ -200,7 +202,7 @@ function Frets({ instrument, selected, onTap, result, helpPc }) {
           key={id}
           role="button"
           tabIndex={result ? -1 : 0}
-          aria-label={`Corda ${STRING_NAMES[instrument][s]}, ${f === 0 ? 'a vuoto' : `tasto ${f}`}: ${nameOf(midi)}${picked ? ', selezionata' : ''}`}
+          aria-label={t('Corda {s}, {v}: {midi}{v2}', { s: stringName(instrument, s), v: f === 0 ? t('a vuoto') : t('tasto {f}', { f }), midi: nameOf(midi), v2: picked ? t(', selezionata') : '' })}
           aria-pressed={Boolean(picked)}
           onClick={() => !result && onTap({ id, midi })}
           onKeyDown={(e) => !result && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), onTap({ id, midi }))}
@@ -216,7 +218,7 @@ function Frets({ instrument, selected, onTap, result, helpPc }) {
   )
 
   return (
-    <svg className="bi" viewBox={`0 0 ${W} ${H}`} role="group" aria-label={`Manico di ${instrument === 'guitar' ? 'chitarra' : 'basso'}`}>
+    <svg className="bi" viewBox={`0 0 ${W} ${H}`} role="group" aria-label={t('Manico di {instrument}', { instrument: instrument === 'guitar' ? t('chitarra') : t('basso') })}>
       {[...marks, ...dbl].map((n) => (
         <text key={`n${n}`} x={fx(n)} y={14} textAnchor="middle" className="bi-lbl">
           {NUMERAL[n]}

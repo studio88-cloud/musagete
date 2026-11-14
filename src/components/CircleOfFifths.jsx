@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { t, tr } from '../lib/i18n'
+import { nn } from '../lib/music'
 
 // Tonalità in senso orario partendo da Do: [maggiore, minore relativa, armatura]
 const KEYS = [
@@ -30,25 +32,25 @@ export default function CircleOfFifths() {
   const right = KEYS[(sel + 1) % 12]
   return (
     <div className="cof">
-      <svg viewBox="0 0 300 300" className="cof-svg" role="group" aria-label="Circolo delle quinte">
+      <svg viewBox="0 0 300 300" className="cof-svg" role="group" aria-label={t('Circolo delle quinte')}>
         {KEYS.map((_, i) => {
           const [x, y] = pt(112, i)
           const [mx, my] = pt(72, i)
           const on = i === sel
           return (
-            <g key={i} onClick={() => setSel(i)} style={{ cursor: 'pointer' }} role="button" tabIndex={0} aria-label={`${KEYS[i][0]} maggiore, ${KEYS[i][1]} minore`} aria-pressed={on} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSel(i)}>
+            <g key={i} onClick={() => setSel(i)} style={{ cursor: 'pointer' }} role="button" tabIndex={0} aria-label={t('{v} maggiore, {v2} minore', { v: nn(KEYS[i][0]), v2: nn(KEYS[i][1]) })} aria-pressed={on} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSel(i)}>
               <circle cx={x} cy={y} r="24" className={`cof-maj${on ? ' is-on' : ''}`} />
-              <text x={x} y={y + 5} textAnchor="middle" className="cof-t">{SHORT[i]}</text>
+              <text x={x} y={y + 5} textAnchor="middle" className="cof-t">{nn(SHORT[i])}</text>
               <circle cx={mx} cy={my} r="17" className={`cof-min${on ? ' is-on' : ''}`} />
-              <text x={mx} y={my + 3.5} textAnchor="middle" className="cof-t2">{SHORT_MIN[i]}m</text>
+              <text x={mx} y={my + 3.5} textAnchor="middle" className="cof-t2">{nn(SHORT_MIN[i])}m</text>
             </g>
           )
         })}
       </svg>
       <div className="cof-info" aria-live="polite">
-        <strong>{k[0]} maggiore · {k[1]} minore</strong>
-        <span>Armatura: {k[2]}</span>
-        <span>Tonalità vicine: {left[0]} (una quinta sotto) e {right[0]} (una quinta sopra)</span>
+        <strong>{t('{a} maggiore · {b} minore', { a: nn(k[0]), b: nn(k[1]) })}</strong>
+        <span>{t('Armatura: {sig}', { sig: tr(k[2]) })}</span>
+        <span>{t('Tonalità vicine: {a} (una quinta sotto) e {b} (una quinta sopra)', { a: nn(left[0]), b: nn(right[0]) })}</span>
       </div>
     </div>
   )
